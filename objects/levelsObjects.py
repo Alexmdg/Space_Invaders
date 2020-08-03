@@ -14,7 +14,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.img = pygame.transform.scale(
-                            pygame.image.load(os.path.join('images', 'soldier.png')).convert_alpha(),
+                            pygame.image.load(os.path.join('../images', 'soldier.png')).convert_alpha(),
                             (48, 48)
                         )
         self.rect = pygame.Rect(370, 515, 48, 48)
@@ -57,13 +57,13 @@ class OctoArmy(pygame.sprite.Group):
     def __init__(self, rows, columns):
         super().__init__()
         self.img = pygame.transform.scale(
-            pygame.image.load(os.path.join('images', 'ennemy.png')).convert_alpha(),
+            pygame.image.load(os.path.join('../images', 'ennemy.png')).convert_alpha(),
             (36, 36)
         )
         self.dXn = 0
         self.dXn_m1 = 0
         self.dY = 0
-        self.level = LEVEL['1']
+        self.difficulty = DIFFICULTY['3']
 
         for j in range(0, rows):
             for i in range(0, columns):
@@ -79,10 +79,10 @@ class OctoArmy(pygame.sprite.Group):
             self.dY = 1
         else:
             self.dY = 0
-        logger.debug(Fore.BLUE + f'{self.dXn} | {self.dXn * self.dXn_m1} | {self.dY}')
+        # logger.debug(Fore.BLUE + f'{self.dXn} | {self.dXn * self.dXn_m1} | {self.dY}')
         for enemy in self.sprites():
             pygame.display.get_surface().blit(self.img, enemy.rect)
-            enemy.rect.move_ip(self.dXn, self.dY * self.level)
+            enemy.rect.move_ip(self.difficulty['speedX'] * self.dXn, self.dY * self.difficulty['speedY'])
 
 
 class Arrows(pygame.sprite.Group):
@@ -103,7 +103,7 @@ class Arrows(pygame.sprite.Group):
     def __init__(self):
         super().__init__()
         self.img = pygame.transform.scale(
-                            pygame.image.load(os.path.join('images', 'spear.png')).convert_alpha(),
+                            pygame.image.load(os.path.join('../images', 'spear.png')).convert_alpha(),
                             (15, 22)
                     )
         self.speed = -6.66

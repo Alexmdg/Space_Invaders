@@ -2,9 +2,17 @@ import logging
 from colorama import Fore
 
 
-LEVEL = {'1': 15,
-         '2': 30,
-         '3': 60}
+DIFFICULTY = {
+    '1': {'speedX': 1,
+          'speedY': 15,
+          'hp': 1},
+    '2': {'speedX': 1.2,
+          'speedY': 30,
+          'hp': 1},
+    '3': {'speedX': 1.4,
+          'speedY': 50,
+          'hp': 1}
+    }
 
 ####            Logging           ####
 def createLogger(name, file=None,):
