@@ -3,6 +3,7 @@ from colorama import Fore
 
 SCREEN_SIZE = (960, 600)
 UNITS_SIZE = (SCREEN_SIZE[0]*SCREEN_SIZE[0]) // 16000
+FPS = 34
 
 PURPLE = (89, 24, 204)
 BLACK = (0, 0, 0)

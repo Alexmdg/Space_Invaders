@@ -10,17 +10,26 @@ class StageRender(pygame.Surface):
     objects = {}
     def __init__(self, size, level):
         super().__init__(size)
-        topbar = TopBar(level)
+        self.topbar = TopBar(level)
         backgroundImg = pygame.image.load(os.path.join('images\\', '2834.jpg'))
         self.background = pygame.transform.scale(backgroundImg, SCREEN_SIZE).convert_alpha()
         self.blit(self.background, (0, 0))
-        self.blit(topbar, (0, 0))
+        self.blit(self.topbar, (0, 0))
         self.objects['player'] = Player()
-        self.objects['enemies'] = EnnemyArmy(5, 12, 70, '1')
+        self.objects['enemies'] = EnnemyArmy(5, 12, 70, level)
         self.objects['shots'] = Arrows(50)
+        self.showObjects()
         self.running = True
 
     def showObjects(self):
+        self.blit(self.background, (0, 0))
+        self.blit(self.topbar, (0, 0))
+        pygame.sprite.groupcollide(
+            self.objects['shots'],
+            self.objects['enemies'],
+            True, True)
+        if pygame.sprite.spritecollideany(self.objects['player'].sprites()[0], self.objects['enemies']):
+            self.running = False
         for object in self.objects:
             self.objects[object].update()
             for sprite in self.objects[object].sprites():
@@ -28,12 +37,7 @@ class StageRender(pygame.Surface):
 
     def handleEvent(self, event):
         self.objects['shots'].fireShot(self.objects['player'].sprites()[0].rect, event)
-        pygame.sprite.groupcollide(
-            self.objects['shots'],
-            self.objects['enemies'],
-            True, True)
-        if pygame.sprite.spritecollideany(self.objects['player'].sprites()[0], self.objects['enemies']):
-            self.running = False
+
 
 class GUIRender:
     pass

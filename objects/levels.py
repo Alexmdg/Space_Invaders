@@ -7,7 +7,7 @@ from settings import *
 
 
 logger = createLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 class Player(pygame.sprite.Group):
     class BasePlayer(pygame.sprite.Sprite):
