@@ -18,14 +18,14 @@ def createLogger(name, file=None,):
         return logger
 
 SCREEN_SIZE = (960, 600)
-UNITS_SIZE = (SCREEN_SIZE[0]*SCREEN_SIZE[0]) // 16000
+UNITS_SIZE = int((SCREEN_SIZE[0]*SCREEN_SIZE[1]) // 10000)
 FPS = 34
 
 PURPLE = (89, 24, 204)
 BLACK = (0, 0, 0)
 GREY = (229, 222, 206)
 
-GRAPHIC_OBJECTS = None
+IMAGE_LOADER = None
 
 DIFFICULTY = {
     '1': {'speedX': 1,

@@ -7,7 +7,7 @@ class GameEngine:
         pygame.init()
         self.screen = pygame.display.set_mode(SCREEN_SIZE)
         pygame.display.set_caption("Space Invaders")
-        settings.GRAPHIC_OBJECTS = GraphicObjects()
+        settings.IMAGE_LOADER = ImageLoader()
         self.clock = pygame.time.Clock()
         self.running = True
         self.main_loop()

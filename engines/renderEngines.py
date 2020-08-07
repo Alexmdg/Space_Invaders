@@ -1,24 +1,22 @@
-from objects.levels import *
-from objects.hud import *
-
+from objects.stages.gameEntities import *
+from objects.stages.hud import *
+from objects.graphics.animations import Dying
 
 logger = createLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 
 class StageRender(pygame.Surface):
-    objects = {}
     def __init__(self, size, level):
         super().__init__(size)
         self.topbar = TopBar(level)
-        backgroundImg = pygame.image.load(os.path.join('images\\', '2834.jpg'))
-        self.background = pygame.transform.scale(backgroundImg, SCREEN_SIZE).convert_alpha()
+        self.background = pygame.transform.scale(settings.IMAGE_LOADER.city_background, SCREEN_SIZE)
         self.blit(self.background, (0, 0))
         self.blit(self.topbar, (0, 0))
         self.objects = {'player':  Player(),
                         'enemies': EnnemyArmy(SpaceOcto, 5, 12, 70, level),
-                        'shots': Arrows(50),
-                        'Deads': Dying()
+                        'shots': Weapon(50),
+                        'deads': Dying()
                     }
         self.showObjects()
         self.running = True
@@ -26,7 +24,7 @@ class StageRender(pygame.Surface):
     def showObjects(self):
         self.blit(self.background, (0, 0))
         self.blit(self.topbar, (0, 0))
-        self.deathHandler()
+        self.collisionHandler()
         for object in self.objects:
             self.objects[object].update()
             for sprite in self.objects[object].sprites():
@@ -35,19 +33,26 @@ class StageRender(pygame.Surface):
     def handleEvent(self, event):
         self.objects['shots'].fireShot(self.objects['player'].sprites()[0].rect, event)
 
-    def deathHandler(self):
+    def collisionHandler(self):
         if pygame.sprite.spritecollideany(self.objects['player'].sprites()[0], self.objects['enemies']):
             self.running = False
         deaths = pygame.sprite.groupcollide(self.objects['shots'],
                                             self.objects['enemies'],
                                             True, True)
+        power_up = pygame.sprite.spritecollideany(self.objects['player'].sprites()[0], self.objects['deads'])
+        if power_up:
+            self.objects['player'].power_up += 1
+            power_up.kill()
         for arrow in deaths:
             for dead in deaths[arrow]:
-                self.objects['Deads'].died(dead)
+                self.objects['deads'].died(dead)
 
 
-class GUIRender:
-    pass
+
+
+class MenuRender(pygame.Surface):
+    def __init__(self, size):
+        super().__init__(size)
 
 
 
