@@ -7,16 +7,19 @@ class GameEngine:
         pygame.init()
         self.screen = pygame.display.set_mode(SCREEN_SIZE)
         pygame.display.set_caption("Space Invaders")
+        settings.GRAPHIC_OBJECTS = GraphicObjects()
         self.clock = pygame.time.Clock()
         self.running = True
+        self.main_loop()
 
+    def main_loop(self):
         while self.running:
             stage = StageRender(SCREEN_SIZE, "1")
             self.screen.blit(stage, (0, 0))
             while stage.running:
                 self.handleEvents(stage)
-                self.update(stage)
                 stage.showObjects()
+                self.update(stage)
         pygame.quit()
         quit()
 

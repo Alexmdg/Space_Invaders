@@ -1,6 +1,22 @@
 import logging
 from colorama import Fore
 
+####            Logging           ####
+def createLogger(name, file=None,):
+    logger = logging.getLogger(name)
+    formatter = logging.Formatter(Fore.WHITE + '%(asctime)s:%(levelname)s:%(funcName)s:%(message)s')
+    handler = logging.StreamHandler()
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    if file is True :
+        filelogger = logging.getLogger(f"f_{name}")
+        filehandler = logging.FileHandler(f"{name}.log")
+        filehandler.setFormatter(formatter)
+        filelogger.addHandler(filehandler)
+        return logger, filelogger
+    else:
+        return logger
+
 SCREEN_SIZE = (960, 600)
 UNITS_SIZE = (SCREEN_SIZE[0]*SCREEN_SIZE[0]) // 16000
 FPS = 34
@@ -8,6 +24,8 @@ FPS = 34
 PURPLE = (89, 24, 204)
 BLACK = (0, 0, 0)
 GREY = (229, 222, 206)
+
+GRAPHIC_OBJECTS = None
 
 DIFFICULTY = {
     '1': {'speedX': 1,
@@ -41,19 +59,3 @@ DIFFICULTY = {
           'speedY': 50,
           'hp': 1}
     }
-
-####            Logging           ####
-def createLogger(name, file=None,):
-    logger = logging.getLogger(name)
-    formatter = logging.Formatter(Fore.WHITE + '%(asctime)s:%(levelname)s:%(funcName)s:%(message)s')
-    handler = logging.StreamHandler()
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    if file is True :
-        filelogger = logging.getLogger(f"f_{name}")
-        filehandler = logging.FileHandler(f"{name}.log")
-        filehandler.setFormatter(formatter)
-        filelogger.addHandler(filehandler)
-        return logger, filelogger
-    else:
-        return logger

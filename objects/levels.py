@@ -1,31 +1,24 @@
 import pygame
 import os
 import math
-from settings import *
+import settings
+from .graphicObjects import *
 
 # Icons and Images made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
 
-logger = createLogger(__name__)
-logger.setLevel(logging.INFO)
+logger = settings.createLogger(__name__)
+logger.setLevel(settings.logging.INFO)
 
 class Player(pygame.sprite.Group):
     class BasePlayer(pygame.sprite.Sprite):
         def __init__(self):
             super().__init__()
-            self.image = pygame.transform.scale(
-                pygame.image.load(os.path.join('images\\', 'soldier.png')).convert_alpha(),
-                (UNITS_SIZE, UNITS_SIZE)
-            )
-            self.rect = pygame.Rect((SCREEN_SIZE[0] / 2) - 12, SCREEN_SIZE[1] - UNITS_SIZE * 1.2, UNITS_SIZE,
-                                    UNITS_SIZE)
+            self.image = pygame.transform.scale(settings.GRAPHIC_OBJECTS.base_player, (settings.UNITS_SIZE, settings.UNITS_SIZE))
+            self.rect = pygame.Rect((settings.SCREEN_SIZE[0] / 2) - 12, settings.SCREEN_SIZE[1] - settings.UNITS_SIZE * 1.2, settings.UNITS_SIZE,
+                                    settings.UNITS_SIZE)
     def __init__(self):
         super().__init__()
-        self.surf = pygame.transform.scale(
-                            pygame.image.load(os.path.join('images\\', 'soldier.png')).convert_alpha(),
-                            (UNITS_SIZE, UNITS_SIZE)
-                        )
-
         self.max_speed = 5
         self.max_ammo = 7
         self.damage = 1
@@ -56,46 +49,66 @@ class Player(pygame.sprite.Group):
             self.speed = 0
         self.sprites()[0].rect.move_ip(self.speed, 0)
 
-
 class EnnemyArmy(pygame.sprite.Group):
-    class SpaceOcto(pygame.sprite.Sprite):
-        def __init__(self, rect, surf):
-            super().__init__()
-            self.rect = pygame.Rect(rect)
-            self.image = surf
-
-    def __init__(self, rows, columns, unit_size_factor, level):
+    def __init__(self, unit, rows, columns, unit_size_factor, level):
         super().__init__()
-        self.unit_size = int((UNITS_SIZE * unit_size_factor) / 100)
-        self.unit_surf = pygame.transform.scale(
-                    pygame.image.load(os.path.join('images\\', 'ennemy.png')).convert_alpha(),
-                    (self.unit_size, self.unit_size)
-                )
+        self.unit_size = int((settings.UNITS_SIZE * unit_size_factor) / 100)
         self.dXn = 0
         self.dXn_m1 = 0
         self.dY = 0
-        self.difficulty = DIFFICULTY[level]
+        self.difficulty = settings.DIFFICULTY[level]
 
         for j in range(0, rows):
             for i in range(0, columns):
-                enemy = self.SpaceOcto(((0, 0), (UNITS_SIZE, UNITS_SIZE)), self.unit_surf)
-                enemy.rect.center = ((3*SCREEN_SIZE[0] // 4 ) - (1.25*self.unit_size))\
+                enemy = unit(((0, 0), (self.unit_size, self.unit_size)))
+                enemy.rect.center = ((3*settings.SCREEN_SIZE[0] // 4 ) - (1.25*self.unit_size))\
                                     - (((1.25*self.unit_size)*(columns//2)) - ((1.25*self.unit_size) * i))\
                                     , (1.25*self.unit_size) + ((1.25*self.unit_size) * j)
                 self.add(enemy)
-        logger.debug(Fore.MAGENTA + f"{self.sprites()}")
-
+        logger.debug(settings.Fore.MAGENTA + f"{self.sprites()}")
 
     def update(self):
         self.dXn_m1 = self.dXn
-        self.dXn = ((SCREEN_SIZE[0]-UNITS_SIZE) / 100) * math.cos(pygame.time.get_ticks() / 700)
+        self.dXn = ((settings.SCREEN_SIZE[0]-settings.UNITS_SIZE) / 100) * math.cos(pygame.time.get_ticks() / 700)
         if self.dXn * self.dXn_m1 < 0:
             self.dY = 1
         else:
             self.dY = 0
-        logger.debug(Fore.BLUE + f'{self.dXn} | {self.dXn * self.dXn_m1} | {self.dY}')
+        logger.debug(settings.Fore.BLUE + f'{self.dXn} | {self.dXn * self.dXn_m1} | {self.dY}')
         for enemy in self.sprites():
             enemy.rect.move_ip(self.difficulty['speedX'] * self.dXn, self.dY * self.difficulty['speedY'])
+
+class SpaceOcto(pygame.sprite.Sprite):
+    def __init__(self, rect):
+        super().__init__()
+        self.rect = pygame.Rect(rect)
+        self.size = rect[1]
+        self.image = pygame.transform.scale(settings.GRAPHIC_OBJECTS.space_octo, self.size)
+        self.dX = 0
+        self.dY = 0
+
+class Dying(pygame.sprite.Group):
+        def __init__(self):
+            super().__init__()
+
+        def died(self, unit):
+            unit.image = pygame.transform.scale(settings.GRAPHIC_OBJECTS.ink_stain, unit.size)
+            unit.timer = int(0.618 * settings.FPS)
+            self.add(unit)
+
+
+        def update(self):
+            for unit in self.sprites():
+                unit.dX -= 0.1
+                unit.dY -= 0.1
+                if unit.timer > 0:
+                    if unit.rect[2] < 1.4 * unit.size[0]:
+                        unit.rect.inflate_ip(0.1 * unit.size[0], 0.1 * unit.size[1])
+                        unit.image = pygame.transform.scale(unit.image, (unit.rect[2], unit.rect[3]))
+                    unit.rect.move_ip(unit.dX, unit.dY)
+                    unit.timer -= 1
+                if unit.timer == 0:
+                    unit.kill()
 
 
 class Arrows(pygame.sprite.Group):
@@ -114,11 +127,8 @@ class Arrows(pygame.sprite.Group):
 
     def __init__(self, ammo_size_factor):
         super().__init__()
-        self.ammo_size = int((UNITS_SIZE * ammo_size_factor) / 100)
-        self.ammo_surf = pygame.transform.scale(
-                            pygame.image.load(os.path.join('images\\', 'spear.png')).convert_alpha(),
-                            (self.ammo_size, self.ammo_size)
-                    )
+        self.ammo_size = int((settings.UNITS_SIZE * ammo_size_factor) / 100)
+        self.ammo_surf = pygame.transform.scale(settings.GRAPHIC_OBJECTS.arrow, (self.ammo_size, self.ammo_size))
         self.speed = -6.66
         self.max_ammo = 7
         self.shot_fired = False

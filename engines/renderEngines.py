@@ -15,21 +15,18 @@ class StageRender(pygame.Surface):
         self.background = pygame.transform.scale(backgroundImg, SCREEN_SIZE).convert_alpha()
         self.blit(self.background, (0, 0))
         self.blit(self.topbar, (0, 0))
-        self.objects['player'] = Player()
-        self.objects['enemies'] = EnnemyArmy(5, 12, 70, level)
-        self.objects['shots'] = Arrows(50)
+        self.objects = {'player':  Player(),
+                        'enemies': EnnemyArmy(SpaceOcto, 5, 12, 70, level),
+                        'shots': Arrows(50),
+                        'Deads': Dying()
+                    }
         self.showObjects()
         self.running = True
 
     def showObjects(self):
         self.blit(self.background, (0, 0))
         self.blit(self.topbar, (0, 0))
-        pygame.sprite.groupcollide(
-            self.objects['shots'],
-            self.objects['enemies'],
-            True, True)
-        if pygame.sprite.spritecollideany(self.objects['player'].sprites()[0], self.objects['enemies']):
-            self.running = False
+        self.deathHandler()
         for object in self.objects:
             self.objects[object].update()
             for sprite in self.objects[object].sprites():
@@ -37,6 +34,16 @@ class StageRender(pygame.Surface):
 
     def handleEvent(self, event):
         self.objects['shots'].fireShot(self.objects['player'].sprites()[0].rect, event)
+
+    def deathHandler(self):
+        if pygame.sprite.spritecollideany(self.objects['player'].sprites()[0], self.objects['enemies']):
+            self.running = False
+        deaths = pygame.sprite.groupcollide(self.objects['shots'],
+                                            self.objects['enemies'],
+                                            True, True)
+        for arrow in deaths:
+            for dead in deaths[arrow]:
+                self.objects['Deads'].died(dead)
 
 
 class GUIRender:
