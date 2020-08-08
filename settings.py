@@ -29,7 +29,8 @@ def create_loggers(name, file=False):
     event_logger = MyLogger(name, file, fmt=Fore.YELLOW + '%(created)f:Event Logger:%(levelname)s:%(funcName)s:%(message)s')
     rect_logger = MyLogger(name, file, fmt=Fore.MAGENTA + '%(created)f:Rect Logger:%(levelname)s:%(funcName)s:%(message)s')
     display_logger = MyLogger(name, file, fmt=Fore.LIGHTMAGENTA_EX + '%(created)f:Display Logger:%(levelname)s:%(funcName)s:%(message)s')
-    return main_logger, event_logger, rect_logger, display_logger
+    sprite_logger = MyLogger(name, file, fmt=Fore.CYAN + '%(created)f:Sprite Logger:%(levelname)s:%(funcName)s:%(message)s')
+    return main_logger, event_logger, rect_logger, display_logger, sprite_logger
 
 ####            Graphic Options          ####
 

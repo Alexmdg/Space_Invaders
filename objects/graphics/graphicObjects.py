@@ -9,5 +9,6 @@ class ImageLoader:
         self.power_up = image.load(os.path.join('objects\graphics\images\\', 'powerup.png')).convert_alpha()
         self.ink_stain = image.load(os.path.join('objects\graphics\images\\', 'stain.png')).convert_alpha()
         self.space_octo = image.load(os.path.join('objects\graphics\images\\', 'ennemy.png')).convert_alpha()
+        self.space_ghost = image.load(os.path.join('objects\graphics\images\\', 'enemy2.png')).convert_alpha()
         self.arrow = image.load(os.path.join('objects\graphics\images\\', 'spear.png')).convert_alpha()
 

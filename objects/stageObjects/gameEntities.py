@@ -1,18 +1,18 @@
 import math
 import settings
+import random
 import pygame.rect
 import pygame.sprite
 
 
-
 # Icons and Images made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
-
-main_logger, event_logger, rect_logger, display_logger = settings.create_loggers(__name__)
+main_logger, event_logger, rect_logger, display_logger, sprite_logger = settings.create_loggers(__name__)
 main_logger.setLevel(settings.logging.DEBUG)
 event_logger.setLevel(settings.logging.DEBUG)
-rect_logger.setLevel(settings.logging.INFO)
+rect_logger.setLevel(settings.logging.DEBUG)
 display_logger.setLevel(settings.logging.DEBUG)
+sprite_logger.setLevel(settings.logging.DEBUG)
 
 class Player(pygame.sprite.Group):
     class BasePlayer(pygame.sprite.Sprite):
@@ -37,17 +37,17 @@ class Player(pygame.sprite.Group):
     def update(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and abs(self.dX) < self.max_speed:
-            self.dX -= 0.2
+            self.dX -= 0.5
         if keys[pygame.K_RIGHT]and self.dX < self.max_speed:
-            self.dX += 0.2
+            self.dX += 0.5
         if keys[pygame.K_LEFT] and self.dX > -0.2:
-            self.dX -= 0.4
-        if keys[pygame.K_RIGHT] and self.dX < 0.2:
-            self.dX += 0.4
-        if keys[pygame.K_LEFT] == 0 and self.dX < 0:
-            self.dX += 0.6
-        if keys[pygame.K_RIGHT] == 0 and self.dX > 0:
             self.dX -= 0.6
+        if keys[pygame.K_RIGHT] and self.dX < 0.2:
+            self.dX += 0.6
+        if keys[pygame.K_LEFT] == 0 and self.dX < 0:
+            self.dX += 0.8
+        if keys[pygame.K_RIGHT] == 0 and self.dX > 0:
+            self.dX -= 0.8
         if self.sprites()[0].rect.x < 0:
             self.sprites()[0].rect.x = 0
             self.dX = 0
@@ -63,9 +63,12 @@ class EnnemyArmy(pygame.sprite.Group):
         self.dXn = 0
         self.dXn_m1 = 0
         self.dY = 0
+        self.dYx = 0
         self.difficulty = settings.DIFFICULTY[level]
         self.clock = pygame.time.Clock()
         self.time = 0
+        self.ennemy_type = unit
+        sprite_logger.debug(f'self.ennemy-type: {self.ennemy_type}')
 
         for j in range(0, rows):
             for i in range(0, columns):
@@ -74,22 +77,33 @@ class EnnemyArmy(pygame.sprite.Group):
                                     - (((1.25*self.unit_size)*(columns//2)) - ((1.25*self.unit_size) * i))\
                                     , (1.25*self.unit_size) + ((1.25*self.unit_size) * j)
                 self.add(enemy)
-        display_logger.debug(f"{self.sprites()}")
+        sprite_logger.debug(f"self.sprites(): {self.sprites()}")
 
     def update(self):
         self.clock.tick()
-        if self.clock.get_time() < 35 :
+        if self.clock.get_time() < 35:
             self.time += self.clock.get_time()
         display_logger.debug(f'clock time: {self.clock.get_time()}, self.time: {self.time}, self.dY: {self.dY}')
         self.dXn_m1 = self.dXn
-        self.dXn = ((settings.SCREEN_SIZE[0]-settings.UNITS_SIZE) / 100) * math.cos(self.time / 700)
+        self.dXn = ((settings.SCREEN_SIZE[0] - settings.UNITS_SIZE) / 100) * math.cos(self.time / 700)
         if self.dXn * self.dXn_m1 < 0:
             self.dY = 1
         else:
             self.dY = 0
         rect_logger.debug(f'{self.dXn} | {self.dXn * self.dXn_m1} | {self.dY}')
-        for enemy in self.sprites():
-            enemy.rect.move_ip(self.difficulty['speedX'] * self.dXn, self.dY * self.difficulty['speedY'])
+        if self.ennemy_type == SpaceOcto:
+            for enemy in self.sprites():
+                enemy.rect.move_ip(self.difficulty['speedX'] * self.dXn, self.dY * self.difficulty['speedY'])
+        elif self.ennemy_type == SpaceGhost:
+            for enemy in self.sprites():
+                if self.sprites().index(enemy) % 2 == 0 :
+                    enemy.dYx = ((settings.SCREEN_SIZE[1] - settings.UNITS_SIZE) / 88) * math.cos(self.time/ 700)
+                    enemy.rect.move_ip(self.difficulty['speedX'] * self.dXn,
+                                    (enemy.dYx * self.difficulty['speedX'])+(self.dY * self.difficulty['speedY']))
+                else:
+                    enemy.dYx = ((settings.SCREEN_SIZE[1] - settings.UNITS_SIZE) / 88) * math.sin(self.time/ 700)
+                    enemy.rect.move_ip(self.difficulty['speedX'] * self.dXn,
+                                    (enemy.dYx * self.difficulty['speedX'])+(self.dY * self.difficulty['speedY']))
 
 class SpaceOcto(pygame.sprite.Sprite):
     def __init__(self, rect):
@@ -102,6 +116,20 @@ class SpaceOcto(pygame.sprite.Sprite):
         self.Y = 0
         self.dX = 0
         self.dY = 0
+
+class SpaceGhost(pygame.sprite.Sprite):
+    def __init__(self, rect):
+        super().__init__()
+        self.rect = pygame.Rect(rect)
+        self.power_up = False
+        self.size = rect[1]
+        self.image = pygame.transform.scale(settings.IMAGE_LOADER.space_ghost, self.size)
+        self.X = 0
+        self.Y = 0
+        self.dX = 0
+        self.dY = 0
+        self.dYx = 0
+
 
 class Weapon(pygame.sprite.Group):
     class Arrow(pygame.sprite.Sprite):
