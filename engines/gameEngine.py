@@ -1,4 +1,5 @@
 from engines.renderEngines import *
+from objects.graphics.graphicObjects import *
 
 main_logger, event_logger, rect_logger, display_logger = settings.create_loggers(__name__)
 main_logger.setLevel(settings.logging.DEBUG)
@@ -13,13 +14,16 @@ class GameEngine:
         pygame.display.set_caption("Space Invaders")
         settings.IMAGE_LOADER = ImageLoader()
         self.clock = pygame.time.Clock()
+        self.menu = None
+        self.stage = None
         self.running = True
         self.main_loop()
 
+
     def main_loop(self):
         while self.running:
-            menu = MenuRender(MainMenu())
-            self.sub_loop(menu)
+            self.menu = MenuRender(MainMenu())
+            self.sub_loop(self.menu)
         pygame.quit()
         quit()
 
@@ -35,13 +39,13 @@ class GameEngine:
             if event.type == pygame.QUIT:
                 self.running = False
                 render.is_running = False
-                main_logger.debug(settings.Fore.BLUE + 'User closed the game')
+                main_logger.succes('User closed the game')
             elif event.type == menuEvents:
                 if event.render == 2:
                     pass
                 if event.render == 1:
                     self.menu.is_running = False
-                    self.sub_loop(StageRender(settings.STAGES[event.object_to_render]))
+                    self.sub_loop(StageRender(settings.SCREEN_SIZE, event.scene))
             else:
                 render.handleEvents(event)
 

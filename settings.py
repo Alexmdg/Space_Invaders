@@ -11,10 +11,6 @@ class MyLogger(logging.Logger):
     def __init__(self, name, file=False, fmt=Fore.WHITE + '%(created)f:MainLogger:%(levelname)s:%(funcName)s:%(message)s'):
         super().__init__(name)
         formatter = MyFormater(fmt)
-        # logging.addLevelName(11, 'EVENT_DEBUG')
-        # logging.addLevelName(12, 'RECT_DEBUG')
-        # logging.addLevelName(13, 'DISPLAY_DEBUG')
-
         handler = logging.StreamHandler()
         handler.setFormatter(formatter)
         self.addHandler(handler)
@@ -24,9 +20,9 @@ class MyLogger(logging.Logger):
             filehandler.setFormatter(formatter)
             filelogger.addHandler(filehandler)
 
-    # def event_debug(self, msg, *args, **kwargs):
-    #     if self.isEnabledFor(11):
-    #         self._log(11, msg, args, **kwargs)
+    def succes(self, message):
+        self.info(Fore.GREEN + message)
+
 
 def create_loggers(name, file=False):
     main_logger = MyLogger(name, file, fmt=Fore.BLUE + '%(created)f:Main Logger:%(levelname)s:%(funcName)s:%(message)s')
@@ -45,7 +41,7 @@ PURPLE = (89, 24, 204)
 BLACK = (0, 0, 0)
 GREY = (229, 222, 206)
 YELLOW = (245, 191, 48)
-ORANGE = (294, 157, 45)
+ORANGE = (249, 157, 45)
 
 IMAGE_LOADER = None
 
@@ -84,3 +80,4 @@ DIFFICULTY = {
           'speedY': 50,
           'hp': 1}
     }
+

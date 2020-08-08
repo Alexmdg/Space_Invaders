@@ -1,6 +1,4 @@
-import pygame
-import os
-import math
+from pygame import Surface, Rect, draw, event, font
 import settings
 
 # Icons and Images made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
@@ -15,15 +13,15 @@ display_logger.setLevel(settings.logging.DEBUG)
 class Pannel:
     def __init__(self, size):
         self.size = size
-        self.image = pygame.Surface(size)
-        self.rect = pygame.Rect((0, 0), size)
+        self.image = Surface(size)
+        self.rect = Rect((0, 0), size)
         self.rect.center = (size[0]/2, size[1]/2)
 
     def set_border_Color(self, color):
-        pygame.draw.line(self.image, color, (0, 0), (self.size[0], 0), 3)
-        pygame.draw.line(self.image, color, (0, 0), (0, self.size[1]), 3)
-        pygame.draw.line(self.image, color, (self.size[0], self.size[1]), (self.size[0], 0), 3)
-        pygame.draw.line(self.image, color, (self.size[0], self.size[1]), (0, self.size[1]), 3)
+        draw.line(self.image, color, (0, 0), (self.size[0], 0), 3)
+        draw.line(self.image, color, (0, 0), (0, self.size[1]), 3)
+        draw.line(self.image, color, (self.size[0], self.size[1]), (self.size[0], 0), 3)
+        draw.line(self.image, color, (self.size[0], self.size[1]), (0, self.size[1]), 3)
 
 
 class VerticalButtons:
@@ -57,14 +55,14 @@ class Button:
 
     def clicked(self):
         self.is_clicked = True
-        self.body.set_border_Color(self, settings.ORANGE)
-        pygame.event.post(self.event)
+        self.body.set_border_Color(settings.ORANGE)
+        event.post(self.event.event)
 
 
 class TextLabel:
     def __init__(self, size, msg):
         self.msg = msg
-        self.font = pygame.font.SysFont(None, 24)
+        self.font = font.SysFont(None, 24)
         self.label = self.font.render(msg, True, settings.GREY)
         self.rect = self.label.get_rect()
         self.rect.center = (size[0] / 2, size[1] / 2)

@@ -1,5 +1,6 @@
 from objects.menuObjects.menuParts import *
 from objects.menuObjects.menuEvents import *
+from objects.stages import *
 
 main_logger, event_logger, rect_logger, display_logger = settings.create_loggers(__name__)
 main_logger.setLevel(settings.logging.DEBUG)
@@ -18,7 +19,7 @@ class MainMenu():
         self.buttons.add_button((0.8 * self.buttons.body.size[0],
                                  0.1 * self.buttons.body.size[1]),
                                 'Start Game',
-                                MainMenuEvents(1, 1))
+                                MainMenuEvents(1, Stage1()))
         self.buttons.add_button((0.8 * self.buttons.body.image.get_size()[0],
                                  0.1 * self.buttons.body.image.get_size()[1]),
                                 'quit',

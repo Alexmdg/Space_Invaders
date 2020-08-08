@@ -1,6 +1,9 @@
 import math
 import settings
-from objects.graphics.graphicObjects import *
+import pygame.rect
+import pygame.sprite
+
+
 
 # Icons and Images made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
@@ -8,7 +11,7 @@ from objects.graphics.graphicObjects import *
 main_logger, event_logger, rect_logger, display_logger = settings.create_loggers(__name__)
 main_logger.setLevel(settings.logging.DEBUG)
 event_logger.setLevel(settings.logging.DEBUG)
-rect_logger.setLevel(settings.logging.DEBUG)
+rect_logger.setLevel(settings.logging.INFO)
 display_logger.setLevel(settings.logging.DEBUG)
 
 class Player(pygame.sprite.Group):
@@ -61,21 +64,27 @@ class EnnemyArmy(pygame.sprite.Group):
         self.dXn_m1 = 0
         self.dY = 0
         self.difficulty = settings.DIFFICULTY[level]
+        self.clock = pygame.time.Clock()
+        self.time = 0
 
         for j in range(0, rows):
             for i in range(0, columns):
                 enemy = unit(((0, 0), (self.unit_size, self.unit_size)))
-                enemy.rect.center = ((3*settings.SCREEN_SIZE[0] // 4 ) - (1.25*self.unit_size))\
+                enemy.rect.center = ((settings.SCREEN_SIZE[0] // 2 ) + (self.unit_size // 4))\
                                     - (((1.25*self.unit_size)*(columns//2)) - ((1.25*self.unit_size) * i))\
                                     , (1.25*self.unit_size) + ((1.25*self.unit_size) * j)
                 self.add(enemy)
         display_logger.debug(f"{self.sprites()}")
 
     def update(self):
+        self.clock.tick()
+        if self.clock.get_time() < 35 :
+            self.time += self.clock.get_time()
+        display_logger.debug(f'clock time: {self.clock.get_time()}, self.time: {self.time}, self.dY: {self.dY}')
         self.dXn_m1 = self.dXn
-        self.dXn = ((settings.SCREEN_SIZE[0]-settings.UNITS_SIZE) / 100) * math.cos(pygame.time.get_ticks() / 700)
+        self.dXn = ((settings.SCREEN_SIZE[0]-settings.UNITS_SIZE) / 100) * math.cos(self.time / 700)
         if self.dXn * self.dXn_m1 < 0:
-            self.dY = 0.5
+            self.dY = 1
         else:
             self.dY = 0
         rect_logger.debug(f'{self.dXn} | {self.dXn * self.dXn_m1} | {self.dY}')

@@ -1,7 +1,8 @@
-import pygame
+from pygame import USEREVENT
+from pygame.event import Event
 
-menuEvents = pygame.USEREVENT + 1
+menuEvents = USEREVENT + 1
 
 class MainMenuEvents:
     def __init__(self, render, scene):
-        pygame.event.Event(menuEvents, {'render': render, 'scene': scene})
+        self.event = Event(menuEvents, {'render': render, 'scene': scene})
