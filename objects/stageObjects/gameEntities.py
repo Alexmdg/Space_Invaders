@@ -5,8 +5,11 @@ from objects.graphics.graphicObjects import *
 # Icons and Images made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
 
-logger = settings.createLogger(__name__)
-logger.setLevel(settings.logging.DEBUG)
+main_logger, event_logger, rect_logger, display_logger = settings.create_loggers(__name__)
+main_logger.setLevel(settings.logging.DEBUG)
+event_logger.setLevel(settings.logging.DEBUG)
+rect_logger.setLevel(settings.logging.DEBUG)
+display_logger.setLevel(settings.logging.DEBUG)
 
 class Player(pygame.sprite.Group):
     class BasePlayer(pygame.sprite.Sprite):
@@ -66,7 +69,7 @@ class EnnemyArmy(pygame.sprite.Group):
                                     - (((1.25*self.unit_size)*(columns//2)) - ((1.25*self.unit_size) * i))\
                                     , (1.25*self.unit_size) + ((1.25*self.unit_size) * j)
                 self.add(enemy)
-        logger.debug(settings.Fore.MAGENTA + f"{self.sprites()}")
+        display_logger.debug(f"{self.sprites()}")
 
     def update(self):
         self.dXn_m1 = self.dXn
@@ -75,7 +78,7 @@ class EnnemyArmy(pygame.sprite.Group):
             self.dY = 0.5
         else:
             self.dY = 0
-        logger.debug(settings.Fore.BLUE + f'{self.dXn} | {self.dXn * self.dXn_m1} | {self.dY}')
+        rect_logger.debug(f'{self.dXn} | {self.dXn * self.dXn_m1} | {self.dY}')
         for enemy in self.sprites():
             enemy.rect.move_ip(self.difficulty['speedX'] * self.dXn, self.dY * self.difficulty['speedY'])
 
