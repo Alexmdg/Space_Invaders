@@ -14,8 +14,23 @@ class Stage1:
     def __init__(self):
         self.topbar = TopBar('1')
         self.background = pygame.transform.scale(settings.IMAGE_LOADER.city_background, settings.SCREEN_SIZE)
-        self.objects = {'player': Player(),
-                        'enemies': EnnemyArmy(SpaceGhost, 5, 12, 70, '1'),
-                        'shots': Weapon(50),
-                        'deads': Dying()
+        self.objects = {'player': [Player()],
+                        'enemies': [EnnemyArmy(SpaceOcto, 5, 12, 70, '1')],
+                        'shots': [Weapon(50)],
+                        'deads': [Dying()]
                     }
+        self.clock = pygame.time.Clock()
+        self.time = 0
+        self.count = 0
+    def update(self):
+        self.clock.tick()
+        self.time += self.clock.get_time() / 1000
+        display_logger.debug(f'self.time : {self.time}')
+        if self.time >= 20 and self.count == 0:
+            self.objects['enemies'].append(EnnemyArmy(SpaceGhost, 3, 8, 70, '1'))
+            self.time = 0
+            self.count = 1
+        if self.time >= 20 and self.count == 1:
+            self.objects['enemies'].append(EnnemyArmy(SpaceBlob, 3, 6, 70, '1'))
+            self.time = 0
+            self.count += 1

@@ -10,8 +10,8 @@ import pygame.sprite
 main_logger, event_logger, rect_logger, display_logger, sprite_logger = settings.create_loggers(__name__)
 main_logger.setLevel(settings.logging.DEBUG)
 event_logger.setLevel(settings.logging.DEBUG)
-rect_logger.setLevel(settings.logging.DEBUG)
-display_logger.setLevel(settings.logging.DEBUG)
+rect_logger.setLevel(settings.logging.INFO)
+display_logger.setLevel(settings.logging.INFO)
 sprite_logger.setLevel(settings.logging.DEBUG)
 
 class Player(pygame.sprite.Group):
@@ -97,11 +97,21 @@ class EnnemyArmy(pygame.sprite.Group):
         elif self.ennemy_type == SpaceGhost:
             for enemy in self.sprites():
                 if self.sprites().index(enemy) % 2 == 0 :
-                    enemy.dYx = ((settings.SCREEN_SIZE[1] - settings.UNITS_SIZE) / 88) * math.cos(self.time/ 700)
+                    enemy.dYx = ((settings.SCREEN_SIZE[1] - settings.UNITS_SIZE) / 88) * math.cos(self.time/ 350)
                     enemy.rect.move_ip(self.difficulty['speedX'] * self.dXn,
                                     (enemy.dYx * self.difficulty['speedX'])+(self.dY * self.difficulty['speedY']))
                 else:
-                    enemy.dYx = ((settings.SCREEN_SIZE[1] - settings.UNITS_SIZE) / 88) * math.sin(self.time/ 700)
+                    enemy.dYx = ((settings.SCREEN_SIZE[1] - settings.UNITS_SIZE) / 88) * math.sin(self.time/ 350)
+                    enemy.rect.move_ip(self.difficulty['speedX'] * self.dXn,
+                                    (enemy.dYx * self.difficulty['speedX'])+(self.dY * self.difficulty['speedY']))
+        elif self.ennemy_type == SpaceBlob:
+            for enemy in self.sprites():
+                if self.sprites().index(enemy) % 2 == 0 :
+                    enemy.dYx = ((settings.SCREEN_SIZE[1] - settings.UNITS_SIZE) / 88) * math.tan(self.time / 3500)
+                    enemy.rect.move_ip(self.difficulty['speedX'] * self.dXn,
+                                    (enemy.dYx * self.difficulty['speedX'])+(self.dY * self.difficulty['speedY']))
+                else:
+                    enemy.dYx = ((settings.SCREEN_SIZE[1] - settings.UNITS_SIZE) / 88) * math.sin(self.time / 3500)
                     enemy.rect.move_ip(self.difficulty['speedX'] * self.dXn,
                                     (enemy.dYx * self.difficulty['speedX'])+(self.dY * self.difficulty['speedY']))
 
@@ -130,6 +140,18 @@ class SpaceGhost(pygame.sprite.Sprite):
         self.dY = 0
         self.dYx = 0
 
+class SpaceBlob(pygame.sprite.Sprite):
+    def __init__(self, rect):
+        super().__init__()
+        self.rect = pygame.Rect(rect)
+        self.power_up = False
+        self.size = rect[1]
+        self.image = pygame.transform.scale(settings.IMAGE_LOADER.space_blob, self.size)
+        self.X = 0
+        self.Y = 0
+        self.dX = 0
+        self.dY = 0
+        self.dYx = 0
 
 class Weapon(pygame.sprite.Group):
     class Arrow(pygame.sprite.Sprite):

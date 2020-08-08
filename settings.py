@@ -51,7 +51,7 @@ IMAGE_LOADER = None
 
 DIFFICULTY = {
     '1': {'speedX': 1,
-          'speedY': 15,
+          'speedY': 28,
           'hp': 1},
     '2': {'speedX': 1,
           'speedY': 30,
