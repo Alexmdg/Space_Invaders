@@ -17,12 +17,12 @@ class GameEngine:
         self.clock = pygame.time.Clock()
         self.menu = None
         self.stage = None
-        self.running = True
+        self.is_running = True
         self.main_loop()
 
 
     def main_loop(self):
-        while self.running:
+        while self.is_running:
             self.menu = MenuRender(MainMenu())
             self.sub_loop(self.menu)
         pygame.quit()
@@ -48,11 +48,16 @@ class GameEngine:
                 pygame.quit()
                 quit()
             elif event.type == menuEvents:
-                if event.sender == 'mainMenu':
-                    self.menu.is_running = False
-                    self.sub_loop(StageRender(settings.SCREEN_SIZE, event.scene))
-                if event.sender == 'pauseMenu':
-                    self.menu.is_running = False
+                if event.action == 'start_g':
+                    render.is_running = False
+                    self.sub_loop(StageRender(settings.SCREEN_SIZE, Stage(Level1())))
+                if event.action == 'Quit':
+                    render.is_running = False
+                    self.is_running = False
+                    main_logger.succes('User closed the game')
+                    pygame.quit()
+                    quit()
+
             else:
                 render.handleEvents(event)
 

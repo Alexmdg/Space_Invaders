@@ -25,23 +25,23 @@ class Pannel:
         draw.line(self.image, color, (self.size[0], self.size[1]), (0, self.size[1]), 3)
 
 
-class VerticalButtons:
-    def __init__(self, size):
-        self.buttons = []
-        self.body = Pannel(size)
-        self.body.image.fill(settings.PURPLE)
-        self.body.set_border_Color(settings.YELLOW)
-
-    def add_button(self, size, msg, font_size, event):
-        self.body.image.fill(settings.PURPLE)
-        self.body.set_border_Color(settings.YELLOW)
-        button = Button(size, msg, font_size, event)
-        self.buttons.append(button)
-        list_size = self.body.size[1]
-        space_between = (list_size - sum([elem.body.size[1] for elem in self.buttons]))/(len(self.buttons)+1)
-        for elem in self.buttons:
-            elem.body.rect.center = ((self.body.size[0] / 2)-(elem.body.size[0]/2), (self.buttons.index(elem) * space_between) + space_between)
-            self.body.image.blit(elem.body.image, elem.body.rect.center)
+# class VerticalButtons:
+#     def __init__(self, size):
+#         self.buttons = []
+#         self.body = Pannel(size)
+#         self.body.image.fill(settings.PURPLE)
+#         self.body.set_border_Color(settings.YELLOW)
+#
+#     def add_button(self, size, msg, font_size, event):
+#         self.body.image.fill(settings.PURPLE)
+#         self.body.set_border_Color(settings.YELLOW)
+#         button = Button(size, msg, font_size, event)
+#         self.buttons.append(button)
+#         list_size = self.body.size[1]
+#         space_between = (list_size - sum([elem.body.size[1] for elem in self.buttons]))/(len(self.buttons)+1)
+#         for elem in self.buttons:
+#             elem.body.rect.center = ((self.body.size[0] / 2)-(elem.body.size[0]/2), (self.buttons.index(elem) * space_between) + space_between)
+#             self.body.image.blit(elem.body.image, elem.body.rect.center)
 
 
 class Button:
@@ -62,17 +62,12 @@ class Button:
 
 class TextLabel:
     def __init__(self, size, msg, font_size):
+        self.font_size = font_size
         self.msg = msg
-        self.font = font.SysFont(None, font_size)
+        self.font = font.SysFont(None, self.font_size)
         self.label = self.font.render(msg, True, settings.GREY)
         self.rect = self.label.get_rect()
         self.rect.center = (size[0] / 2, size[1] / 2)
-
-
-
-
-
-
 
 
 

@@ -17,25 +17,39 @@ class StageRender(pygame.Surface):
         self.is_paused = False
 
     def update(self):
-        self.blit(self.stage.background, (0, 0))
-        self.blit(self.stage.topbar, (0, 0))
-        if self.stage.intro.is_running:
-            self.stage.intro.update()
-            for object in self.stage.objects:
-                for elem in self.stage.objects[object]:
-                    for sprite in elem.sprites():
-                        self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
-            self.blit(self.stage.intro.bg.image, self.stage.intro.bg.rect)
-            self.blit(self.stage.intro.title.label, self.stage.intro.title.rect)
-            self.blit(self.stage.intro.counter.label, self.stage.intro.counter.rect)
+        if self.stage.is_running:
+            self.blit(self.stage.background, (0, 0))
+            self.blit(self.stage.topbar, (0, 0))
+            if self.stage.intro.is_running:
+                self.stage.intro.update()
+                for object in self.stage.objects:
+                    for elem in self.stage.objects[object]:
+                        for sprite in elem.sprites():
+                            self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
+                self.blit(self.stage.intro.bg.image, self.stage.intro.bg.rect)
+                self.blit(self.stage.intro.title.label, self.stage.intro.title.rect)
+                self.blit(self.stage.intro.desc.label, self.stage.intro.desc.rect)
+                self.blit(self.stage.intro.counter.label, self.stage.intro.counter.rect)
+            elif self.stage.outro.is_running:
+                self.stage.outro.update()
+                for object in self.stage.objects:
+                    for elem in self.stage.objects[object]:
+                        for sprite in elem.sprites():
+                            self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
+                self.blit(self.stage.outro.bg.image, self.stage.intro.bg.rect)
+                self.blit(self.stage.outro.title.label, self.stage.outro.title.rect)
+                self.blit(self.stage.outro.desc.label, self.stage.outro.desc.rect)
+
+            else:
+                self.stage.update()
+                self._collisionHandler()
+                for object in self.stage.objects:
+                    for elem in self.stage.objects[object]:
+                        elem.update()
+                        for sprite in elem.sprites():
+                            self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
         else:
-            self.stage.update()
-            self._collisionHandler()
-            for object in self.stage.objects:
-                for elem in self.stage.objects[object]:
-                    elem.update()
-                    for sprite in elem.sprites():
-                        self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
+            self.is_running = False
 
 
     def handleEvents(self, event):
@@ -47,7 +61,8 @@ class StageRender(pygame.Surface):
     def _collisionHandler(self):
         for enemies in self.stage.objects['enemies']:
             if pygame.sprite.spritecollideany(self.stage.objects['player'][0].sprites()[0], enemies):
-                self.stage.is_death_outro_running = True
+                self.stage.outro.is_running = True
+                self.stage.outro.chose_ending('lose')
             deaths = pygame.sprite.groupcollide(self.stage.objects['shots'][0],
                                                 enemies,
                                                 True, True)
@@ -74,13 +89,10 @@ class MenuRender(pygame.Surface):
     def handleEvents(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             event_logger.debug(f'click : {event.type}, {event.pos}')
-            for button in self.menu.buttons.buttons:
-                button_x1 = self.menu.body.rect.centerx + button.body.rect[0]
-                button_y1 = self.menu.body.rect.centery - button.body.rect[1]
-                hitbox = pygame.Rect((button_x1, button_y1), (button.body.rect[2], button.body.rect[3]))
-                event_logger.debug(f'button rect : {hitbox}')
-                event_logger.debug(f'collidepoint : {hitbox.collidepoint(event.pos)}')
-                if hitbox.collidepoint(event.pos):
+            for button in self.menu.buttons:
+                event_logger.debug(f'hitbox rect : {button.body.rect}')
+                event_logger.debug(f'collidepoint : {button.body.rect.collidepoint(event.pos)}')
+                if button.body.rect.collidepoint(event.pos):
                     self.menu.on_click(button)
 
 
