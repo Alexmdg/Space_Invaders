@@ -33,6 +33,10 @@ class GameEngine:
             self.handleEvents(render)
             render.update()
             self.update(render)
+            if render.is_paused:
+                self.menu = MenuRender(PauseMenu())
+                self.sub_loop(self.menu)
+                render.is_paused = False
 
 
     def handleEvents(self, render):
@@ -41,12 +45,14 @@ class GameEngine:
                 self.running = False
                 render.is_running = False
                 main_logger.succes('User closed the game')
+                pygame.quit()
+                quit()
             elif event.type == menuEvents:
-                if event.render == 2:
-                    pass
-                if event.render == 1:
+                if event.sender == 'mainMenu':
                     self.menu.is_running = False
                     self.sub_loop(StageRender(settings.SCREEN_SIZE, event.scene))
+                if event.sender == 'pauseMenu':
+                    self.menu.is_running = False
             else:
                 render.handleEvents(event)
 

@@ -14,6 +14,7 @@ class StageRender(pygame.Surface):
         self.stage = stage
         self.update()
         self.is_running = True
+        self.is_paused = False
 
     def update(self):
         self.stage.update()
@@ -29,7 +30,7 @@ class StageRender(pygame.Surface):
     def handleEvents(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-                pass
+                self.is_paused = True
         self.stage.objects['shots'][0].fireShot(self.stage.objects['player'][0].sprites()[0].rect, event)
 
     def collisionHandler(self):
@@ -52,6 +53,7 @@ class MenuRender(pygame.Surface):
     def __init__(self, menu):
         super().__init__(menu.body.size)
         self.is_running = True
+        self.is_paused = False
         self.menu =  menu
         self.blit(self.menu.body.image, (0, 0))
         main_logger.succes('Display main menu : OK')
