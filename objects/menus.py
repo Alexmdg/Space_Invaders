@@ -23,7 +23,7 @@ class MainMenu():
                                  0.1 * self.buttons.body.size[1]),
                                 'Start Game',
                                 24,
-                                MainMenuEvents(0, 1, 1, Stage1()))
+                                MainMenuEvents(0, 1, 1, Stage1(Level1())))
         self.buttons.add_button((0.8 * self.buttons.body.image.get_size()[0],
                                  0.1 * self.buttons.body.image.get_size()[1]),
                                 'quit',

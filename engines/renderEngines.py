@@ -17,18 +17,19 @@ class StageRender(pygame.Surface):
         self.is_paused = False
 
     def update(self):
-        self.stage.update()
         self.blit(self.stage.background, (0, 0))
         self.blit(self.stage.topbar, (0, 0))
-        if self.stage.intro_is_running:
+        if self.stage.intro.is_running:
+            self.stage.intro.update()
             for object in self.stage.objects:
                 for elem in self.stage.objects[object]:
                     for sprite in elem.sprites():
                         self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
-            self.blit(self.stage.intro.image, self.stage.intro.rect)
-            self.blit(self.stage.title.label, self.stage.title.rect)
-            self.blit(self.stage.counter.label, self.stage.counter.rect)
+            self.blit(self.stage.intro.bg.image, self.stage.intro.bg.rect)
+            self.blit(self.stage.intro.title.label, self.stage.intro.title.rect)
+            self.blit(self.stage.intro.counter.label, self.stage.intro.counter.rect)
         else:
+            self.stage.update()
             self._collisionHandler()
             for object in self.stage.objects:
                 for elem in self.stage.objects[object]:
@@ -46,7 +47,7 @@ class StageRender(pygame.Surface):
     def _collisionHandler(self):
         for enemies in self.stage.objects['enemies']:
             if pygame.sprite.spritecollideany(self.stage.objects['player'][0].sprites()[0], enemies):
-                self.is_running = False
+                self.stage.is_death_outro_running = True
             deaths = pygame.sprite.groupcollide(self.stage.objects['shots'][0],
                                                 enemies,
                                                 True, True)
