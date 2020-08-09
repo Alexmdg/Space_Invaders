@@ -3,6 +3,7 @@ import settings
 import random
 import pygame.rect
 import pygame.sprite
+import pygame.key
 
 
 # Icons and Images made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
@@ -10,9 +11,9 @@ import pygame.sprite
 main_logger, event_logger, rect_logger, display_logger, sprite_logger = settings.create_loggers(__name__)
 main_logger.setLevel(settings.logging.DEBUG)
 event_logger.setLevel(settings.logging.DEBUG)
-rect_logger.setLevel(settings.logging.DEBUG)
-display_logger.setLevel(settings.logging.DEBUG)
-sprite_logger.setLevel(settings.logging.DEBUG)
+rect_logger.setLevel(settings.logging.INFO)
+display_logger.setLevel(settings.logging.INFO)
+sprite_logger.setLevel(settings.logging.INFO)
 
 class Player(pygame.sprite.Group):
     class BasePlayer(pygame.sprite.Sprite):
@@ -33,6 +34,7 @@ class Player(pygame.sprite.Group):
         self.alive = True
         player = self.BasePlayer()
         self.add(player)
+        self.jump_cooldown = False
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -48,13 +50,31 @@ class Player(pygame.sprite.Group):
             self.dX += 0.8
         if keys[pygame.K_RIGHT] == 0 and self.dX > 0:
             self.dX -= 0.8
+
+        if self.sprites()[0].rect.y <= settings.SCREEN_SIZE[1] - (1.8 * settings.UNITS_SIZE):
+            self.jump_cooldown = True
+        if keys[pygame.K_SPACE] and not self.jump_cooldown:
+            self.dY = 5
+        if (keys[pygame.K_SPACE] == 0 and self.sprites()[0].rect.y < settings.SCREEN_SIZE[1] - (settings.UNITS_SIZE * 1.2) - 1)\
+            or (self.jump_cooldown and self.sprites()[0].rect.y < settings.SCREEN_SIZE[1] - (settings.UNITS_SIZE * 1.2) - 1):
+            self.dY -= 3
         if self.sprites()[0].rect.x < 0:
             self.sprites()[0].rect.x = 0
             self.dX = 0
         elif self.sprites()[0].rect.x > settings.SCREEN_SIZE[0] - settings.UNITS_SIZE:
             self.sprites()[0].rect.x = settings.SCREEN_SIZE[0] - settings.UNITS_SIZE
             self.dX = 0
-        self.sprites()[0].rect.move_ip(self.dX + self.speed, 0)
+        if self.sprites()[0].rect.y > settings.SCREEN_SIZE[1] - settings.UNITS_SIZE * 1.2:
+            self.sprites()[0].rect.y = settings.SCREEN_SIZE[1] - settings.UNITS_SIZE * 1.2
+            self.dY = 0
+            self.jump_cooldown = False
+        if self.sprites()[0].rect.y <= settings.SCREEN_SIZE[1] - (1.8 * settings.UNITS_SIZE):
+            if self.dY > 0:
+                self.dY = 0
+            else:
+                self.dY -= 1
+        self.sprites()[0].rect.move_ip(self.dX + self.speed, -self.dY)
+
 
 class EnnemyArmy(pygame.sprite.Group):
     def __init__(self, unit, rows, columns, unit_size_factor, level):
@@ -94,14 +114,14 @@ class EnnemyArmy(pygame.sprite.Group):
                     enemy.dXn_m1 = enemy.dXn
                     enemy.dXn = ((settings.SCREEN_SIZE[0] - settings.UNITS_SIZE) / 100) * math.cos(self.time / 1000)
                     if enemy.dXn * enemy.dXn_m1 < 0:
-                        enemy.dY = 4
+                        enemy.dY = 1
                     else:
                         enemy.dY = 0
                     rect_logger.debug(f'{enemy.dXn} | {enemy.dXn * enemy.dXn_m1} | {enemy.dY}')
                     enemy.dYx = ((settings.SCREEN_SIZE[1] - settings.UNITS_SIZE) / 55)\
-                                * ((math.sin(self.time / 1500))*(math.sin(self.time / 350)))
+                                * ((math.sin(self.time / 700))*(math.sin(self.time / 350)))
                     enemy.rect.move_ip(self.difficulty['speedX'] * enemy.dXn,
-                                    (enemy.dYx * self.difficulty['speedX'])+(enemy.dY * self.difficulty['speedY']))
+                                    (enemy.dYx * self.difficulty['speedX'])+(enemy.dY * self.difficulty['speedY'])+ 2)
                 else:
                     enemy.dXn_m1 = enemy.dXn
                     enemy.dXn = ((settings.SCREEN_SIZE[0] - settings.UNITS_SIZE) / 100) * (-math.cos(self.time / 1000))
@@ -113,7 +133,7 @@ class EnnemyArmy(pygame.sprite.Group):
                     enemy.dYx = ((settings.SCREEN_SIZE[1] - settings.UNITS_SIZE) / 55)\
                                 * ((math.sin(self.time / 700))*(math.sin(self.time / 350)))
                     enemy.rect.move_ip(self.difficulty['speedX'] * enemy.dXn,
-                                       (enemy.dYx * self.difficulty['speedX']) + (enemy.dY * self.difficulty['speedY']))
+                                       (enemy.dYx * self.difficulty['speedX']) + (enemy.dY * self.difficulty['speedY'])+ 2)
         else:
             self.dXn_m1 = self.dXn
             self.dXn = ((settings.SCREEN_SIZE[0] - settings.UNITS_SIZE) / 100) * math.cos(self.time / 700)
@@ -205,7 +225,7 @@ class Weapon(pygame.sprite.Group):
 
     def fireShot(self, player_rect, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_a:
                 if len(self.sprites()) < self.max_ammo:
                     if self.shot_fired is False:
                         shot = self.Arrow(pygame.Rect(player_rect.x, player_rect.y - 34, 15, 22), self.ammo_surf)

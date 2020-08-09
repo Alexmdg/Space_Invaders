@@ -8,7 +8,7 @@ main_logger, event_logger, rect_logger, display_logger, sprite_logger = settings
 main_logger.setLevel(settings.logging.DEBUG)
 event_logger.setLevel(settings.logging.DEBUG)
 rect_logger.setLevel(settings.logging.DEBUG)
-display_logger.setLevel(settings.logging.DEBUG)
+display_logger.setLevel(settings.logging.INFO)
 sprite_logger.setLevel(settings.logging.DEBUG)
 
 class Stage1:
