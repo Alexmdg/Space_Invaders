@@ -5,10 +5,12 @@ menuEvents = USEREVENT + 1
 
 class MenuEventsStartGame:
     def __init__(self):
-        self.event = Event(menuEvents, {'sender': 'mainMenu',
-                                        'action': 'start_g',})
+        self.event = Event(menuEvents, {'action': 'start_g'})
 
 class MenuEventsQuitGame:
     def __init__(self):
-        self.event = Event(menuEvents, {'sender': 'pauseMenu',
-                                        'action': 'Quit'})
+        self.event = Event(menuEvents, {'action': 'Quit'})
+
+class MenuEventsResumeGame:
+    def __init__(self):
+        self.event = Event(menuEvents, {'action': 'ResumeGame'})

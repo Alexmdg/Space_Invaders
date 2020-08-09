@@ -93,7 +93,15 @@ class MenuRender(pygame.Surface):
                 event_logger.debug(f'hitbox rect : {button.body.rect}')
                 event_logger.debug(f'collidepoint : {button.body.rect.collidepoint(event.pos)}')
                 if button.body.rect.collidepoint(event.pos):
-                    self.menu.on_click(button)
+                    self.menu.click_down(button)
+        elif event.type == pygame.MOUSEBUTTONUP:
+            event_logger.debug(f'click : {event.type}, {event.pos}')
+            for button in self.menu.buttons:
+                event_logger.debug(f'hitbox rect : {button.body.rect}')
+                event_logger.debug(f'collidepoint : {button.body.rect.collidepoint(event.pos)}')
+                if button.body.rect.collidepoint(event.pos):
+                    self.menu.click_up(button)
+
 
 
     def update(self):

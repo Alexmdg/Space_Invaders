@@ -17,7 +17,7 @@ class StageIntro:
         self.bg.image.set_alpha(100)
         self.bg.rect.centerx = settings.SCREEN_SIZE[0] / 2
         self.bg.rect.centery = settings.SCREEN_SIZE[1] / 2
-        self.title = TextLabel((self.bg.rect[2] * 0.22, self.bg.rect[3] * 0.22), stage, 72)
+        self.title = TextLabel((self.bg.rect[2] * 0.22, self.bg.rect[3] * 0.22), stage, 72, settings.YELLOW)
         self.title.rect.centerx = settings.SCREEN_SIZE[0] / 2
         self.title.rect.centery = (1.618 * settings.SCREEN_SIZE[1]) / 5
         self.desc = TextLabel((self.bg.rect[2] * 0.22, self.bg.rect[3] * 0.22), "Let's see what you can do", 36)

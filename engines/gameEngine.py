@@ -48,15 +48,17 @@ class GameEngine:
                 pygame.quit()
                 quit()
             elif event.type == menuEvents:
-                if event.action == 'start_g':
-                    render.is_running = False
-                    self.sub_loop(StageRender(settings.SCREEN_SIZE, Stage(Level1())))
                 if event.action == 'Quit':
                     render.is_running = False
                     self.is_running = False
                     main_logger.succes('User closed the game')
                     pygame.quit()
                     quit()
+                elif event.action == 'start_g':
+                    render.is_running = False
+                    self.sub_loop(StageRender(settings.SCREEN_SIZE, Stage(Level1())))
+                elif event.action == 'ResumeGame':
+                    render.is_running = False
 
             else:
                 render.handleEvents(event)
