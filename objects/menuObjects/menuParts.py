@@ -32,10 +32,10 @@ class VerticalButtons:
         self.body.image.fill(settings.PURPLE)
         self.body.set_border_Color(settings.YELLOW)
 
-    def add_button(self, size, msg, event):
+    def add_button(self, size, msg, font_size, event):
         self.body.image.fill(settings.PURPLE)
         self.body.set_border_Color(settings.YELLOW)
-        button = Button(size, msg, event)
+        button = Button(size, msg, font_size, event)
         self.buttons.append(button)
         list_size = self.body.size[1]
         space_between = (list_size - sum([elem.body.size[1] for elem in self.buttons]))/(len(self.buttons)+1)
@@ -45,11 +45,11 @@ class VerticalButtons:
 
 
 class Button:
-    def __init__(self, size, msg, event):
+    def __init__(self, size, msg, font_size, event):
         self.body = Pannel(size)
         self.body.image.fill(settings.PURPLE)
         self.body.set_border_Color(settings.YELLOW)
-        self.text = TextLabel(size, msg)
+        self.text = TextLabel(size, msg, font_size)
         self.body.image.blit(self.text.label, self.text.rect)
         self.is_clicked = False
         self.event = event
@@ -61,9 +61,9 @@ class Button:
 
 
 class TextLabel:
-    def __init__(self, size, msg):
+    def __init__(self, size, msg, font_size):
         self.msg = msg
-        self.font = font.SysFont(None, 24)
+        self.font = font.SysFont(None, font_size)
         self.label = self.font.render(msg, True, settings.GREY)
         self.rect = self.label.get_rect()
         self.rect.center = (size[0] / 2, size[1] / 2)

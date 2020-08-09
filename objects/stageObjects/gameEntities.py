@@ -94,7 +94,7 @@ class EnnemyArmy(pygame.sprite.Group):
                     enemy.dXn_m1 = enemy.dXn
                     enemy.dXn = ((settings.SCREEN_SIZE[0] - settings.UNITS_SIZE) / 100) * math.cos(self.time / 1000)
                     if enemy.dXn * enemy.dXn_m1 < 0:
-                        enemy.dY = 1
+                        enemy.dY = 4
                     else:
                         enemy.dY = 0
                     rect_logger.debug(f'{enemy.dXn} | {enemy.dXn * enemy.dXn_m1} | {enemy.dY}')

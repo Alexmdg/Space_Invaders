@@ -20,12 +20,22 @@ class StageRender(pygame.Surface):
         self.stage.update()
         self.blit(self.stage.background, (0, 0))
         self.blit(self.stage.topbar, (0, 0))
-        self.collisionHandler()
-        for object in self.stage.objects:
-            for elem in self.stage.objects[object]:
-                elem.update()
-                for sprite in elem.sprites():
-                    self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
+        if self.stage.intro_is_running:
+            for object in self.stage.objects:
+                for elem in self.stage.objects[object]:
+                    for sprite in elem.sprites():
+                        self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
+            self.blit(self.stage.intro.image, self.stage.intro.rect)
+            self.blit(self.stage.title.label, self.stage.title.rect)
+            self.blit(self.stage.counter.label, self.stage.counter.rect)
+        else:
+            self._collisionHandler()
+            for object in self.stage.objects:
+                for elem in self.stage.objects[object]:
+                    elem.update()
+                    for sprite in elem.sprites():
+                        self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
+
 
     def handleEvents(self, event):
         if event.type == pygame.KEYDOWN:
@@ -33,7 +43,7 @@ class StageRender(pygame.Surface):
                 self.is_paused = True
         self.stage.objects['shots'][0].fireShot(self.stage.objects['player'][0].sprites()[0].rect, event)
 
-    def collisionHandler(self):
+    def _collisionHandler(self):
         for enemies in self.stage.objects['enemies']:
             if pygame.sprite.spritecollideany(self.stage.objects['player'][0].sprites()[0], enemies):
                 self.is_running = False
@@ -54,7 +64,9 @@ class MenuRender(pygame.Surface):
         super().__init__(menu.body.size)
         self.is_running = True
         self.is_paused = False
-        self.menu =  menu
+        main_logger.succes('MenuRender init : OK')
+        self.menu = menu
+        main_logger.succes('Load Menu Object : OK')
         self.blit(self.menu.body.image, (0, 0))
         main_logger.succes('Display main menu : OK')
 
@@ -72,8 +84,8 @@ class MenuRender(pygame.Surface):
 
 
     def update(self):
-        pass
-
+        self.menu.update()
+        self.blit(self.menu.body.image, (0, 0))
 
 
 

@@ -38,11 +38,17 @@ SCREEN_SIZE = (960, 600)
 UNITS_SIZE = int((SCREEN_SIZE[0]*SCREEN_SIZE[1]) // 10000)
 FPS = 34
 
-PURPLE = (89, 24, 204)
-BLACK = (0, 0, 0)
-GREY = (229, 222, 206)
-YELLOW = (245, 191, 48)
-ORANGE = (249, 157, 45)
+def Purple(a): return (89, 24, 204, a)
+def Black(a): return (0, 0, 0, a)
+def Grey(a): return(229, 222, 206, a)
+def Yellow(a): return(245, 191, 48, a)
+def Orange(a): return(249, 157, 45, a)
+
+PURPLE = Purple(0)
+BLACK = Black(0)
+GREY = Grey(0)
+YELLOW = Yellow(0)
+ORANGE = Orange(0)
 
 IMAGE_LOADER = None
 
