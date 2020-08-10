@@ -1,6 +1,5 @@
 import math
 import settings
-import random
 import pygame.rect
 import pygame.sprite
 import pygame.key
@@ -24,23 +23,19 @@ class Player(pygame.sprite.Group):
                                     settings.UNITS_SIZE)
     def __init__(self):
         super().__init__()
-        self.max_speed = 5
-        self.speed = 0
-        self.health = 1
-        self.shield = 0
         self.dX = 0
         self.dY = 0
-        self.power_up = 0
         self.alive = True
         player = self.BasePlayer()
+        self.stats = PlayerStats()
         self.add(player)
         self.jump_cooldown = False
 
     def update(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT] and abs(self.dX) < self.max_speed:
+        if keys[pygame.K_LEFT] and abs(self.dX) < self.stats.max_speed:
             self.dX -= 0.5
-        if keys[pygame.K_RIGHT]and self.dX < self.max_speed:
+        if keys[pygame.K_RIGHT]and self.dX < self.stats.max_speed:
             self.dX += 0.5
         if keys[pygame.K_LEFT] and self.dX > -0.2:
             self.dX -= 0.6
@@ -73,8 +68,27 @@ class Player(pygame.sprite.Group):
                 self.dY = 0
             else:
                 self.dY -= 1
-        self.sprites()[0].rect.move_ip(self.dX + self.speed, -self.dY)
+        self.sprites()[0].rect.move_ip(self.dX + self.stats.speed, -self.dY)
 
+class PlayerStats:
+    def __init__(self):
+        self.max_speed = 5
+        self.speed = 0
+        self.max_jump = 0
+        self.health = 1
+        self.shield = 0
+        self.ammo_speed = 0
+        self.attack_rate = 0
+        self.max_ammo = 0
+        self.damage = 0
+        self.power_up = 0
+        self.light = 0
+        self.fire = 0
+        self.ice = 0
+        self.earth = 0
+        self.stage_score = 0
+        self.total_score = 0
+        self.kills = 0
 
 class EnnemyArmy(pygame.sprite.Group):
     def __init__(self, unit, rows, columns, unit_size_factor, level):

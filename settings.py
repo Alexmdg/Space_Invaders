@@ -4,11 +4,11 @@ from colorama import Fore
 ####            Logging           ####
 
 class MyFormater(logging.Formatter):
-    def __init__(self, fmt = Fore.WHITE + '%(asctime)s:%(levelname)s:%(funcName)s:%(message)s'):
+    def __init__(self, fmt = Fore.WHITE + '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(message)s'):
         super().__init__(fmt)
 
 class MyLogger(logging.Logger):
-    def __init__(self, name, file=False, fmt=Fore.WHITE + '%(created)f:MainLogger:%(levelname)s:%(funcName)s:%(message)s'):
+    def __init__(self, name, file=False, fmt=Fore.WHITE + '%(created)f:MainLogger:%(levelname)s:%(module)s:%(funcName)s:%(message)s'):
         super().__init__(name)
         formatter = MyFormater(fmt)
         handler = logging.StreamHandler()
@@ -25,11 +25,11 @@ class MyLogger(logging.Logger):
 
 
 def create_loggers(name, file=False):
-    main_logger = MyLogger(name, file, fmt=Fore.BLUE + '%(created)f:Main Logger:%(levelname)s:%(funcName)s:%(message)s')
-    event_logger = MyLogger(name, file, fmt=Fore.YELLOW + '%(created)f:Event Logger:%(levelname)s:%(funcName)s:%(message)s')
-    rect_logger = MyLogger(name, file, fmt=Fore.MAGENTA + '%(created)f:Rect Logger:%(levelname)s:%(funcName)s:%(message)s')
-    display_logger = MyLogger(name, file, fmt=Fore.LIGHTMAGENTA_EX + '%(created)f:Display Logger:%(levelname)s:%(funcName)s:%(message)s')
-    sprite_logger = MyLogger(name, file, fmt=Fore.CYAN + '%(created)f:Sprite Logger:%(levelname)s:%(funcName)s:%(message)s')
+    main_logger = MyLogger(name, file, fmt=Fore.BLUE + '%(created)f:Main Logger:%(levelname)s:%(module)s:%(funcName)s:%(message)s')
+    event_logger = MyLogger(name, file, fmt=Fore.YELLOW + '%(created)f:Event Logger:%(levelname)s:%(module)s:%(funcName)s:%(message)s')
+    rect_logger = MyLogger(name, file, fmt=Fore.MAGENTA + '%(created)f:Rect Logger:%(levelname)s:%(module)s:%(funcName)s:%(message)s')
+    display_logger = MyLogger(name, file, fmt=Fore.LIGHTMAGENTA_EX + '%(created)f:Display Logger:%(module)s:%(levelname)s:%(funcName)s:%(message)s')
+    sprite_logger = MyLogger(name, file, fmt=Fore.CYAN + '%(created)f:Sprite Logger:%(levelname)s:%(module)s:%(funcName)s:%(message)s')
     return main_logger, event_logger, rect_logger, display_logger, sprite_logger
 
 ####            Graphic Options          ####

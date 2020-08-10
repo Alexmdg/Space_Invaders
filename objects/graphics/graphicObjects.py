@@ -13,4 +13,5 @@ class ImageLoader:
         self.space_blob = image.load(os.path.join('objects\graphics\images\\', 'enemy3.png')).convert_alpha()
         self.arrow = image.load(os.path.join('objects\graphics\images\\', 'spear.png')).convert_alpha()
         self.dead_bg = image.load(os.path.join('objects\graphics\images\\', '2245.jpg')).convert_alpha()
+        self.win_bg = image.load(os.path.join('objects\graphics\images\\', 'win.jpg')).convert_alpha()
 

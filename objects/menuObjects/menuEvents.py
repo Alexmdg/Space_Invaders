@@ -14,3 +14,11 @@ class MenuEventsQuitGame:
 class MenuEventsResumeGame:
     def __init__(self):
         self.event = Event(menuEvents, {'action': 'ResumeGame'})
+
+class MenuEventsRestartLevel:
+    def __init__(self):
+        self.event = Event(menuEvents, {'action': 'RestartLevel'})
+
+class MenuEventsContinueGame:
+    def __init__(self):
+        self.event = Event(menuEvents, {'action': 'ContinueGame'})
