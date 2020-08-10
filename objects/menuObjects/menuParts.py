@@ -15,7 +15,7 @@ sprite_logger.setLevel(settings.logging.DEBUG)
 class Pannel:
     def __init__(self, size):
         self.size = size
-        self.image = Surface(size)
+        self.image = Surface(size, flags=pygame.SRCALPHA)
         self.rect = self.image.get_rect()
 
     def set_border_Color(self, color):
@@ -59,16 +59,16 @@ class TextLabel:
         self.label = self.font.render(self.msg, True, font_color)
 
 
-class ItemBoxList(Pannel):
+class ItemBox(Pannel):
     def __init__(self, name, side='Vertical'):
         self.name = name
         self.side = side
         self.items = []
 
 
-    def createPannel(self, centerx, centery, space_between=0):
-        self.space_between = space_between
+    def createPannel(self, centerx, centery, space_between=0, transparent=False):
         if self.side == 'Vertical':
+            self.space_between = (space_between * settings.SCREEN_SIZE[1]) / 100
             sizeX = 0
             sizeY = self.space_between * (len(self.items) - 1)
             for item in self.items:
@@ -81,11 +81,42 @@ class ItemBoxList(Pannel):
             self.rect.centery = centery
 
             pos = 0
+            if transparent is True:
+                self.image.fill(settings.Purple(0))
             for item in self.items:
                 item.rect.x = 0
                 item.rect.y = pos
                 pos += item.size[1] + self.space_between
                 self.image.blit(item.image, item.rect)
+        elif self.side == 'Horizontal':
+            self.space_between = (space_between * settings.SCREEN_SIZE[0]) / 100
+            sizeY = 0
+            sizeX = self.space_between * (len(self.items) - 1)
+            for item in self.items:
+                sizeY = max(sizeY, item.size[1])
+                sizeX += item.size[0]
+
+            super().__init__((sizeX, sizeY))
+            self.image.fill(settings.PURPLE)
+            self.rect.centerx = centerx
+            self.rect.centery = centery
+
+            pos = 0
+
+            if transparent is True:
+                self.image.convert_alpha()
+                self.image.fill(settings.Purple(0))
+            for item in self.items:
+                item.rect.y = 0
+                item.rect.x = pos
+                pos += item.size[0] + self.space_between
+                if transparent is True:
+                    item.image.convert_alpha()
+                    item.image.fill(settings.Purple(200))
+                    item.image.blit(item.text.label, item.text.rect)
+                    item.set_border_Color(settings.Yellow())
+                self.image.blit(item.image, item.rect)
+
 
     def update(self):
         self.image.fill(settings.PURPLE)
@@ -97,7 +128,7 @@ class Menu(Pannel):
     def __init__(self, height_ratio=0.618, width_ratio=0.618):
         super().__init__(settings.SCREEN_SIZE)
         self.menu_body = Pannel((settings.SCREEN_SIZE[0] * height_ratio, settings.SCREEN_SIZE[1] * width_ratio))
-        self.item_boxes = [ItemBoxList('mainBox')]
+        self.item_boxes = [ItemBox('mainBox')]
 
         self.is_running = True
         self.pos = 0

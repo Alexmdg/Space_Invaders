@@ -27,17 +27,14 @@ class StageRender(pygame.Surface):
                     for elem in self.stage.objects[object]:
                         for sprite in elem.sprites():
                             self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
-                self.blit(self.stage.intro.bg.image, self.stage.intro.bg.rect)
-                self.blit(self.stage.intro.title.label, self.stage.intro.title.rect)
-                self.blit(self.stage.intro.desc.label, self.stage.intro.desc.rect)
-                self.blit(self.stage.intro.counter.label, self.stage.intro.counter.rect)
+                self.blit(self.stage.intro.image, self.stage.intro.rect)
             elif self.stage.outro.is_running:
                 self.stage.outro.update()
                 for object in self.stage.objects:
                     for elem in self.stage.objects[object]:
                         for sprite in elem.sprites():
                             self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
-                self.blit(self.stage.outro.body.image, self.stage.outro.body.rect)
+                self.blit(self.stage.outro.image, self.stage.outro.rect)
             elif self.stage.objects['player'][0].stats.kills == self.stage.level.total_unit:
                 self.stage.outro.chose_ending('win')
                 self.stage.outro.is_running = True

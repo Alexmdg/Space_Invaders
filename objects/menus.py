@@ -15,7 +15,7 @@ class MainMenu(Menu):
         self.add_button('mainBox', 'startGame', 'New Game', MenuEventsStartGame())
         self.add_button('mainBox', 'gameContinue', 'Continue Game', MenuEventsContinueGame())
         self.add_button('mainBox', 'quit', 'Quit Game', MenuEventsQuitGame())
-        self.item_boxes[0].createPannel(self.menu_body.size[0] / 2, self.menu_body.size[1] / 2, space_between=61.8)
+        self.item_boxes[0].createPannel(self.menu_body.size[0] / 2, self.menu_body.size[1] / 2, space_between=5.57)
         self.update()
 
 class PauseMenu(Menu):

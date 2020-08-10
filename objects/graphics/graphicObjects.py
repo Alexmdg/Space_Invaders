@@ -15,3 +15,4 @@ class ImageLoader:
         self.dead_bg = image.load(os.path.join('objects\graphics\images\\', '2245.jpg')).convert_alpha()
         self.win_bg = image.load(os.path.join('objects\graphics\images\\', 'win.jpg')).convert_alpha()
 
+

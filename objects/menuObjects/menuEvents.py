@@ -7,6 +7,10 @@ class MenuEventsStartGame:
     def __init__(self):
         self.event = Event(menuEvents, {'action': 'start_g'})
 
+class MenuEventsMainMenu:
+    def __init__(self):
+        self.event = Event(menuEvents, {'action': 'MainMenu'})
+
 class MenuEventsQuitGame:
     def __init__(self):
         self.event = Event(menuEvents, {'action': 'Quit'})
@@ -22,3 +26,12 @@ class MenuEventsRestartLevel:
 class MenuEventsContinueGame:
     def __init__(self):
         self.event = Event(menuEvents, {'action': 'ContinueGame'})
+
+class MenuEventsNextLevel:
+    def __init__(self):
+        self.event = Event(menuEvents, {'action': 'NextLevel'})
+
+
+class MenuEventsHeroMenu:
+    def __init__(self):
+        self.event = Event(menuEvents, {'action': 'HeroMenu'})
