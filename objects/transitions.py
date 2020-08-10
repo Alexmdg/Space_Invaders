@@ -4,11 +4,11 @@ import pygame.time
 import math
 
 main_logger, event_logger, rect_logger, display_logger, sprite_logger = settings.create_loggers(__name__)
-main_logger.setLevel(settings.logging.DEBUG)
+main_logger.setLevel(settings.logging.INFO)
 event_logger.setLevel(settings.logging.INFO)
-rect_logger.setLevel(settings.logging.DEBUG)
+rect_logger.setLevel(settings.logging.INFO)
 display_logger.setLevel(settings.logging.INFO)
-sprite_logger.setLevel(settings.logging.DEBUG)
+sprite_logger.setLevel(settings.logging.INFO)
 
 class StageIntro(Pannel):
     def __init__(self, stage, ratiox=0.423, ratioy=0.618):
@@ -65,11 +65,10 @@ class StageIntro(Pannel):
 
 
 class StageOutro(Pannel):
-    def __init__(self, level, stats, ratiox=0.786, ratioy=0.618):
+    def __init__(self, ratiox=0.786, ratioy=0.618):
         super().__init__((ratiox * settings.SCREEN_SIZE[0], ratioy * settings.SCREEN_SIZE[1]))
         self.image.convert_alpha()
         self.image.fill(settings.Purple(100))
-        self.stats = stats
         self.is_running = False
         self.ending = ''
         self.stage_ended = False

@@ -2,19 +2,20 @@ from objects.menus import *
 
 
 main_logger, event_logger, rect_logger, display_logger, sprite_logger = settings.create_loggers(__name__)
-main_logger.setLevel(settings.logging.DEBUG)
-event_logger.setLevel(settings.logging.DEBUG)
-rect_logger.setLevel(settings.logging.DEBUG)
-display_logger.setLevel(settings.logging.DEBUG)
-sprite_logger.setLevel(settings.logging.DEBUG)
+main_logger.setLevel(settings.logging.INFO)
+event_logger.setLevel(settings.logging.INFO)
+rect_logger.setLevel(settings.logging.INFO)
+display_logger.setLevel(settings.logging.INFO)
+sprite_logger.setLevel(settings.logging.INFO)
 
 class StageRender(pygame.Surface):
     def __init__(self, size, stage):
         super().__init__(size)
-        self.stage = stage
-        self.update()
         self.is_running = True
         self.is_paused = False
+        self.stage = stage
+        self.update()
+        display_logger.success('stageRender init: OK')
 
     def update(self):
         if self.stage.is_running:
@@ -35,7 +36,7 @@ class StageRender(pygame.Surface):
                         for sprite in elem.sprites():
                             self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
                 self.blit(self.stage.outro.image, self.stage.outro.rect)
-            elif self.stage.objects['player'][0].stats.kills == self.stage.level.total_unit:
+            elif self.stage.hero.kills == self.stage.level.total_unit:
                 self.stage.outro.chose_ending('win')
                 self.stage.outro.is_running = True
             else:
@@ -48,7 +49,6 @@ class StageRender(pygame.Surface):
                             self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
         else:
             self.is_running = False
-
 
     def handleEvents(self, event):
         if event.type == pygame.KEYDOWN:
@@ -71,7 +71,7 @@ class StageRender(pygame.Surface):
             for arrow in deaths:
                 for dead in deaths[arrow]:
                     self.stage.objects['deads'][0].died(dead)
-                    self.stage.objects['player'][0].stats.kills += 1
+                    self.stage.hero.kills += 1
 
 
 class MenuRender(pygame.Surface):
@@ -79,11 +79,9 @@ class MenuRender(pygame.Surface):
         super().__init__(menu.size)
         self.is_running = True
         self.is_paused = False
-        main_logger.succes('MenuRender init : OK')
         self.menu = menu
-        main_logger.succes('Load Menu Object : OK')
         self.blit(self.menu.image, (0, 0))
-        main_logger.succes('Display main menu : OK')
+        display_logger.success('menuRender init: OK')
 
     def handleEvents(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
