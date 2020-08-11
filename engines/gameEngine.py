@@ -62,7 +62,8 @@ class GameEngine:
                 number = 0
                 end_stage = self.sub_loop(self.menu, depth, number)
                 if end_stage is True:
-                    pygame.event.post(MenuEventsCloseStage().event)
+                    render.stage.is_running = False
+                    # pygame.event.post(MenuEventsCloseStage().event)
                 render.is_paused = False
                 main_logger.success("Game Resumed")
         if type(render) == MenuRender:
@@ -84,44 +85,19 @@ class GameEngine:
                 event_logger.success('User closed the game')
                 pygame.quit()
                 quit()
-            elif event.type == menuEvents:
-                if event.action == 'Quit':
-                    render.is_running = False
-                    self.is_running = False
-                    event_logger.success('User closed the game')
-                    pygame.quit()
-                    quit()
-                elif event.action == 'StartGame':
-                    if event.context == 'restart':
-                        if event.sender == 'PauseMenu':
-                            event_logger.success(f"Event 'RestartGame' received...")
-                            render.menu.close_stage = True
-                            render.is_running = False
-                            self.hero.reset()
-                            self.next_scene = 'stage'
-                    else:
-                        event_logger.success(f"Event 'StartGame' received...")
-                        render.is_running = False
-                        self.hero.reset()
-                        self.next_scene = 'stage'
-                elif event.action == 'CloseStage':
-                        event_logger.success(f"Event 'CloseStage' received...")
-                        render.stage.is_running = False
-                elif event.action == 'ResumeGame':
-                    render.is_running = False
-                elif event.action == 'MainMenu':
-                    render.is_running = False
-                    event_logger.success(f"Event 'MainMenu' received... ")
-                    self.menu = MenuRender(MainMenuScene())
-                    self.next_scene = 'menu'
-                elif event.action == 'RestartLevel':
-                    render.is_running = False
-                    event_logger.success(f"Event 'RestartLevel' received... Starting sub_loop on StageRender(stage = Stage({self.hero.level}")
-                    self.next_scene = StageRender(settings.SCREEN_SIZE, StageScene(self.stages, self.hero))
-                elif event.action == 'NextLevel':
-                    event_logger.success(f"Event 'Next Level' received... Starting sub_loop on StageRender(stage = Stage({self.hero.level}")
-                elif event.action == 'HeroMenu':
-                    event_logger.success(f"Event 'HeroMenu' received... Starting sub_loop on MenuRender(menu = HeroMenu()")
+            elif event.type == quit_game_Events:
+                event_logger.success("Event 'QuitGame' Received")
+            elif event.type == start_stage_Events:
+                event_logger.success("Event 'StartStage' Received")
+            elif event.type == close_stage_Events:
+                event_logger.success("Event 'CloseStage' Received")
+            elif event.type == set_and_get_Events:
+                event_logger.success("Event 'Get or Set game data' Received")
+            elif event.type == start_menu_Events:
+                event_logger.success("Event 'Display Menu' Received")
+            elif event.type == close_menu_Events:
+                event_logger.success("Event 'Close Menu' Received")
+
             else:
                 render.handleEvents(event)
 

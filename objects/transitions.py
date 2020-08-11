@@ -1,5 +1,5 @@
 from objects.menuObjects.menuParts import *
-from objects.menuObjects.menuEvents import *
+from objects.events.customEvents import *
 import pygame.time
 import math
 
