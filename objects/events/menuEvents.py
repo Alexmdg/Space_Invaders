@@ -1,18 +1,26 @@
 from pygame import USEREVENT
 from pygame.event import Event
 
-menuEvents = USEREVENT + 1
 
-class MenuEventsStartGame:
-    def __init__(self):
-        self.event = Event(menuEvents, {'action': 'StartGame',
-                                        'context': 'start'})
 
-class MenuEventsCloseStage:
-    def __init__(self):
-        self.event = Event(menuEvents, {'action': 'CloseStage',
-                                        'context': 'restart',
-                                        'sender': 'PauseMenu'})
+start_stage_Events = USEREVENT + 1
+close_stage_Events = USEREVENT + 2
+set_and_get_Events = USEREVENT + 3
+start_menu_Events = USEREVENT + 4
+
+class StartStageEvent:
+    def __init__(self, render='StageRender', scene='StageScene', stage=1):
+        self.event = Event(start_stage_Events,
+                           {'render': render,
+                            'scene': scene,
+                            'stage': stage})
+
+class CloseStageEvents:
+    def __init__(self, render='StageRender', scene='StageScene', stage=1):
+        self.event = Event(start_stage_Events,
+                           {'render': render,
+                            'scene': scene,
+                            'stage': stage})
 
 class MenuEventsNewGame:
     def __init__(self):

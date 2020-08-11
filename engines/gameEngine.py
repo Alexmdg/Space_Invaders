@@ -62,7 +62,8 @@ class GameEngine:
                 number = 0
                 end_stage = self.sub_loop(self.menu, depth, number)
                 if end_stage is True:
-                    pygame.event.post(MenuEventsCloseStage().event)
+                    render.stage.is_running = False
+                    # pygame.event.post(MenuEventsCloseStage().event)
                 render.is_paused = False
                 main_logger.success("Game Resumed")
         if type(render) == MenuRender:
