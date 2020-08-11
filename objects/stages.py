@@ -32,23 +32,8 @@ class StageScene():
         main_logger.success(f'Load StageScene {stage.level} : OK')
 
     def reset(self, stage, hero):
-        try:
-            self.is_running = None
-            self.level = None
-            self.hero = None
-            self.topbar = None
-            self.background = None
-            self.objects = None
-            self.intro = None
-            self.outro = None
-            self.clock = None
-            self.time = None
-            self.count = None
-            sprite_logger.debug(f'{self.objects}')
-            self.__init__(stage, hero)
-            display_logger.success(f'StageScene has been reset. self.is_running = {self.is_running}')
-        except:
-            display_logger.exception('StageScene reset failled')
+        self.__init__(stage, hero)
+        display_logger.success(f'StageScene has been reset. self.is_running = {self.is_running}')
         return self
 
     def update(self):
