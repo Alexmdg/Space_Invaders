@@ -66,9 +66,10 @@ class StageIntro(Pannel):
 
 
 class StageOutro(Pannel):
-    def __init__(self, ratiox=0.786, ratioy=0.618):
+    def __init__(self, hero, ratiox=0.786, ratioy=0.618):
         display_logger.success(f'StageOutro init : OK')
         super().__init__((ratiox * settings.SCREEN_SIZE[0], ratioy * settings.SCREEN_SIZE[1]))
+        self.hero = hero
         self.image.convert_alpha()
         self.image.fill(settings.Purple(100))
         self.is_running = False
@@ -76,7 +77,6 @@ class StageOutro(Pannel):
         self.stage_ended = False
         self.rect.centerx = settings.SCREEN_SIZE[0] / 2
         self.rect.centery = settings.SCREEN_SIZE[1] / 2
-
         self.buttons = ItemBox('mainBox', side='Horizontal')
 
     def chose_ending(self, choice):
@@ -121,7 +121,7 @@ class StageOutro(Pannel):
             self.title = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), 'Stage 1 complete', 72)
             self.title.rect.centerx = self.size[0] / 2
             self.title.rect.centery = (1.618 * self.size[1]) / 5
-            self.desc = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), f'stats = ', 36)
+            self.desc = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), f'kills = {self.hero.kills}', 36)
             self.desc.rect.centerx = self.size[0] / 2
             self.desc.rect.centery = (2.618 * self.size[1]) / 5
             self.buttons.items.append(Button('nextLevel',

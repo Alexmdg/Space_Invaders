@@ -25,7 +25,7 @@ class StageScene():
                     }
         sprite_logger.debug(f'{self.objects}')
         self.intro = StageIntro(stage.name)
-        self.outro = StageOutro()
+        self.outro = StageOutro(self.hero)
         self.clock = pygame.time.Clock()
         self.time = 0.00
         self.count = 0

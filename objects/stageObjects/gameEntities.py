@@ -99,7 +99,6 @@ class PlayerStats:
             ujson.dump(datas, f, indent=4)
             main_logger.success('Hero stats saved to "hero.json"')
 
-
     def reset(self):
         datas = {
                  "level": 1,
@@ -125,8 +124,6 @@ class PlayerStats:
         with open('hero.json', 'w') as f:
             ujson.dump(datas, f, indent=4)
             main_logger.success('Hero stats has been reset')
-
-
 
 
 class EnnemyArmy(pygame.sprite.Group):
