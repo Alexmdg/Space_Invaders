@@ -11,7 +11,7 @@ rect_logger.setLevel(settings.logging.INFO)
 display_logger.setLevel(settings.logging.INFO)
 sprite_logger.setLevel(settings.logging.INFO)
 
-class StageScene:
+class StageScene():
     def __init__(self, stage, hero):
         self.is_running = True
         self.level = stage
