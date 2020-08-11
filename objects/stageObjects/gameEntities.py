@@ -13,7 +13,7 @@ main_logger.setLevel(settings.logging.INFO)
 event_logger.setLevel(settings.logging.INFO)
 rect_logger.setLevel(settings.logging.INFO)
 display_logger.setLevel(settings.logging.INFO)
-sprite_logger.setLevel(settings.logging.DEBUG)
+sprite_logger.setLevel(settings.logging.INFO)
 
 class Player(pygame.sprite.Group):
     class BasePlayer(pygame.sprite.Sprite):

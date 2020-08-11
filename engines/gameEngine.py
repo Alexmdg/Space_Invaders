@@ -30,8 +30,8 @@ class GameEngine:
         self.main_loop()
 
     def main_loop(self):
-        main_logger.success("Main loop init: OK")
         while self.is_running:
+            main_logger.success("Main loop init: OK")
             depth = 0
             self.number += 1
             if self.next_scene == 'stage':
@@ -51,9 +51,7 @@ class GameEngine:
             main_logger.success(
                 f"Sub loop {depth - 1} : {number} for {type(render)} with scene {type(render.stage)} init: OK")
         except:
-            main_logger.success(f"Sub loop {depth-1} : {number} for {type(render)} with scene {type(render.menu)} init: OK")
-        main_logger.debug(f'{isinstance(render, StageRender)}')
-        main_logger.debug(f'render is running = {render.is_running}')
+            main_logger.debug(f"Sub loop {depth-1} : {number} for {type(render)} with scene {type(render.menu)} init: OK")
         while render.is_running:
             self.handleEvents(render)
             render.update()
@@ -63,20 +61,18 @@ class GameEngine:
                 self.menu = MenuRender(PauseMenuScene())
                 number = 0
                 end_stage = self.sub_loop(self.menu, depth, number)
-                main_logger.info(f'end_stage = {end_stage}')
                 if end_stage is True:
                     pygame.event.post(MenuEventsCloseStage().event)
                 render.is_paused = False
                 main_logger.success("Game Resumed")
         if type(render) == MenuRender:
             if type(render.menu) == PauseMenuScene:
-                main_logger.info(f'render =  {type(render)}, menu = {type(render.menu)}, end_stage = {render.menu.close_stage}')
                 return render.menu.close_stage
         try:
-            main_logger.success(
+            main_logger.debug(
                 f"Sub loop {depth - 1} : {number} for {type(render)} with scene {type(render.stage)} end: OK")
         except:
-            main_logger.success(
+            main_logger.debug(
                 f"Sub loop {depth - 1} : {number} for {type(render)} with scene {type(render.menu)} end: OK")
 
 
@@ -115,7 +111,7 @@ class GameEngine:
                     render.is_running = False
                 elif event.action == 'MainMenu':
                     render.is_running = False
-                    event_logger.success(f"Event 'MainMenu' received... Starting sub_loop on MenuRender(menu = MainMenu()")
+                    event_logger.success(f"Event 'MainMenu' received... ")
                     self.menu = MenuRender(MainMenuScene())
                     self.next_scene = 'menu'
                 elif event.action == 'RestartLevel':

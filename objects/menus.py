@@ -11,6 +11,7 @@ sprite_logger.setLevel(settings.logging.DEBUG)
 
 class MainMenuScene(Menu):
     def __init__(self):
+        display_logger.success(f'MainMenuScene init : OK')
         super().__init__()
         self.add_button('mainBox', 'startGame', 'New Game', MenuEventsStartGame())
         self.add_button('mainBox', 'gameContinue', 'Continue Game', MenuEventsContinueGame())
@@ -20,6 +21,7 @@ class MainMenuScene(Menu):
 
 class PauseMenuScene(Menu):
     def __init__(self):
+        display_logger.success(f'PauseMenuScene init : OK')
         super().__init__()
         self.close_stage = False
         self.add_button('mainBox', 'gameResume', 'Resume Game', MenuEventsResumeGame())

@@ -29,11 +29,11 @@ class StageScene():
         self.clock = pygame.time.Clock()
         self.time = 0.00
         self.count = 0
-        main_logger.success(f'Load StageScene {stage.level} : OK')
+        display_logger.success('StageScene init : OK')
 
     def reset(self, stage, hero):
         self.__init__(stage, hero)
-        display_logger.success(f'StageScene has been reset. self.is_running = {self.is_running}')
+        display_logger.success(f'StageScene has been reset to level : {stage.level}')
         return self
 
     def update(self):
@@ -99,7 +99,7 @@ class Stages:
                     for army in self.spawns:
                         Earmy = eval(army)
                         self.total_unit += len(Earmy.sprites())
-            main_logger.success(f'scenatio {self.name} init : OK')
+            display_logger.success(f'Scene Parameters fot {self.name} init : OK')
         except:
             main_logger.exception("Couldn't get_stage")
 

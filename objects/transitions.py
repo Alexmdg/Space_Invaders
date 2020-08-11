@@ -12,6 +12,7 @@ sprite_logger.setLevel(settings.logging.INFO)
 
 class StageIntro(Pannel):
     def __init__(self, stage, ratiox=0.423, ratioy=0.618):
+        display_logger.success(f'StageIntro init : OK')
         super().__init__((ratiox * settings.SCREEN_SIZE[0], ratioy * settings.SCREEN_SIZE[1]))
         self.image.convert_alpha()
         self.image.fill(settings.Purple(100))
@@ -66,6 +67,7 @@ class StageIntro(Pannel):
 
 class StageOutro(Pannel):
     def __init__(self, ratiox=0.786, ratioy=0.618):
+        display_logger.success(f'StageOutro init : OK')
         super().__init__((ratiox * settings.SCREEN_SIZE[0], ratioy * settings.SCREEN_SIZE[1]))
         self.image.convert_alpha()
         self.image.fill(settings.Purple(100))

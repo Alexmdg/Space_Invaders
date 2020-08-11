@@ -23,8 +23,7 @@ class StageRender(pygame.Surface):
             super().__init__(size)
             self.is_running = True
             self.update()
-            display_logger.success('stageRender init: OK')
-            display_logger.success(f'StageRender has been reset. self.is_running = {self.is_running}')
+            display_logger.success(f'StageRender reset to level : {self.stage.level}')
         except:
             display_logger.exception('StageRender reset failled')
         return self
