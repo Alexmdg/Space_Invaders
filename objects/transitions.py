@@ -119,7 +119,7 @@ class StageOutro(Pannel):
             self.title = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), 'Stage 1 complete', 72)
             self.title.rect.centerx = self.size[0] / 2
             self.title.rect.centery = (1.618 * self.size[1]) / 5
-            self.desc = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), f'stats = {self.stats}', 36)
+            self.desc = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), f'stats = ', 36)
             self.desc.rect.centerx = self.size[0] / 2
             self.desc.rect.centery = (2.618 * self.size[1]) / 5
             self.buttons.items.append(Button('nextLevel',
@@ -151,4 +151,13 @@ class StageOutro(Pannel):
         self.image.blit(self.buttons.image, self.buttons.rect)
         self.image.blit(self.title.label, self.title.rect)
         self.image.blit(self.desc.label, self.desc.rect)
+
+    def click_down(self, button):
+        button.click_down()
+
+    def click_up(self, button):
+        button.click_up()
+        event_logger.debug('button clicked')
+        self.is_running = False
+        self.stage_ended = True
 

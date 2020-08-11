@@ -9,7 +9,7 @@ display_logger.setLevel(settings.logging.DEBUG)
 sprite_logger.setLevel(settings.logging.DEBUG)
 
 
-class MainMenu(Menu):
+class MainMenuScene(Menu):
     def __init__(self):
         super().__init__()
         self.add_button('mainBox', 'startGame', 'New Game', MenuEventsStartGame())
@@ -18,15 +18,16 @@ class MainMenu(Menu):
         self.item_boxes[0].createPannel(self.menu_body.size[0] / 2, self.menu_body.size[1] / 2, space_between=5.57)
         self.update()
 
-class PauseMenu(Menu):
+class PauseMenuScene(Menu):
     def __init__(self):
         super().__init__()
+        self.close_stage = False
         self.add_button('mainBox', 'gameResume', 'Resume Game', MenuEventsResumeGame())
         self.add_button('mainBox', 'gameRestart', 'Restart Level', MenuEventsRestartLevel())
-        self.add_button('mainBox', 'startGame', 'New Game', MenuEventsStartGame())
+        self.add_button('mainBox', 'startGame', 'New Game', MenuEventsNewGame())
         self.add_button('mainBox', 'quit', 'Quit Game', MenuEventsQuitGame())
-        self.item_boxes[0].createPannel(self.menu_body.size[0] / 2, self.menu_body.size[1] / 2, space_between=23.61)
+        self.item_boxes[0].createPannel(self.menu_body.size[0] / 2, self.menu_body.size[1] / 2, space_between=5.57)
         self.update()
 
-class NextStageMenu(Menu):
+class NextStageMenuScene(Menu):
     pass

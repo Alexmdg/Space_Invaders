@@ -13,7 +13,7 @@ main_logger.setLevel(settings.logging.INFO)
 event_logger.setLevel(settings.logging.INFO)
 rect_logger.setLevel(settings.logging.INFO)
 display_logger.setLevel(settings.logging.INFO)
-sprite_logger.setLevel(settings.logging.INFO)
+sprite_logger.setLevel(settings.logging.DEBUG)
 
 class Player(pygame.sprite.Group):
     class BasePlayer(pygame.sprite.Sprite):
@@ -277,13 +277,12 @@ class Weapon(pygame.sprite.Group):
         self.shot_fired = False
 
     def fireShot(self, player_rect, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
-                if len(self.sprites()) < self.max_ammo:
-                    if self.shot_fired is False:
-                        shot = self.Arrow(pygame.Rect(player_rect.x, player_rect.y - 34, 15, 22), self.ammo_surf)
-                        self.add(shot)
-                        self.shot_fired = self.attack_rate
+        if event.key == pygame.K_a:
+            if len(self.sprites()) < self.max_ammo:
+                if self.shot_fired is False:
+                    shot = self.Arrow(pygame.Rect(player_rect.x, player_rect.y - 34, 15, 22), self.ammo_surf)
+                    self.add(shot)
+                    self.shot_fired = self.attack_rate
 
     def update(self):
         for ammo in self.sprites():

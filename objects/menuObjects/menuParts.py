@@ -119,7 +119,6 @@ class ItemBox(Pannel):
 
 
     def update(self):
-        self.image.fill(settings.PURPLE)
         for item in self.items:
             self.image.blit(item.image, item.rect)
 
