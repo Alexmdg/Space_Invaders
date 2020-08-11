@@ -1,4 +1,5 @@
-from pygame import Surface, Rect, draw, event, font
+from pygame import Surface, Rect, draw, font
+import pygame.event
 import pygame.transform
 import settings
 
@@ -42,7 +43,8 @@ class Button(Pannel):
         self.text.change_settings(font_size=self.text.font_size, font_color=settings.GREY)
         self.image.blit(self.text.label, self.text.rect)
         self.is_clicked = True
-        event.post(self.event.event)
+        for event in self.event:
+            pygame.event.post(event.event)
 
 
 class TextLabel:

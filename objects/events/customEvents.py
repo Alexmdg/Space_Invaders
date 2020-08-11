@@ -47,7 +47,7 @@ class CloseMenuEvents:
                             'level': level})
 
 
-class QuiGameEvents:
+class QuitGameEvents:
     def __init__(self, sender= 'MainMenu', render='StageRender', scene='StageScene', level=1):
         self.event = Event(start_stage_Events,
                            {'sender': sender,
