@@ -98,7 +98,7 @@ class StageRender(pygame.Surface):
                                                 True, True)
             power_up = pygame.sprite.spritecollideany(self.stage.objects['player'][0].sprites()[0], self.stage.objects['deads'][0])
             if power_up:
-                self.stage.objects['player'][0].stats.power_up += 1
+                self.stage.hero.power_up += 1
                 power_up.kill()
             for arrow in deaths:
                 for dead in deaths[arrow]:
