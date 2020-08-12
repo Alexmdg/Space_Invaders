@@ -87,6 +87,8 @@ class GameEngine:
                 quit()
             elif event.type == quit_game_Events:
                 event_logger.success("Event 'QuitGame' Received")
+                render.is_running = False
+                self.is_running = False
             elif event.type == start_stage_Events:
                 event_logger.success("Event 'StartStage' Received")
             elif event.type == close_stage_Events:
