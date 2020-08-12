@@ -129,7 +129,7 @@ class ItemBox(Pannel):
 class Menu(Pannel):
     def __init__(self, ratiox=0.618, ratioy=0.618):
         super().__init__(settings.SCREEN_SIZE)
-        self.menu_body = Pannel((settings.SCREEN_SIZE[0] * height_ratio, settings.SCREEN_SIZE[1] * width_ratio))
+        self.menu_body = Pannel((settings.SCREEN_SIZE[0] * ratiox, settings.SCREEN_SIZE[1] * ratioy))
         self.item_boxes = [ItemBox('mainBox')]
 
         self.is_running = True
