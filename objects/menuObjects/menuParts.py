@@ -9,8 +9,8 @@ import settings
 main_logger, event_logger, rect_logger, display_logger, sprite_logger = settings.create_loggers(__name__)
 main_logger.setLevel(settings.logging.INFO)
 event_logger.setLevel(settings.logging.INFO)
-rect_logger.setLevel(settings.logging.INFO)
-display_logger.setLevel(settings.logging.INFO)
+rect_logger.setLevel(settings.logging.DEBUG)
+display_logger.setLevel(settings.logging.DEBUG)
 sprite_logger.setLevel(settings.logging.INFO)
 
 class Pannel:
@@ -68,8 +68,9 @@ class ItemBox(Pannel):
         self.items = []
 
 
-    def createPannel(self, centerx, centery, space_between=0, transparent=False,
-                     bg_color=settings.Purple(0), bttn_color=settings.Purple(200)):
+    def createPannel(self, centerx=settings.SCREEN_SIZE[0]/2, centery=settings.SCREEN_SIZE[1]/2, space_between=0, transparent=False,
+                     bg_color=settings.Purple(0), bttn_color=settings.Purple(0)):
+
         if self.side == 'Vertical':
             self.space_between = (space_between * settings.SCREEN_SIZE[1]) / 100
             sizeX = 0
@@ -114,15 +115,16 @@ class ItemBox(Pannel):
                 item.rect.x = pos
                 pos += item.size[0] + self.space_between
                 if transparent is True:
-                    item.image.convert_alpha()
-                    item.image.fill(bttn_color)
-                    item.image.blit(item.text.label, item.text.rect)
-                    item.set_border_Color(settings.Yellow())
+                    if type(item) == Button:
+                        item.image.convert_alpha()
+                        item.image.fill(bttn_color)
+                        item.image.blit(item.text.label, item.text.rect)
+                        item.set_border_Color(settings.YELLOW)
                 self.image.blit(item.image, item.rect)
-
 
     def update(self):
         for item in self.items:
+            display_logger.debug(f'{item}')
             self.image.blit(item.image, item.rect)
 
 
@@ -131,6 +133,7 @@ class Menu(Pannel):
         super().__init__(settings.SCREEN_SIZE)
         self.menu_body = Pannel((settings.SCREEN_SIZE[0] * ratiox, settings.SCREEN_SIZE[1] * ratioy))
         self.item_boxes = [ItemBox('mainBox')]
+        self.targetbox = None
 
         self.is_running = True
         self.pos = 0
@@ -162,6 +165,52 @@ class Menu(Pannel):
                         font_size,
                         event)
         search_itemBox_name(self.item_boxes, itemBox_name)
+
+    def search_itembox(self, target, ib=None):
+        ib = self.item_boxes[0] if ib is None else ib
+        for item in ib.items:
+            rect_logger.debug(f'{item}, {type(item)}')
+            if type(item) == ItemBox:
+                if item.name == target:
+                    rect_logger.success(f'Box found : {item.name} - {type(item)} - {item.items}')
+                    self.targetbox = item
+                else:
+                    rect_logger.debug(f'Searching in {item.name}')
+                    self.search_itembox(target, item)
+
+
+
+    def create_pannels(self):
+        def search_itemBox(itembox):
+            boxes = 0
+            for box in itembox.items:
+                if type(box) == ItemBox:
+                    try:
+                        rect_logger.debug(settings.Fore.GREEN +
+                            f'Box : {box.name} in Itembox : {itembox.name} init: Box_size = {box.size}: OK')
+                    except:
+                        boxes += 1
+                        rect_logger.debug(f"Box : '{box.name}' in Itembox : '{itembox.name}' : searching ItemBoxes")
+                        search_itemBox(box)
+                        try:
+                            box.createPannel(transparent=True)
+                        except:
+                            rect_logger.exception("Couldn't create pannel")
+            if boxes == 0:
+                itembox.createPannel(transparent=True)
+            else:
+                search_itemBox(itembox)
+            return boxes
+
+        try:
+            for box in self.item_boxes:
+                boxes = search_itemBox(box)
+                while boxes > 0:
+                    boxes = 0
+                    search_itemBox(box)
+                    rect_logger.debug(f'Boxes without pannels : {boxes}')
+        except:
+            rect_logger.exception("Couldn't create pannels")
 
     def update(self):
 

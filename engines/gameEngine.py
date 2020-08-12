@@ -82,8 +82,12 @@ class GameEngine:
                 self.next_render.reset(self.next_scene, self.hero)
             elif event.type == start_menu_Events:
                 event_logger.success("Event 'Display Menu' Received")
-                self.next_scene = eval(event.scene)
-                self.next_render = eval(event.render)(self.next_scene)
+                if event.scene == 'HeroMenu':
+                    self.next_scene = eval(event.scene)(self.hero)
+                    self.next_render = eval(event.render)(self.next_scene)
+                else:
+                    self.next_scene = eval(event.scene)()
+                    self.next_render = eval(event.render)(self.next_scene)
             elif event.type == close_render_Events:
                 event_logger.success(f"Event 'Close Render' for {event.render}-{event.scene} Received")
                 render.is_running = False

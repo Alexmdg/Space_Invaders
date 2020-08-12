@@ -61,7 +61,7 @@ class Stages:
                 'level': 1,
                 'name': 'Stage 1',
                 'waves': 0,
-                'initial_spawns': ["EnnemyArmy(SpaceOcto, 5, 12, 70, '1')"],
+                'initial_spawns': ["EnnemyArmy(SpaceOcto, 1, 1, 70, '1')"],
                 'spawns': [],
                 'spawn_delays': [50],
                 'difficulty': '1',
