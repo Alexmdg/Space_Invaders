@@ -37,5 +37,27 @@ class PauseMenuScene(Menu):
         self.item_boxes[0].createPannel(self.menu_body.size[0] / 2, self.menu_body.size[1] / 2, space_between=5.57)
         self.update()
 
-class NextStageMenuScene(Menu):
-    pass
+class HeroStats(Menu):
+    def __init__(self, hero):
+        display_logger.success(f'HeroStatsScene init : OK')
+        super().__init__(ratiox=0.786, ratioy=0.618)
+        self.item_boxes[0].side = 'Horizontal'
+        self.item_boxes.append(ItemBox('powerUps'))
+        self.item_boxes.append(ItemBox('skills'))
+        self.item_boxes.append(ItemBox('Fire'))
+        self.item_boxes.append(ItemBox('Light'))
+        self.item_boxes.append(ItemBox('Ice'))
+        self.item_boxes.append(ItemBox('Earth'))
+        self.item_boxes.append(ItemBox('Buttons'))
+
+        for item_box in self.item_boxes[3:7]:
+            self.item_boxes.items.append(ItemBox('buttons'))
+
+            self.add_button(item_box.name, 'level', hero.datas[item_box.name])
+            self.add_button(item_box.name, 'add+', '+')
+            self.add_button(item_box.name, 'add-', '-')
+
+        self.add_button('mainBox', 'cancel', 'Cancel and go back', [CloseMenuEvents(), StartMenuEvent()])
+        self.add_button('mainBox', 'save', 'Learn skills and continue', [CloseMenuEvents(), StartMenuEvent()])
+        self.add_button()
+
