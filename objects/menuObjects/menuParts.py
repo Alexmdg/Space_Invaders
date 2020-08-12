@@ -149,15 +149,19 @@ class Menu(Pannel):
     def add_button(self, itemBox_name, name, label, event=None,
                    xratio=0.618, yratio=0.161,
                    font_size=48):
+        def search_itemBox_name(box_list, box_name):
+            for box in box_list:
+                if box.name == box_name:
+                    box.items.append(button)
+                elif type(box) == ItemBox:
+                    search_itemBox_name(box.items, box_name)
         button = Button(name,
                         (xratio * self.menu_body.size[0],
                          yratio * self.menu_body.size[1]),
                         label,
                         font_size,
                         event)
-        for box in self.item_boxes:
-            if box.name == itemBox_name:
-                box.items.append(button)
+        search_itemBox_name(self.item_boxes, itemBox_name)
 
     def update(self):
 

@@ -37,7 +37,7 @@ class PauseMenuScene(Menu):
         self.item_boxes[0].createPannel(self.menu_body.size[0] / 2, self.menu_body.size[1] / 2, space_between=5.57)
         self.update()
 
-class HeroStats(Menu):
+class HeroMenu(Menu):
     def __init__(self, hero):
         display_logger.success(f'HeroStatsScene init : OK')
         super().__init__(ratiox=0.786, ratioy=0.618)
