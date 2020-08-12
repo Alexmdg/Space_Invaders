@@ -4,14 +4,13 @@ from pygame.event import Event
 
 
 start_stage_Events = USEREVENT + 1
-close_stage_Events = USEREVENT + 2
-set_and_get_Events = USEREVENT + 3
-start_menu_Events = USEREVENT + 4
-close_menu_Events = USEREVENT + 5
-quit_game_Events = USEREVENT + 6
+start_menu_Events = USEREVENT + 2
+close_render_Events = USEREVENT + 3
+set_and_get_Events = USEREVENT + 4
+quit_game_Events = USEREVENT + 5
 
 
-class StartStageEvent:
+class StartStageEvents:
     def __init__(self, sender= 'MainMenu', render='StageRender', scene='StageScene', level=1):
         self.event = Event(start_stage_Events,
                            {'sender': sender,
@@ -20,16 +19,7 @@ class StartStageEvent:
                             'level': level})
 
 
-class CloseStageEvents:
-    def __init__(self, sender= 'MainMenu', render='StageRender', scene='StageScene', level=1):
-        self.event = Event(close_stage_Events,
-                           {'sender': sender,
-                            'render': render,
-                            'scene': scene,
-                            'level': level})
-
-
-class StartMenuEvent:
+class StartMenuEvents:
     def __init__(self, sender= 'LoseOutro', render='MenuRender', scene='MainMenu', level=1):
         self.event = Event(start_menu_Events,
                            {'sender': sender,
@@ -38,18 +28,9 @@ class StartMenuEvent:
                             'level': level})
 
 
-class CloseMenuEvents:
-    def __init__(self, sender= 'MainMenu', render='MenuRender', scene='MainMenu', level=1):
-        self.event = Event(close_menu_Events,
-                           {'sender': sender,
-                            'render': render,
-                            'scene': scene,
-                            'level': level})
-
-
-class QuitGameEvents:
+class CloseRenderEvents:
     def __init__(self, sender= 'MainMenu', render='StageRender', scene='StageScene', level=1):
-        self.event = Event(quit_game_Events,
+        self.event = Event(close_render_Events,
                            {'sender': sender,
                             'render': render,
                             'scene': scene,
@@ -67,3 +48,11 @@ class GetSetEvents:
                             'level': level,
                             'context': context})
 
+
+class QuitGameEvents:
+    def __init__(self, sender= 'MainMenu', render='StageRender', scene='StageScene', level=1):
+        self.event = Event(quit_game_Events,
+                           {'sender': sender,
+                            'render': render,
+                            'scene': scene,
+                            'level': level})

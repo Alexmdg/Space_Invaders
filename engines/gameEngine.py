@@ -49,15 +49,15 @@ class GameEngine:
             self.update(render)
             display_logger.debug(f'{type(render)}:is running = {render.is_running}')
             if render.is_paused:
-                self.menu = MenuRender(PauseMenuScene())
+                pause = MenuRender(PauseMenuScene())
                 number = 0
-                end_stage = self.sub_loop(self.menu, depth, number)
+                end_stage = self.sub_loop(pause, depth, number)
                 if end_stage is True:
-                    render.stage.is_running = False
+                    render.scene.is_running = False
                 render.is_paused = False
                 main_logger.success("Game Resumed")
         if type(render.scene) == PauseMenuScene:
-            return render.menu.close_stage
+            return render.scene.close_stage
         main_logger.debug(f"Sub loop {depth - 1} : {number} for {type(render)} with scene {type(render.scene)} end: OK")
 
 
@@ -75,19 +75,20 @@ class GameEngine:
                 self.is_running = False
             elif event.type == start_stage_Events:
                 event_logger.success("Event 'StartStage' Received")
+                if event.sender == 'PauseMenu':
+                    render.scene.close_stage = True
                 self.next_scene = eval(event.scene)(self.stages.get_stage(event.level), self.hero)
                 self.next_render = eval(event.render)(self.next_scene)
                 self.next_render.reset(self.next_scene, self.hero)
-            elif event.type == close_stage_Events:
-                event_logger.success("Event 'CloseStage' Received")
-            elif event.type == set_and_get_Events:
-                event_logger.success("Event 'Get or Set game data' Received")
             elif event.type == start_menu_Events:
                 event_logger.success("Event 'Display Menu' Received")
-            elif event.type == close_menu_Events:
-                event_logger.success("Event 'Close Menu' Received")
+                self.next_scene = eval(event.scene)
+                self.next_render = eval(event.render)(self.next_scene)
+            elif event.type == close_render_Events:
+                event_logger.success(f"Event 'Close Render' for {event.render}-{event.scene} Received")
                 render.is_running = False
-
+            elif event.type == set_and_get_Events:
+                event_logger.success("Event 'Get or Set game data' Received")
             else:
                 render.handleEvents(event)
 
