@@ -124,24 +124,20 @@ class StageOutro(Pannel):
             self.desc = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), f'kills = {self.hero.kills}', 36)
             self.desc.rect.centerx = self.size[0] / 2
             self.desc.rect.centery = (2.618 * self.size[1]) / 5
-            self.buttons.items.append(Button('nextLevel',
+            self.buttons.items.append(Button('continue',
                                               (0.268 * self.size[0],
                                                0.161 * self.size[1]),
                                               "Continue",
                                               48,
-                                              MenuEventsNextLevel()))
-            self.buttons.items.append(Button('heroMenu',
-                                             (0.268 * self.size[0],
-                                              0.161 * self.size[1]),
-                                             "Hero Stats",
-                                             48,
-                                             MenuEventsHeroMenu()))
+                                              [CloseRenderEvents(sender='OutroWin'),
+                                               StartMenuEvents(sender='OutroWin', scene="HeroMenu")]))
             self.buttons.items.append(Button('mainMenu',
                                              (0.268 * self.size[0],
                                               0.161 * self.size[1]),
                                              "Main Menu",
                                              48,
-                                             MenuEventsMainMenu()))
+                                             [CloseRenderEvents(sender='OutroWin'),
+                                              StartMenuEvents(sender='OutroWin', scene="MainMenu")]))
             self.buttons.createPannel(self.size[0] / 2, self.size[1] * 0.786, space_between=5.57, transparent=True)
             self.image.blit(self.buttons.image, self.buttons.rect)
 

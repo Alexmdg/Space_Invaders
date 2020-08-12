@@ -34,7 +34,6 @@ class StageScene():
     def reset(self, stage, hero):
         self.__init__(stage, hero)
         display_logger.success(f'StageScene has been reset to level : {stage.level}')
-        return self
 
     def update(self):
         if self.is_running is True:

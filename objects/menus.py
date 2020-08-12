@@ -13,8 +13,8 @@ class MainMenuScene(Menu):
     def __init__(self):
         display_logger.success(f'MainMenuScene init : OK')
         super().__init__()
-        self.add_button('mainBox', 'startGame', 'New Game', [CloseMenuEvents(), StartStageEvent()])
-        self.add_button('mainBox', 'gameContinue', 'Continue Game', [CloseMenuEvents(), StartStageEvent(level=0)])
+        self.add_button('mainBox', 'startGame', 'New Game', [CloseRenderEvents(), StartStageEvents()])
+        self.add_button('mainBox', 'gameContinue', 'Continue Game', [CloseRenderEvents(), StartStageEvents(level=0)])
         self.add_button('mainBox', 'quit', 'Quit Game', [QuitGameEvents()])
         self.item_boxes[0].createPannel(self.menu_body.size[0] / 2, self.menu_body.size[1] / 2, space_between=5.57)
         self.update()
@@ -24,15 +24,14 @@ class PauseMenuScene(Menu):
         display_logger.success(f'PauseMenuScene init : OK')
         super().__init__()
         self.close_stage = False
-        self.add_button('mainBox', 'gameResume', 'Resume Game', [CloseMenuEvents(sender='PauseMenu')])
-        self.add_button('mainBox', 'gameRestart', 'Restart Level', [CloseMenuEvents(sender='PauseMenu'),
-                                                                    CloseStageEvents(sender='PauseMenu'),
-                                                                    StartStageEvent(sender='PauseMenu', level=0)])
-        self.add_button('mainBox', 'startGame', 'New Game', [CloseMenuEvents(sender='PauseMenu'),
-                                                             CloseStageEvents(sender='PauseMenu'),
+        self.add_button('mainBox', 'gameResume', 'Resume Game', [CloseRenderEvents(sender='PauseMenu')])
+        self.add_button('mainBox', 'levelRestart', 'Restart Level', [CloseRenderEvents(sender='PauseMenu'),
+                                                                    CloseRenderEvents(sender='PauseMenu'),
+                                                                    StartStageEvents(sender='PauseMenu', level=0)])
+        self.add_button('mainBox', 'gameRestart', 'New Game', [CloseRenderEvents(sender='PauseMenu'),
                                                              GetSetEvents(type='set', sender='PauseMenu',
                                                                           context="RestartGame"),
-                                                             StartStageEvent(sender='PauseMenu', level=1)])
+                                                             StartStageEvents(sender='PauseMenu', level=1)])
         self.add_button('mainBox', 'quit', 'Quit Game', [QuitGameEvents()])
         self.item_boxes[0].createPannel(self.menu_body.size[0] / 2, self.menu_body.size[1] / 2, space_between=5.57)
         self.update()
