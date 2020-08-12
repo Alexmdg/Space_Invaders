@@ -68,7 +68,8 @@ class ItemBox(Pannel):
         self.items = []
 
 
-    def createPannel(self, centerx, centery, space_between=0, transparent=False):
+    def createPannel(self, centerx, centery, space_between=0, transparent=False,
+                     bg_color=settings.Purple(0), bttn_color=settings.Purple(200)):
         if self.side == 'Vertical':
             self.space_between = (space_between * settings.SCREEN_SIZE[1]) / 100
             sizeX = 0
@@ -107,14 +108,14 @@ class ItemBox(Pannel):
 
             if transparent is True:
                 self.image.convert_alpha()
-                self.image.fill(settings.Purple(0))
+                self.image.fill(bg_color)
             for item in self.items:
                 item.rect.y = 0
                 item.rect.x = pos
                 pos += item.size[0] + self.space_between
                 if transparent is True:
                     item.image.convert_alpha()
-                    item.image.fill(settings.Purple(200))
+                    item.image.fill(bttn_color)
                     item.image.blit(item.text.label, item.text.rect)
                     item.set_border_Color(settings.Yellow())
                 self.image.blit(item.image, item.rect)
@@ -126,9 +127,9 @@ class ItemBox(Pannel):
 
 
 class Menu(Pannel):
-    def __init__(self, height_ratio=0.618, width_ratio=0.618):
+    def __init__(self, ratiox=0.618, ratioy=0.618):
         super().__init__(settings.SCREEN_SIZE)
-        self.menu_body = Pannel((settings.SCREEN_SIZE[0] * height_ratio, settings.SCREEN_SIZE[1] * width_ratio))
+        self.menu_body = Pannel((settings.SCREEN_SIZE[0] * ratiox, settings.SCREEN_SIZE[1] * ratioy))
         self.item_boxes = [ItemBox('mainBox')]
 
         self.is_running = True
@@ -145,20 +146,22 @@ class Menu(Pannel):
         self.time = 0
         self.image.blit(self.menu_body.image, self.menu_body.rect)
 
-
-    def add_button(self, itemBox_name, name, label, event,
+    def add_button(self, itemBox_name, name, label, event=None,
                    xratio=0.618, yratio=0.161,
                    font_size=48):
-
+        def search_itemBox_name(box_list, box_name):
+            for box in box_list:
+                if box.name == box_name:
+                    box.items.append(button)
+                elif type(box) == ItemBox:
+                    search_itemBox_name(box.items, box_name)
         button = Button(name,
                         (xratio * self.menu_body.size[0],
                          yratio * self.menu_body.size[1]),
                         label,
                         font_size,
                         event)
-        for box in self.item_boxes:
-            if box.name == itemBox_name:
-                box.items.append(button)
+        search_itemBox_name(self.item_boxes, itemBox_name)
 
     def update(self):
 

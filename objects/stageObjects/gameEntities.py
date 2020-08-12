@@ -91,6 +91,7 @@ class PlayerStats:
         self.stage_score = datas['stage_score']
         self.total_score = datas['total_score']
         self.kills = datas['kills']
+        self.datas=datas
 
     def save(self):
         datas = dict((key, value) for (key, value) in self.__dict__.items())
