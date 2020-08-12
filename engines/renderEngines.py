@@ -9,17 +9,17 @@ display_logger.setLevel(settings.logging.INFO)
 sprite_logger.setLevel(settings.logging.INFO)
 
 class StageRender(pygame.Surface):
-    def __init__(self, size, stage):
+    def __init__(self, stage_scene, size=settings.SCREEN_SIZE):
         super().__init__(size)
         self.is_running = True
         self.is_paused = False
-        self.stage = stage
+        self.stage = stage_scene
         self.update()
         display_logger.success('stageRender init: OK')
 
-    def reset(self, size, stage, hero):
+    def reset(self, stage_scene, hero, size=settings.SCREEN_SIZE):
         try:
-            self.stage = self.stage.reset(stage.level, hero)
+            self.stage = self.stage.reset(stage_scene.level, hero)
             super().__init__(size)
             self.is_running = True
             self.update()

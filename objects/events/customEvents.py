@@ -22,7 +22,7 @@ class StartStageEvent:
 
 class CloseStageEvents:
     def __init__(self, sender= 'MainMenu', render='StageRender', scene='StageScene', level=1):
-        self.event = Event(start_stage_Events,
+        self.event = Event(close_stage_Events,
                            {'sender': sender,
                             'render': render,
                             'scene': scene,
@@ -31,7 +31,7 @@ class CloseStageEvents:
 
 class StartMenuEvent:
     def __init__(self, sender= 'LoseOutro', render='MenuRender', scene='MainMenu', level=1):
-        self.event = Event(start_stage_Events,
+        self.event = Event(start_menu_Events,
                            {'sender': sender,
                             'render': render,
                             'scene': scene,
@@ -40,7 +40,7 @@ class StartMenuEvent:
 
 class CloseMenuEvents:
     def __init__(self, sender= 'MainMenu', render='MenuRender', scene='MainMenu', level=1):
-        self.event = Event(start_stage_Events,
+        self.event = Event(close_menu_Events,
                            {'sender': sender,
                             'render': render,
                             'scene': scene,
@@ -49,7 +49,7 @@ class CloseMenuEvents:
 
 class QuitGameEvents:
     def __init__(self, sender= 'MainMenu', render='StageRender', scene='StageScene', level=1):
-        self.event = Event(start_stage_Events,
+        self.event = Event(quit_game_Events,
                            {'sender': sender,
                             'render': render,
                             'scene': scene,

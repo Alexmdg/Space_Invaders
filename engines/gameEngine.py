@@ -23,7 +23,7 @@ class GameEngine:
         self.hero = PlayerStats(stats)
         self.stages = Stages()
         self.stages.get_stage(self.hero.level)
-        self.stage = StageRender(settings.SCREEN_SIZE, StageScene(self.stages.get_stage(self.hero.level), self.hero))
+        self.stage = StageRender(StageScene(self.stages.get_stage(self.hero.level), self.hero))
         self.menu = MenuRender(MainMenuScene())
         self.next_scene = 'menu'
         self.number = 0
@@ -35,7 +35,6 @@ class GameEngine:
             depth = 0
             self.number += 1
             if self.next_scene == 'stage':
-                self.stage = self.stage.reset(settings.SCREEN_SIZE, StageScene(self.stages.get_stage(self.hero.level), self.hero), self.hero)
                 self.sub_loop(self.stage, depth, self.number)
             elif self.next_scene == 'menu':
                 self.sub_loop(self.menu, depth, self.number)
@@ -82,7 +81,7 @@ class GameEngine:
             if event.type == pygame.QUIT:
                 self.running = False
                 render.is_running = False
-                event_logger.success('User closed the game')
+                event_logger.success('User closed the game in a barbaric way')
                 pygame.quit()
                 quit()
             elif event.type == quit_game_Events:
@@ -91,6 +90,11 @@ class GameEngine:
                 self.is_running = False
             elif event.type == start_stage_Events:
                 event_logger.success("Event 'StartStage' Received")
+                self.next_scene = 'stage'
+                self.stage = self.stage.reset(
+                                StageScene(self.stages.get_stage(event.level), self.hero),
+                                self.hero
+                            )
             elif event.type == close_stage_Events:
                 event_logger.success("Event 'CloseStage' Received")
             elif event.type == set_and_get_Events:
@@ -99,6 +103,7 @@ class GameEngine:
                 event_logger.success("Event 'Display Menu' Received")
             elif event.type == close_menu_Events:
                 event_logger.success("Event 'Close Menu' Received")
+                render.is_running = False
 
             else:
                 render.handleEvents(event)
