@@ -87,19 +87,8 @@ class HeroMenu(Menu):
 
         self.create_pannels()
 
-        # self.search_itembox('Row 2')
-        # self.targetbox.createPannel(centerx=settings.SCREEN_SIZE[0] / 2, centery=settings.SCREEN_SIZE[1] / 2,
-        #                             space_between=0.090)
-        # self.targetbox.rect.x = 0
-        # self.targetbox.rect.y = 0.090 * self.size[1]
-        # self.search_itembox('Row 3')
-        # self.targetbox.createPannel(centerx=settings.SCREEN_SIZE[0] / 2, centery=settings.SCREEN_SIZE[1] / 2,
-        #                             space_between=0.090)
-        # self.targetbox.rect.x = 0
-        # self.targetbox.rect.y = 0.090 * self.size[1]
         self.search_itembox('Skills')
-        self.targetbox.createPannel(centerx=settings.SCREEN_SIZE[0] / 2, centery=settings.SCREEN_SIZE[1] / 2,
-                                    space_between=4.61)
+        self.targetbox.createPannel(centerx=settings.SCREEN_SIZE[0] / 2, centery=settings.SCREEN_SIZE[1] / 2, space_between=4.61)
         self.targetbox.rect.x = 0
         self.targetbox.rect.y = 0
         self.search_itembox('Datas')
@@ -108,7 +97,7 @@ class HeroMenu(Menu):
         self.targetbox.rect.y = 0
         self.search_itembox('Buttons')
         self.targetbox.createPannel(centerx= settings.SCREEN_SIZE[0] / 2, centery = settings.SCREEN_SIZE[1] / 2, space_between=9.02)
-        self.targetbox.rect.x = self.size[0] /2
+        self.targetbox.rect.x = self.size[0] / 2
         self.targetbox.rect.y = 0
         self.item_boxes[0].createPannel(centerx= settings.SCREEN_SIZE[0] / 2, centery = settings.SCREEN_SIZE[1] / 2, space_between=9.02)
         self.item_boxes[0].rect.x = 0
