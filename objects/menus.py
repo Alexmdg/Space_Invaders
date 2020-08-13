@@ -85,75 +85,74 @@ class HeroMenu(Menu):
         self.add_button('Row3', 'damage', f'damage : {str(hero.damage)}', xratio=a, yratio=b, font_size=18)
         self.add_button('Row3', 'shield', f'shield : {str(hero.shield)}', xratio=a, yratio=b, font_size=18)
 
-        self.create_pannels()
+        # self.create_pannels()
 
-        # self.search_itembox('Row1_Col1')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #              bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Row1')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Row2')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Row3')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Skills')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Earth_add')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Ice_add')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Light_add')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Fire_add')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Earth')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Ice')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Light')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Fire')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Collected')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('PowerUps')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Datas')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('Buttons')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        # self.search_itembox('mainBox')
-        # self.targetbox.createPannel(space_between=0, transparent=True,
-        #                             bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
-        #
-        # self.menu_body.image.blit(self.targetbox.image, self.targetbox.rect)
+        self.search_itembox('Row1_Col1')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                     bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Row1')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Row2')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Row3')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Skills')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Earth_add')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Ice_add')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Light_add')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Fire_add')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Earth')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Ice')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Light')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Fire')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Collected')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('PowerUps')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Datas')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.search_itembox('Buttons')
+        self.targetbox.createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
+        self.item_boxes[0].createPannel(space_between=0, transparent=True,
+                                    bg_color=settings.Purple(0), bttn_color=settings.Purple(0))
 
+        self.menu_body.image.blit(self.targetbox.image, self.targetbox.rect)
 
 
-        # self.search_itembox('Datas')
-        # self.targetbox.rect.centery = 0.145 * self.size[1]/2
-        # self.targetbox.rect.centery = self.size[0]/2
-        # self.image.blit(self.targetbox.image, self.targetbox.rect)
-        # self.search_itembox('Buttons')
-        # self.targetbox.rect.centery = 0.786 * self.size[1]/2
-        # self.targetbox.rect.centery = self.size[0]/2
-        # self.image.blit(self.targetbox.image, self.targetbox.rect)
+
+        self.search_itembox('Datas')
+        self.targetbox.rect.centery = 0.145 * self.size[1]/2
+        self.targetbox.rect.centery = self.size[0]/2
+        self.image.blit(self.targetbox.image, self.targetbox.rect)
+        self.search_itembox('Buttons')
+        self.targetbox.rect.centery = 0.786 * self.size[1]/2
+        self.targetbox.rect.centery = self.size[0]/2
+        self.image.blit(self.targetbox.image, self.targetbox.rect)
 
         display_logger.success(f'HeroMenu init : OK')
 
