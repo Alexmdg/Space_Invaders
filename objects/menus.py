@@ -59,10 +59,11 @@ class HeroMenu(Menu):
         self.add_button('Light', 'light', str(hero.light), xratio = 0.145, yratio=0.090)
         self.add_button('Ice', 'ice', str(hero.ice), xratio = 0.145, yratio=0.090)
         self.add_button('Earth', 'earth', str(hero.earth), xratio = 0.145, yratio=0.090)
+        n=1
         for item_box in self.item_boxes[0].items[0].items[0].items[2:]:
             item_box.items.append(ItemBox(item_box.name+'_add', side='Horizontal'))
-            self.add_button(item_box.name+'_add', '+', '+', [CloseRenderEvents(), CloseRenderEvents()], xratio=0.055, yratio=0.055, font_size=24)
-            self.add_button(item_box.name+'_add', '-', '-', [CloseRenderEvents(), CloseRenderEvents()], xratio=0.055, yratio=0.055, font_size=24)
+            self.add_button(item_box.name+'_add', '+', '+', [PowerUpEvents(sender=n, action='+')], xratio=0.055, yratio=0.055, font_size=24)
+            self.add_button(item_box.name+'_add', '-', '-', [PowerUpEvents(sender=n, action='-')], xratio=0.055, yratio=0.055, font_size=24)
         self.search_itembox('Skills')
         self.targetbox.items.append(ItemBox('Row1', side='Horizontal'))
         self.targetbox.items.append(ItemBox('Row2', side='Horizontal'))

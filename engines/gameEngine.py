@@ -60,7 +60,6 @@ class GameEngine:
             return render.scene.close_stage
         main_logger.debug(f"Sub loop {depth - 1} : {number} for {type(render)} with scene {type(render.scene)} end: OK")
 
-
     def handleEvents(self, render):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -91,6 +90,11 @@ class GameEngine:
             elif event.type == close_render_Events:
                 event_logger.success(f"Event 'Close Render' for {event.render}-{event.scene} Received")
                 render.is_running = False
+            elif event.type == power_up_Events:
+                if event.action == '+':
+                    pass
+                elif event.action == '-':
+                    pass
             elif event.type == set_and_get_Events:
                 event_logger.success("Event 'Get or Set game data' Received")
             else:

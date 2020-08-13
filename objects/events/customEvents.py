@@ -8,6 +8,7 @@ start_menu_Events = USEREVENT + 2
 close_render_Events = USEREVENT + 3
 set_and_get_Events = USEREVENT + 4
 quit_game_Events = USEREVENT + 5
+power_up_Events = USEREVENT + 6
 
 
 class StartStageEvents:
@@ -56,3 +57,11 @@ class QuitGameEvents:
                             'render': render,
                             'scene': scene,
                             'level': level})
+
+
+class PowerUpEvents:
+    def __init__(self, sender=1, action='+'):
+        self.event = Event(power_up_Events,
+                           {'sender': sender,
+                            'action': action})
+
