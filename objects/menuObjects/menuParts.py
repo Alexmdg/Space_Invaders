@@ -119,7 +119,6 @@ class ItemBox(Pannel):
                         item.image.convert_alpha()
                         item.image.fill(bttn_color)
                         item.image.blit(item.text.label, item.text.rect)
-                        item.set_border_Color(settings.YELLOW)
                 self.image.blit(item.image, item.rect)
 
     def update(self):
@@ -178,7 +177,8 @@ class Menu(Pannel):
                     rect_logger.debug(f'Searching in {item.name}')
                     self.search_itembox(target, item)
 
-
+    def touch_boxes(self):
+        pass
 
     def create_pannels(self):
         def search_itemBox(itembox):
@@ -213,7 +213,6 @@ class Menu(Pannel):
             rect_logger.exception("Couldn't create pannels")
 
     def update(self):
-
         for box in self.item_boxes:
             box.update()
             self.menu_body.image.blit(box.image, box.rect)
