@@ -111,6 +111,7 @@ class StageOutro(Pannel):
             self.image.blit(self.buttons.image, self.buttons.rect)
 
         elif choice == "win":
+            self.hero.save()
             self.background = pygame.Surface(self.size)
             self.background.blit(
                 pygame.transform.scale(settings.IMAGE_LOADER.win_bg, (int(0.618 * self.size[0]), int(self.size[1]))),
@@ -130,14 +131,14 @@ class StageOutro(Pannel):
                                               "Continue",
                                               48,
                                               [CloseRenderEvents(sender='OutroWin'),
-                                               StartMenuEvents(sender='OutroWin', scene="HeroMenu")]))
+                                               StartMenuEvents(sender='OutroWin', scene="HeroMenuScene")]))
             self.buttons.items.append(Button('mainMenu',
                                              (0.268 * self.size[0],
                                               0.161 * self.size[1]),
                                              "Main Menu",
                                              48,
                                              [CloseRenderEvents(sender='OutroWin'),
-                                              StartMenuEvents(sender='OutroWin', scene="MainMenu")]))
+                                              StartMenuEvents(sender='OutroWin', scene="MainMenuScene")]))
             self.buttons.createPannel(self.size[0] / 2, self.size[1] * 0.786, space_between=5.57, transparent=True)
             self.image.blit(self.buttons.image, self.buttons.rect)
 

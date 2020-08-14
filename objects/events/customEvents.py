@@ -12,7 +12,7 @@ power_up_Events = USEREVENT + 6
 
 
 class StartStageEvents:
-    def __init__(self, sender= 'MainMenu', render='StageRender', scene='StageScene', level=1):
+    def __init__(self, sender= 'MainMenuScene', render='StageRender', scene='StageScene', level=1):
         self.event = Event(start_stage_Events,
                            {'sender': sender,
                             'render': render,
@@ -21,7 +21,7 @@ class StartStageEvents:
 
 
 class StartMenuEvents:
-    def __init__(self, sender= 'LoseOutro', render='MenuRender', scene='MainMenu', level=1):
+    def __init__(self, sender= 'LoseOutro', render='MenuRender', scene='MainMenuScene', level=1):
         self.event = Event(start_menu_Events,
                            {'sender': sender,
                             'render': render,
@@ -30,7 +30,7 @@ class StartMenuEvents:
 
 
 class CloseRenderEvents:
-    def __init__(self, sender= 'MainMenu', render='StageRender', scene='StageScene', level=1):
+    def __init__(self, sender= 'MainMenuScene', render='StageRender', scene='StageScene', level=1):
         self.event = Event(close_render_Events,
                            {'sender': sender,
                             'render': render,
@@ -39,7 +39,7 @@ class CloseRenderEvents:
 
 
 class GetSetEvents:
-    def __init__(self, sender='MainMenu',
+    def __init__(self, sender='MainMenuScene',
                 type='get', hero='', level=1,
                 context=''):
         self.event = Event(set_and_get_Events,
@@ -51,7 +51,7 @@ class GetSetEvents:
 
 
 class QuitGameEvents:
-    def __init__(self, sender= 'MainMenu', render='StageRender', scene='StageScene', level=1):
+    def __init__(self, sender= 'MainMenuScene', render='StageRender', scene='StageScene', level=1):
         self.event = Event(quit_game_Events,
                            {'sender': sender,
                             'render': render,

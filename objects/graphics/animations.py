@@ -8,7 +8,7 @@ class Dying(Group):
         super().__init__()
 
     def died(self, unit):
-        if random.randint(0, 48) == 0:
+        if random.randint(0, 100) < 1 * unit.pu_chances:
             unit.image = transform.scale(settings.IMAGE_LOADER.power_up, (int(0.618 * unit.size[0]), int(0.618 * unit.size[1])))
             unit.power_up = True
         else:

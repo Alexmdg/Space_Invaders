@@ -24,14 +24,14 @@ class PauseMenuScene(Menu):
         display_logger.success(f'PauseMenuScene init : OK')
         super().__init__()
         self.close_stage = False
-        self.add_button('mainBox', 'gameResume', 'Resume Game', [CloseRenderEvents(sender='PauseMenu')])
-        self.add_button('mainBox', 'levelRestart', 'Restart Level', [CloseRenderEvents(sender='PauseMenu'),
-                                                                    CloseRenderEvents(sender='PauseMenu'),
-                                                                    StartStageEvents(sender='PauseMenu', level=0)])
-        self.add_button('mainBox', 'gameRestart', 'New Game', [CloseRenderEvents(sender='PauseMenu'),
-                                                             GetSetEvents(type='set', sender='PauseMenu',
+        self.add_button('mainBox', 'gameResume', 'Resume Game', [CloseRenderEvents(sender='PauseMenuScene')])
+        self.add_button('mainBox', 'levelRestart', 'Restart Level', [CloseRenderEvents(sender='PauseMenuScene'),
+                                                                    CloseRenderEvents(sender='PauseMenuScene'),
+                                                                    StartStageEvents(sender='PauseMenuScene', level=0)])
+        self.add_button('mainBox', 'gameRestart', 'New Game', [CloseRenderEvents(sender='PauseMenuScene'),
+                                                             GetSetEvents(type='set', sender='PauseMenuScene',
                                                                           context="RestartGame"),
-                                                             StartStageEvents(sender='PauseMenu', level=1)])
+                                                             StartStageEvents(sender='PauseMenuScene', level=1)])
         self.add_button('mainBox', 'quit', 'Quit Game', [QuitGameEvents()])
         self.item_boxes[0].createPannel(self.menu_body.size[0] / 2, self.menu_body.size[1] / 2, space_between=5.57)
         self.update()
@@ -46,7 +46,7 @@ class HeroMenu(Menu):
                         [CloseRenderEvents(), StartStageEvents(level=self.hero.level)],
                         xratio = 0.423, yratio=0.145, font_size=36)
         self.add_button('Buttons', 'save', 'Learn skills and continue',
-                        [CloseRenderEvents(), StartMenuEvents()],
+                        [CloseRenderEvents(), StartStageEvents(level=self.hero.level)],
                         xratio = 0.423, yratio=0.145, font_size=36)
         self.search_itembox('Datas')
         self.targetbox.items.append(ItemBox('PowerUps', side='Horizontal'))
@@ -86,7 +86,7 @@ class HeroMenu(Menu):
         self.add_button('Row2', 'max_jump', f'Max Jump : {str(self.hero.max_jump)}', xratio=a, yratio=b, font_size=28)
         self.add_button('Row2', 'health', f'Health : {str(self.hero.health)}', xratio=a, yratio=b, font_size=28)
         self.add_button('Row3', 'ammo_speed', f'Ammo Speed : {str(self.hero.ammo_speed)}', xratio=a, yratio=b, font_size=28)
-        self.add_button('Row3', 'attack_rate', f'Attack Rate : {str(self.hero.attack_rate)}', xratio=a, yratio=b, font_size=28)
+        self.add_button('Row3', 'attack_rate', f'Attack Rate : BASE x {str(round(self.hero.attack_rate, 1))}', xratio=a, yratio=b, font_size=28)
         self.add_button('Row3', 'max_ammo', f'Max Ammo : {str(self.hero.max_ammo)}', xratio=a, yratio=b, font_size=28)
         self.add_button('Row3', 'damage', f'Damage : {str(self.hero.damage)}', xratio=a, yratio=b, font_size=28)
         self.add_button('Row3', 'shield', f'Shield : {str(self.hero.shield)}', xratio=a, yratio=b, font_size=28)

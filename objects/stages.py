@@ -24,7 +24,7 @@ class StageScene():
         self.background = pygame.transform.scale(settings.IMAGE_LOADER.city_background, settings.SCREEN_SIZE)
         self.objects = {'player': [Player(self.hero)],
                         'enemies': [eval(enemies) for enemies in self.level.initial_spawns],
-                        'shots': [Weapon(50)],
+                        'shots': [Weapon(50, self.hero)],
                         'deads': [Dying()]
                     }
         sprite_logger.debug(f'{self.objects}')
@@ -65,7 +65,7 @@ class Stages:
                 'level': 1,
                 'name': 'Stage 1',
                 'waves': 0,
-                'initial_spawns': ["EnnemyArmy(SpaceOcto, 1, 1, 70, '1')"],
+                'initial_spawns': ["EnnemyArmy(SpaceOcto, 5, 12, 70, '1')"],
                 'spawns': [],
                 'spawn_delays': [50],
                 'difficulty': '1',

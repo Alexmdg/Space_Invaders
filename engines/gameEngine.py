@@ -1,4 +1,5 @@
 from engines.renderEngines import *
+from objects.menus import *
 from objects.graphics.graphicObjects import *
 import ujson
 
@@ -76,14 +77,21 @@ class GameEngine:
                 self.is_running = False
             elif event.type == start_stage_Events:
                 event_logger.success("Event 'StartStage' Received")
-                if event.sender == 'PauseMenu':
+                if event.sender == 'PauseMenuScene':
                     render.scene.close_stage = True
+                with open('hero.json') as f:
+                    stats = ujson.load(f)
+                self.hero = PlayerStats(stats)
+                self.hero.kills = 0
                 self.next_scene = eval(event.scene)(self.stages.get_stage(event.level), self.hero)
                 self.next_render = eval(event.render)(self.next_scene)
                 self.next_render.reset(self.next_scene, self.hero)
             elif event.type == start_menu_Events:
                 event_logger.success("Event 'Display Menu' Received")
-                if event.scene == 'HeroMenu':
+                if event.scene == 'HeroMenuScene':
+                    with open('hero.json') as f:
+                        stats = ujson.load(f)
+                    self.hero = PlayerStats(stats)
                     self.next_scene = eval(event.scene)(self.hero)
                     self.next_render = eval(event.render)(self.next_scene)
                 else:

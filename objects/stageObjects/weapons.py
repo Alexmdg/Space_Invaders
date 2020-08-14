@@ -24,14 +24,15 @@ class Weapon(pygame.sprite.Group):
             else:
                 self.rect.move_ip(0, self.groups()[0].ammo_speed)
 
-    def __init__(self, ammo_size_factor):
+    def __init__(self, ammo_size_factor, hero):
         super().__init__()
+        self.hero = hero
         self.ammo_size = int((settings.UNITS_SIZE * ammo_size_factor) / 100)
         self.ammo_surf = pygame.transform.scale(settings.IMAGE_LOADER.arrow, (self.ammo_size, self.ammo_size))
-        self.ammo_speed = -6.66
-        self.attack_rate = 2
-        self.max_ammo = 7
-        self.damage = 1
+        self.ammo_speed = -6.66 + (-6.66 * self.hero.ammo_speed)
+        self.attack_rate = 2 + (2 * self.hero.attack_rate)
+        self.max_ammo = 7 + (7 * self.hero.max_ammo)
+        self.damage = 1 + (1 * self.hero.damage)
         self.shot_fired = False
 
     def fireShot(self, player_rect, event):

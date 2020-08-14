@@ -127,10 +127,15 @@ class PlayerStats:
 
     def update(self, type, sign):
         if sign == "+":
-            if type == 1:
-                self.damage += 0.1
-                self.attack_rate += 0.1
-                self.shield += 0.1
+            if self.power_up >= 10:
+                if type == 1:
+                    self.damage += 0.1
+                    self.attack_rate += 0.1
+                    self.shield += 0.1
+                    self.power_up -= 10
+                    self.fire += 1
+            else:
+                pass
         if sign == '-':
             if type == 1:
                 pass

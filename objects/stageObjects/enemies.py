@@ -96,6 +96,7 @@ class SpaceOcto(pygame.sprite.Sprite):
     def __init__(self, rect):
         super().__init__()
         self.rect = pygame.Rect(rect)
+        self.pu_chances = 80
         self.power_up = False
         self.size = rect[1]
         self.image = pygame.transform.scale(settings.IMAGE_LOADER.space_octo, self.size)
