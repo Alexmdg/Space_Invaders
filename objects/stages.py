@@ -1,6 +1,10 @@
-from objects.stageObjects.gameEntities import *
+from objects.stageObjects.player import *
+from objects.stageObjects.enemies import *
+from objects.stageObjects.weapons import *
 from objects.menuObjects.hud import *
 from objects.graphics.animations import *
+from .stageObjects.player import Player
+from .stageObjects.weapons import Weapon
 from .transitions import StageIntro, StageOutro
 
 

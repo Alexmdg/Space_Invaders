@@ -2,6 +2,8 @@ from engines.renderEngines import *
 from objects.graphics.graphicObjects import *
 import ujson
 
+from objects.stageObjects.player import PlayerStats
+
 main_logger, event_logger, rect_logger, display_logger, sprite_logger = settings.create_loggers(__name__)
 main_logger.setLevel(settings.logging.DEBUG)
 event_logger.setLevel(settings.logging.INFO)
