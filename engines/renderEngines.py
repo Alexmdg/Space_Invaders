@@ -197,7 +197,7 @@ class MenuRender(pygame.Surface):
                             for button in item.items:
                                 rect_logger.debug(f'button {button.name} - rect: {button.rect} ')
                                 if button.rect.collidepoint((tmp_posX, tmp_posY)):
-                                    self.scene.click_down(button)
+                                    self.scene.click_up(button)
                                     rect_logger.success(
                                         f'is_collide : {button.rect.collidepoint((tmp_posX, tmp_posY))}')
             else:

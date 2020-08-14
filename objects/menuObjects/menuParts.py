@@ -29,6 +29,9 @@ class Pannel:
 class Button(Pannel):
     def __init__(self, name, size, msg, font_size, event, font_color=settings.GREY):
         super().__init__(size)
+        self.size = size
+        self.font_size=font_size
+        self.fpnt_color = font_color
         self.image.fill(settings.PURPLE)
         self.name = name
         self.text = TextLabel(size, msg, font_size, font_color)
@@ -38,6 +41,7 @@ class Button(Pannel):
     def click_down(self):
         self.text.change_settings(font_size=self.text.font_size)
         self.image.blit(self.text.label, self.text.rect)
+        rect_logger.success(f'button {self.name} has been clicked down')
 
     def click_up(self):
         self.text.change_settings(font_size=self.text.font_size, font_color=settings.GREY)
@@ -45,6 +49,11 @@ class Button(Pannel):
         self.is_clicked = True
         for event in self.event:
             pygame.event.post(event.event)
+        rect_logger.success(f'button {self.name} has been clicked up')
+
+    def change_txt(self, msg):
+        self.text = TextLabel(self.size, msg, self.font_size, self.font_color)
+        self.image.blit(self.text.label, self.text.rect)
 
 
 class TextLabel:
@@ -177,8 +186,14 @@ class Menu(Pannel):
                     rect_logger.debug(f'Searching in {item.name}')
                     self.search_itembox(target, item)
 
-    def touch_boxes(self):
-        pass
+    def search_button(self, target, ib=None):
+        ib = self.item_boxes[0] if ib is None else ib
+        for item in ib.items:
+            if type(item) == Button:
+                if item.name == target:
+                    self.target_button = item
+            elif type(item) == ItemBox:
+                self.search_button(target, item)
 
     def create_pannels(self):
         def search_itemBox(itembox):

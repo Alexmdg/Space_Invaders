@@ -93,10 +93,9 @@ class GameEngine:
                 event_logger.success(f"Event 'Close Render' for {event.render}-{event.scene} Received")
                 render.is_running = False
             elif event.type == power_up_Events:
-                if event.action == '+':
-                    pass
-                elif event.action == '-':
-                    pass
+                event_logger.success(f"Event 'PowerUp Event' : {event.sender}{event.action} Received")
+                render.scene.hero.update(event.sender, event.action)
+                render.scene.update_all_infos()
             elif event.type == set_and_get_Events:
                 event_logger.success("Event 'Get or Set game data' Received")
             else:

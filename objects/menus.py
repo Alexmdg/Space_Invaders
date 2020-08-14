@@ -39,11 +39,11 @@ class PauseMenuScene(Menu):
 class HeroMenu(Menu):
     def __init__(self, hero):
         super().__init__(ratiox=0.786, ratioy=0.786)
-
+        self.hero = hero
         self.item_boxes[0].items.append(ItemBox('Datas'))
         self.item_boxes[0].items.append(ItemBox('Buttons', side='Horizontal'))
         self.add_button('Buttons', 'cancel', 'Cancel and go back',
-                        [CloseRenderEvents(), StartStageEvents(level=hero.level)],
+                        [CloseRenderEvents(), StartStageEvents(level=self.hero.level)],
                         xratio = 0.423, yratio=0.145, font_size=36)
         self.add_button('Buttons', 'save', 'Learn skills and continue',
                         [CloseRenderEvents(), StartMenuEvents()],
@@ -54,16 +54,16 @@ class HeroMenu(Menu):
         self.add_button('PowerUps', 'powerList_title', 'POWER UP', xratio = 0.145, yratio=0.090, font_size=24)
         self.search_itembox('PowerUps')
         self.targetbox.items.append(ItemBox('Collected'))
-        self.add_button('Collected', 'collected_PU', f'power ups : {hero.power_up}',
+        self.add_button('Collected', 'collected_PU', f'power ups : {self.hero.power_up}',
                         xratio=0.145, yratio=0.090, font_size=24)
         self.targetbox.items.append(ItemBox('Fire'))
         self.targetbox.items.append(ItemBox('Light'))
         self.targetbox.items.append(ItemBox('Ice'))
         self.targetbox.items.append(ItemBox('Earth'))
-        self.add_button('Fire', 'fire', str(hero.fire), xratio = 0.145, yratio=0.090)
-        self.add_button('Light', 'light', str(hero.light), xratio = 0.145, yratio=0.090)
-        self.add_button('Ice', 'ice', str(hero.ice), xratio = 0.145, yratio=0.090)
-        self.add_button('Earth', 'earth', str(hero.earth), xratio = 0.145, yratio=0.090)
+        self.add_button('Fire', 'fire', str(self.hero.fire), xratio = 0.145, yratio=0.090)
+        self.add_button('Light', 'light', str(self.hero.light), xratio = 0.145, yratio=0.090)
+        self.add_button('Ice', 'ice', str(self.hero.ice), xratio = 0.145, yratio=0.090)
+        self.add_button('Earth', 'earth', str(self.hero.earth), xratio = 0.145, yratio=0.090)
         n=1
         for item_box in self.item_boxes[0].items[0].items[0].items[2:]:
             item_box.items.append(ItemBox(item_box.name+'_add', side='Horizontal'))
@@ -75,21 +75,21 @@ class HeroMenu(Menu):
         self.targetbox.items.append(ItemBox('Row3', side='Horizontal'))
         a = 0.241
         b = 0.090
-        self.add_button('Row1', 'level', f'Level : {str(hero.level)}', xratio=0.236, yratio=b, font_size=42)
+        self.add_button('Row1', 'level', f'Level : {str(self.hero.level)}', xratio=0.236, yratio=b, font_size=42)
         self.search_itembox('Row1')
         self.targetbox.items.append(ItemBox('Row1_Col1', side='Horizontal'))
-        self.add_button('Row1_Col1', 'kills', f'Kills : {str(hero.kills)}', xratio=0.145, yratio=0.090, font_size=28)
-        self.add_button('Row1_Col1', 'stage_score', f'Stage_Score : {str(hero.stage_score)}', xratio=0.328, yratio=0.055, font_size=32)
-        self.add_button('Row1_Col1', 'total_score', f'Total_Score : {str(hero.total_score)}', xratio=0.328, yratio=0.055, font_size=32)
-        self.add_button('Row2', 'max_speed', f'Max Speed : {str(hero.max_speed)}', xratio=a, yratio=b, font_size=28)
-        self.add_button('Row2', 'speed', f'Accel : {str(hero.level)}', xratio=a, yratio=b, font_size=28)
-        self.add_button('Row2', 'max_jump', f'Max Jump : {str(hero.max_jump)}', xratio=a, yratio=b, font_size=28)
-        self.add_button('Row2', 'health', f'Health : {str(hero.health)}', xratio=a, yratio=b, font_size=28)
-        self.add_button('Row3', 'ammo_speed', f'Ammo Speed : {str(hero.ammo_speed)}', xratio=a, yratio=b, font_size=28)
-        self.add_button('Row3', 'attack_rate', f'Attack Rate : {str(hero.attack_rate)}', xratio=a, yratio=b, font_size=28)
-        self.add_button('Row3', 'max_ammo', f'Max Ammo : {str(hero.max_ammo)}', xratio=a, yratio=b, font_size=28)
-        self.add_button('Row3', 'damage', f'Damage : {str(hero.damage)}', xratio=a, yratio=b, font_size=28)
-        self.add_button('Row3', 'shield', f'Shield : {str(hero.shield)}', xratio=a, yratio=b, font_size=28)
+        self.add_button('Row1_Col1', 'kills', f'Kills : {str(self.hero.kills)}', xratio=0.145, yratio=0.090, font_size=28)
+        self.add_button('Row1_Col1', 'stage_score', f'Stage_Score : {str(self.hero.stage_score)}', xratio=0.328, yratio=0.055, font_size=32)
+        self.add_button('Row1_Col1', 'total_score', f'Total_Score : {str(self.hero.total_score)}', xratio=0.328, yratio=0.055, font_size=32)
+        self.add_button('Row2', 'max_speed', f'Max Speed : {str(self.hero.max_speed)}', xratio=a, yratio=b, font_size=28)
+        self.add_button('Row2', 'speed', f'Accel : {str(self.hero.level)}', xratio=a, yratio=b, font_size=28)
+        self.add_button('Row2', 'max_jump', f'Max Jump : {str(self.hero.max_jump)}', xratio=a, yratio=b, font_size=28)
+        self.add_button('Row2', 'health', f'Health : {str(self.hero.health)}', xratio=a, yratio=b, font_size=28)
+        self.add_button('Row3', 'ammo_speed', f'Ammo Speed : {str(self.hero.ammo_speed)}', xratio=a, yratio=b, font_size=28)
+        self.add_button('Row3', 'attack_rate', f'Attack Rate : {str(self.hero.attack_rate)}', xratio=a, yratio=b, font_size=28)
+        self.add_button('Row3', 'max_ammo', f'Max Ammo : {str(self.hero.max_ammo)}', xratio=a, yratio=b, font_size=28)
+        self.add_button('Row3', 'damage', f'Damage : {str(self.hero.damage)}', xratio=a, yratio=b, font_size=28)
+        self.add_button('Row3', 'shield', f'Shield : {str(self.hero.shield)}', xratio=a, yratio=b, font_size=28)
 
         self.create_pannels()
 
@@ -127,6 +127,11 @@ class HeroMenu(Menu):
             rect_logger.debug(f"menubody's rect = {self.menu_body.rect}")
             self.image.blit(self.background, (0, 0))
             self.image.blit(self.menu_body.image, self.menu_body.rect)
+
+    def update_all_infos(self):
+        self.__init__(self.hero)
+
+
 
 
 
