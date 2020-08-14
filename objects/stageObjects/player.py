@@ -96,6 +96,7 @@ class PlayerStats:
         datas = dict((key, value) for (key, value) in self.__dict__.items())
         main_logger.debug(f'{datas}')
         with open('hero.json', 'w') as f:
+            f.truncate(0)
             ujson.dump(datas, f, indent=4)
             main_logger.success('Hero stats saved to "hero.json"')
 
@@ -122,6 +123,7 @@ class PlayerStats:
                 }
         self.__init__(datas)
         with open('hero.json', 'w') as f:
+            # f.truncate(0)
             ujson.dump(datas, f, indent=4)
             main_logger.success('Hero stats has been reset')
 

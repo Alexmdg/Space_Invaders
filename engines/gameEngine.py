@@ -1,5 +1,4 @@
 from engines.renderEngines import *
-from objects.menus import *
 from objects.graphics.graphicObjects import *
 import ujson
 
@@ -10,7 +9,7 @@ main_logger.setLevel(settings.logging.DEBUG)
 event_logger.setLevel(settings.logging.INFO)
 rect_logger.setLevel(settings.logging.INFO)
 display_logger.setLevel(settings.logging.INFO)
-sprite_logger.setLevel(settings.logging.INFO)
+sprite_logger.setLevel(settings.logging.DEBUG)
 
 class GameEngine:
     def __init__(self):
@@ -83,7 +82,7 @@ class GameEngine:
                     stats = ujson.load(f)
                 self.hero = PlayerStats(stats)
                 self.hero.kills = 0
-                self.next_scene = eval(event.scene)(self.stages.get_stage(event.level), self.hero)
+                self.next_scene = eval(event.scene)(self.stages.get_stage(self.hero.level), self.hero)
                 self.next_render = eval(event.render)(self.next_scene)
                 self.next_render.reset(self.next_scene, self.hero)
             elif event.type == start_menu_Events:
@@ -99,6 +98,17 @@ class GameEngine:
                     self.next_render = eval(event.render)(self.next_scene)
             elif event.type == close_render_Events:
                 event_logger.success(f"Event 'Close Render' for {event.render}-{event.scene} Received")
+                if event.sender == 'HeroMenuNext':
+                    render.scene.hero.level += 1
+                    render.scene.hero.save()
+                    with open('hero.json') as f:
+                        stats = ujson.load(f)
+                    self.hero = PlayerStats(stats)
+                    sprite_logger.debug(f'self.hero = {self.hero.datas}')
+                elif event.sender == 'HeroMenuBack':
+                    with open('hero.json') as f:
+                        stats = ujson.load(f)
+                    self.hero = PlayerStats(stats)
                 render.is_running = False
             elif event.type == power_up_Events:
                 event_logger.success(f"Event 'PowerUp Event' : {event.sender}{event.action} Received")

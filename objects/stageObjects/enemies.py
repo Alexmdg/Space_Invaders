@@ -96,7 +96,7 @@ class SpaceOcto(pygame.sprite.Sprite):
     def __init__(self, rect):
         super().__init__()
         self.rect = pygame.Rect(rect)
-        self.pu_chances = 80
+        self.pu_chances = 40
         self.power_up = False
         self.size = rect[1]
         self.image = pygame.transform.scale(settings.IMAGE_LOADER.space_octo, self.size)
@@ -111,6 +111,7 @@ class SpaceGhost(pygame.sprite.Sprite):
     def __init__(self, rect):
         super().__init__()
         self.rect = pygame.Rect(rect)
+        self.pu_chances = 15
         self.power_up = False
         self.size = rect[1]
         self.image = pygame.transform.scale(settings.IMAGE_LOADER.space_ghost, self.size)
@@ -126,6 +127,7 @@ class SpaceBlob(pygame.sprite.Sprite):
     def __init__(self, rect):
         super().__init__()
         self.rect = pygame.Rect(rect)
+        self.pu_chances = 50
         self.power_up = False
         self.size = rect[1]
         self.image = pygame.transform.scale(settings.IMAGE_LOADER.space_blob, self.size)

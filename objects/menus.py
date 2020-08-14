@@ -36,17 +36,17 @@ class PauseMenuScene(Menu):
         self.item_boxes[0].createPannel(self.menu_body.size[0] / 2, self.menu_body.size[1] / 2, space_between=5.57)
         self.update()
 
-class HeroMenu(Menu):
+class HeroMenuScene(Menu):
     def __init__(self, hero):
         super().__init__(ratiox=0.786, ratioy=0.786)
         self.hero = hero
         self.item_boxes[0].items.append(ItemBox('Datas'))
         self.item_boxes[0].items.append(ItemBox('Buttons', side='Horizontal'))
         self.add_button('Buttons', 'cancel', 'Cancel and go back',
-                        [CloseRenderEvents(), StartStageEvents(level=self.hero.level)],
+                        [CloseRenderEvents(sender='HeroMenuBack'), StartStageEvents(level=self.hero.level)],
                         xratio = 0.423, yratio=0.145, font_size=36)
         self.add_button('Buttons', 'save', 'Learn skills and continue',
-                        [CloseRenderEvents(), StartStageEvents(level=self.hero.level)],
+                        [CloseRenderEvents(sender='HeroMenuNext'), StartStageEvents(level=self.hero.level)],
                         xratio = 0.423, yratio=0.145, font_size=36)
         self.search_itembox('Datas')
         self.targetbox.items.append(ItemBox('PowerUps', side='Horizontal'))

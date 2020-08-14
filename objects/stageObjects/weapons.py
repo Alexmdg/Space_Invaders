@@ -30,7 +30,8 @@ class Weapon(pygame.sprite.Group):
         self.ammo_size = int((settings.UNITS_SIZE * ammo_size_factor) / 100)
         self.ammo_surf = pygame.transform.scale(settings.IMAGE_LOADER.arrow, (self.ammo_size, self.ammo_size))
         self.ammo_speed = -6.66 + (-6.66 * self.hero.ammo_speed)
-        self.attack_rate = 2 + (2 * self.hero.attack_rate)
+        self.attack_cd = 2
+        self.attack_rate = 1 + self.hero.attack_rate
         self.max_ammo = 7 + (7 * self.hero.max_ammo)
         self.damage = 1 + (1 * self.hero.damage)
         self.shot_fired = False
@@ -47,6 +48,6 @@ class Weapon(pygame.sprite.Group):
         for ammo in self.sprites():
             ammo.update()
         if self.shot_fired > 0:
-            self.shot_fired -= 1
-        elif self.shot_fired == 0:
+            self.shot_fired -= 0.1
+        elif self.shot_fired <= 0:
             self.shot_fired = False

@@ -65,7 +65,7 @@ class Stages:
                 'level': 1,
                 'name': 'Stage 1',
                 'waves': 0,
-                'initial_spawns': ["EnnemyArmy(SpaceOcto, 5, 12, 70, '1')"],
+                'initial_spawns': ["EnnemyArmy(SpaceOcto, 3, 8, 70, '1')"],
                 'spawns': [],
                 'spawn_delays': [50],
                 'difficulty': '1',
@@ -102,7 +102,7 @@ class Stages:
                     for army in self.spawns:
                         Earmy = eval(army)
                         self.total_unit += len(Earmy.sprites())
-            display_logger.success(f'Scene Parameters fot {self.name} init : OK')
+            display_logger.success(f'Scene Parameters for stage {self.level} init : OK')
         except:
             main_logger.exception("Couldn't get_stage")
 

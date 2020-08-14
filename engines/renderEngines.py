@@ -69,23 +69,25 @@ class StageRender(pygame.Surface):
             self.scene.objects['shots'][0].fireShot(self.scene.objects['player'][0].sprites()[0].rect, event)
         if self.scene.outro.is_running:
             if event.type == pygame.MOUSEBUTTONDOWN:
-                posX = event.pos[0] - self.scene.outro.rect.x - self.scene.outro.buttons.rect.x
-                posY = event.pos[1] - self.scene.outro.rect.y - self.scene.outro.buttons.rect.y
-                event_logger.debug(f'click : {posX}, {posY}')
-                for button in self.scene.outro.buttons.items:
-                    event_logger.debug(f'hitbox rect : {button.rect}')
-                    event_logger.debug(f'collidepoint : {button.rect.collidepoint(event.pos)}')
-                    if button.rect.collidepoint((posX, posY)):
-                        self.scene.outro.click_down(button)
+                if self.scene.outro.is_running:
+                    posX = event.pos[0] - self.scene.outro.rect.x - self.scene.outro.buttons.rect.x
+                    posY = event.pos[1] - self.scene.outro.rect.y - self.scene.outro.buttons.rect.y
+                    event_logger.debug(f'click : {posX}, {posY}')
+                    for button in self.scene.outro.buttons.items:
+                        event_logger.debug(f'hitbox rect : {button.rect}')
+                        event_logger.debug(f'collidepoint : {button.rect.collidepoint(event.pos)}')
+                        if button.rect.collidepoint((posX, posY)):
+                            self.scene.outro.click_down(button)
             elif event.type == pygame.MOUSEBUTTONUP:
-                posX = event.pos[0] - self.scene.outro.rect.x - self.scene.outro.buttons.rect.x
-                posY = event.pos[1] - self.scene.outro.rect.y - self.scene.outro.buttons.rect.y
-                event_logger.debug(f'click : {posX}, {posY}')
-                for button in self.scene.outro.buttons.items:
-                    event_logger.debug(f'hitbox rect : {button.rect}')
-                    event_logger.debug(f'collidepoint : {button.rect.collidepoint(event.pos)}')
-                    if button.rect.collidepoint((posX, posY)):
-                        self.scene.outro.click_up(button)
+                if self.scene.outro.is_running:
+                    posX = event.pos[0] - self.scene.outro.rect.x - self.scene.outro.buttons.rect.x
+                    posY = event.pos[1] - self.scene.outro.rect.y - self.scene.outro.buttons.rect.y
+                    event_logger.debug(f'click : {posX}, {posY}')
+                    for button in self.scene.outro.buttons.items:
+                        event_logger.debug(f'hitbox rect : {button.rect}')
+                        event_logger.debug(f'collidepoint : {button.rect.collidepoint(event.pos)}')
+                        if button.rect.collidepoint((posX, posY)):
+                            self.scene.outro.click_up(button)
 
     def _collisionHandler(self):
         for enemies in self.scene.objects['enemies']:
@@ -116,7 +118,7 @@ class MenuRender(pygame.Surface):
 
     def handleEvents(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if type(self.scene) == HeroMenu:
+            if type(self.scene) == HeroMenuScene:
                 posX = event.pos[0] - self.scene.menu_body.rect.x - self.scene.item_boxes[0].rect.x
                 posY = event.pos[1] - self.scene.menu_body.rect.y - self.scene.item_boxes[0].rect.y
                 rect_logger.debug(f'menu-body : ({self.scene.menu_body.rect.x}; eventX : {event.pos[0]} posX : {posX}')
@@ -168,7 +170,7 @@ class MenuRender(pygame.Surface):
                             self.scene.click_down(button)
 
         elif event.type == pygame.MOUSEBUTTONUP:
-            if type(self.scene) == HeroMenu:
+            if type(self.scene) == HeroMenuScene:
                 posX = event.pos[0] - self.scene.menu_body.rect.x - self.scene.item_boxes[0].rect.x
                 rect_logger.debug(f'menu-body : ({self.scene.menu_body.rect.x}; eventX : {event.pos[0]} posX : {posX}')
                 rect_logger.debug(f'{self.scene.item_boxes[0].name} : {self.scene.item_boxes[0].rect.x}; posX : {posX}')
