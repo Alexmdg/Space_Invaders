@@ -12,7 +12,7 @@ main_logger, event_logger, rect_logger, display_logger, sprite_logger = settings
 main_logger.setLevel(settings.logging.INFO)
 event_logger.setLevel(settings.logging.INFO)
 rect_logger.setLevel(settings.logging.INFO)
-display_logger.setLevel(settings.logging.INFO)
+display_logger.setLevel(settings.logging.DEBUG)
 sprite_logger.setLevel(settings.logging.INFO)
 
 class StageScene():
@@ -55,6 +55,7 @@ class StageScene():
                         self.count += 1
                 elif self.count == self.level.waves:
                     if self.time >= self.level.spawn_delays[self.count]:
+                        main_logger.success('Time is out')
                         self.outro.chose_ending('win')
                         self.outro.is_running = True
 
@@ -74,10 +75,10 @@ class Stages:
             {
                 'level': 2,
                 'name': 'Stage 2',
-                'waves': 0,
-                'initial_spawns': ["EnnemyArmy(SpaceOcto, 5, 12, 70, '1')"],
-                'spawns': ["EnnemyArmy(SpaceGhost, 5, 8, 70, '1')",
-                           "EnnemyArmy(SpaceBlob, 3, 6, 70, '1')"],
+                'waves': 2,
+                'initial_spawns': ["EnnemyArmy(SpaceOcto, 4, 10, 70, '1')"],
+                'spawns': ["EnnemyArmy(SpaceGhost, 4, 8, 70, '1')",
+                           "EnnemyArmy(SpaceBlob, 2q, 6, 70, '1')"],
                 'spawn_delays': [18, 18, 18],
                 'difficulty': '1',
                 'total_unit': 0,

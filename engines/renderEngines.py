@@ -157,6 +157,7 @@ class MenuRender(pygame.Surface):
                 for button in self.scene.targetbox.items:
                     if button.rect.collidepoint((posX, posY)):
                         self.scene.click_down(button)
+                        main_logger.debug(f'scene.hero.stats : {self.scene.hero.datas}')
 
             else:
                 posX = event.pos[0] - self.scene.menu_body.rect.x - self.scene.item_boxes[0].rect.x

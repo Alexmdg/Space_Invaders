@@ -49,6 +49,8 @@ class Button(Pannel):
         self.is_clicked = True
         for event in self.event:
             pygame.event.post(event.event)
+            if event.event.sender == 'HeroMenuBack' or event.event.sender == 'HeroMenuNext':
+                self.event.remove(event)
         rect_logger.success(f'button {self.name} has been clicked up')
 
     def change_txt(self, msg):

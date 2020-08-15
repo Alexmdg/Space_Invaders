@@ -101,6 +101,7 @@ class PlayerStats:
             main_logger.success('Hero stats saved to "hero.json"')
 
     def reset(self):
+
         datas = {
                  "level": 1,
                  "max_speed": 5,
@@ -121,9 +122,9 @@ class PlayerStats:
                  "total_score": 0,
                  "kills": 0
                 }
-        self.__init__(datas)
+        self.__new__(datas)
         with open('hero.json', 'w') as f:
-            # f.truncate(0)
+            f.truncate(0)
             ujson.dump(datas, f, indent=4)
             main_logger.success('Hero stats has been reset')
 
