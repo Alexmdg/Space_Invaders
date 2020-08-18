@@ -78,7 +78,7 @@ class Stages:
                 'waves': 2,
                 'initial_spawns': ["EnnemyArmy(SpaceOcto, 4, 10, 70, '1')"],
                 'spawns': ["EnnemyArmy(SpaceGhost, 4, 8, 70, '1')",
-                           "EnnemyArmy(SpaceBlob, 2q, 6, 70, '1')"],
+                           "EnnemyArmy(SpaceBlob, 2, 6, 70, '1')"],
                 'spawn_delays': [18, 18, 18],
                 'difficulty': '1',
                 'total_unit': 0,
