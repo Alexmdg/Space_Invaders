@@ -67,7 +67,7 @@ class Player(pygame.sprite.Group):
                 self.dY = 0
             else:
                 self.dY -= 1
-        self.sprites()[0].rect.move_ip(self.dX + self.hero.speed, -self.dY)
+        self.sprites()[0].rect.move_ip(self.dX + (self.dX * self.hero.speed), -(self.dY + (self.dY * self.max_jump)))
 
 
 class PlayerStats:
@@ -79,6 +79,7 @@ class PlayerStats:
         self.health = datas['health']
         self.shield = datas['shield']
         self.ammo_speed = datas['ammo_speed']
+        self.ammo_type = datas['ammo_type']
         self.attack_rate = datas['attack_rate']
         self.max_ammo = datas['max_ammo']
         self.damage = datas['damage']
@@ -90,7 +91,7 @@ class PlayerStats:
         self.stage_score = datas['stage_score']
         self.total_score = datas['total_score']
         self.kills = datas['kills']
-        self.datas=datas
+        self.datas = datas
 
     def save(self):
         datas = dict((key, value) for (key, value) in self.__dict__.items())
@@ -110,6 +111,7 @@ class PlayerStats:
                  "health": 1,
                  "shield": 0,
                  "ammo_speed": 0,
+                 "ammo_type": 0,
                  "attack_rate": 0,
                  "max_ammo": 0,
                  "damage": 0,
@@ -133,12 +135,44 @@ class PlayerStats:
             if self.power_up >= 10:
                 if type == 1:
                     self.damage += 0.1
+                    self.max_ammo += 1
                     self.attack_rate += 0.1
-                    self.shield += 0.1
-                    self.power_up -= 10
                     self.fire += 1
+                elif type == 2:
+                    self.max_speed += 0.4
+                    self.speed += 0.05
+                    self.max_jump += 0.05
+                    self.light += 1
+                elif type == 3:
+                    self.shield += 1
+                    self.freeze += 0.1
+                    self.ammo_speed += 0.1
+                    self.ice += 1
+                elif type == 4:
+                    self.ammo_type += 1
+                    self.life += 1
+                    self.earth += 1
+                self.power_up -= 10
             else:
                 pass
         if sign == '-':
             if type == 1:
-                pass
+                self.damage -= 0.1
+                self.max_ammo -= 1
+                self.attack_rate -= 0.1
+                self.fire -= 1
+            elif type == 2:
+                self.max_speed -= 0.4
+                self.speed -= 0.05
+                self.max_jump -= 0.05
+                self.light -= 1
+            elif type == 3:
+                self.shield -= 1
+                self.freeze -= 0.1
+                self.ammo_speed -= 0.1
+                self.ice -= 1
+            elif type == 4:
+                self.ammo_type -= 1
+                self.life -= 1
+                self.earth -= 1
+            self.power_up += 10
