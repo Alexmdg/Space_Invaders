@@ -45,7 +45,7 @@ class Player(pygame.sprite.Group):
         if keys[pygame.K_RIGHT] == 0 and self.dX > 0:
             self.dX -= 0.8
 
-        if self.sprites()[0].rect.y <= settings.SCREEN_SIZE[1] - (1.8 * settings.UNITS_SIZE):
+        if self.sprites()[0].rect.y <= (settings.SCREEN_SIZE[1] - (1.8 * settings.UNITS_SIZE)) * self.hero.max_jump:
             self.jump_cooldown = True
         if keys[pygame.K_SPACE] and not self.jump_cooldown:
             self.dY = 5
@@ -67,7 +67,7 @@ class Player(pygame.sprite.Group):
                 self.dY = 0
             else:
                 self.dY -= 1
-        self.sprites()[0].rect.move_ip(self.dX + (self.dX * self.hero.speed), -(self.dY + (self.dY * self.hero.max_jump)))
+        self.sprites()[0].rect.move_ip(self.dX * self.hero.speed, -(self.dY))
 
 
 class PlayerStats:
@@ -81,6 +81,7 @@ class PlayerStats:
         self.ammo_speed = datas['ammo_speed']
         self.ammo_type = datas['ammo_type']
         self.attack_rate = datas['attack_rate']
+        self.freeze = datas['freeze']
         self.max_ammo = datas['max_ammo']
         self.damage = datas['damage']
         self.power_up = datas['power_up']
@@ -105,15 +106,16 @@ class PlayerStats:
         datas = {
                  "level": 1,
                  "max_speed": 5,
-                 "speed": 0,
-                 "max_jump": 0,
+                 "speed": 1,
+                 "max_jump": 1,
                  "health": 1,
                  "shield": 0,
-                 "ammo_speed": 0,
+                 "ammo_speed": 1,
                  "ammo_type": 0,
-                 "attack_rate": 0,
+                 "attack_rate": 1,
+                 "freeze": 1,
                  "max_ammo": 0,
-                 "damage": 0,
+                 "damage": 10,
                  "power_up": 0,
                  "light": 0,
                  "fire": 0,
@@ -133,19 +135,19 @@ class PlayerStats:
         if sign == "+":
             if self.power_up >= 10:
                 if type == 1:
-                    self.damage += 0.1
+                    self.damage += (0.1*self.damage)
                     self.max_ammo += 1
-                    self.attack_rate += 0.1
+                    self.attack_rate += (0.1*self.attack_rate)
                     self.fire += 1
                 elif type == 2:
-                    self.max_speed += 0.4
-                    self.speed += 0.05
-                    self.max_jump += 0.05
+                    self.max_speed += (0.1 * self.max_speed)
+                    self.speed += (0.05 * self.speed)
+                    self.max_jump += (0.05 * self.max_jump)
                     self.light += 1
                 elif type == 3:
                     self.shield += 1
-                    self.freeze += 0.1
-                    self.ammo_speed += 0.1
+                    self.freeze += (0.1 * self.freeze)
+                    self.ammo_speed += (0.1 * self.ammo_speed)
                     self.ice += 1
                 elif type == 4:
                     self.ammo_type += 1
@@ -156,19 +158,19 @@ class PlayerStats:
                 pass
         if sign == '-':
             if type == 1:
-                self.damage -= 0.1
+                self.damage -= (0.1 * self.damage)
                 self.max_ammo -= 1
-                self.attack_rate -= 0.1
+                self.attack_rate -= (0.1 * self.attack_rate)
                 self.fire -= 1
             elif type == 2:
-                self.max_speed -= 0.4
-                self.speed -= 0.05
-                self.max_jump -= 0.05
+                self.max_speed -= (0.1 * self.max_speed)
+                self.speed -= (0.05 * self.speed)
+                self.max_jump -= (0.05 * self.max_jump)
                 self.light -= 1
             elif type == 3:
                 self.shield -= 1
-                self.freeze -= 0.1
-                self.ammo_speed -= 0.1
+                self.freeze -= (0.1 * self.freeze)
+                self.ammo_speed -= (0.1 * self.ammo_speed)
                 self.ice -= 1
             elif type == 4:
                 self.ammo_type -= 1

@@ -33,7 +33,7 @@ class Weapon(pygame.sprite.Group):
         self.attack_cd = 2
         self.attack_rate = 1 + self.hero.attack_rate
         self.max_ammo = 7 + (7 * self.hero.max_ammo)
-        self.damage = 1 + (1 * self.hero.damage)
+        self.damage = 5 + (1 * self.hero.damage)
         self.shot_fired = False
 
     def fireShot(self, player_rect, event):
