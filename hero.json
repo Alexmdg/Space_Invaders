@@ -8,6 +8,7 @@
  "ammo_speed": 0,
  "attack_rate": 0.2,
  "max_ammo": 0,
+ "ammo_type": 1,
  "damage": 0.2,
  "power_up": 19,
  "light": 0,

@@ -12,51 +12,49 @@ power_up_Events = USEREVENT + 6
 
 
 class StartStageEvents:
-    def __init__(self, sender= 'MainMenuScene', render='StageRender', scene='StageScene', level=1):
+    def __init__(self, sender= 'MainMenuScene', render='StageRender', scene='StageScene', context=None):
         self.event = Event(start_stage_Events,
                            {'sender': sender,
                             'render': render,
                             'scene': scene,
-                            'level': level})
+                            'context': context})
 
 
 class StartMenuEvents:
-    def __init__(self, sender= 'LoseOutro', render='MenuRender', scene='MainMenuScene', level=1):
+    def __init__(self, sender= 'LoseOutro', render='MenuRender', scene='MainMenuScene', context=None):
         self.event = Event(start_menu_Events,
                            {'sender': sender,
                             'render': render,
                             'scene': scene,
-                            'level': level})
+                            'context': context})
 
 
 class CloseRenderEvents:
-    def __init__(self, sender= 'MainMenuScene', render='StageRender', scene='StageScene', level=1):
+    def __init__(self, sender= 'MainMenuScene', render='StageRender', scene='StageScene', context=None):
         self.event = Event(close_render_Events,
                            {'sender': sender,
                             'render': render,
                             'scene': scene,
-                            'level': level})
+                            'context': context})
 
 
 class GetSetEvents:
-    def __init__(self, sender='MainMenuScene',
-                type='get', hero='', level=1,
-                context=''):
+    def __init__(self, sender='MainMenuScene', action='get', hero='', level=1, context=None):
         self.event = Event(set_and_get_Events,
                            {'sender': sender,
-                            'type': type,
+                            'action': action,
                             'hero': hero,
                             'level': level,
                             'context': context})
 
 
 class QuitGameEvents:
-    def __init__(self, sender= 'MainMenuScene', render='StageRender', scene='StageScene', level=1):
+    def __init__(self, sender= 'MainMenuScene', render='StageRender', scene='StageScene', context=None):
         self.event = Event(quit_game_Events,
                            {'sender': sender,
                             'render': render,
                             'scene': scene,
-                            'level': level})
+                            'context': context})
 
 
 class PowerUpEvents:

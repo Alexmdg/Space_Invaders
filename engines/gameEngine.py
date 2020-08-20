@@ -20,11 +20,11 @@ class GameEngine:
         settings.IMAGE_LOADER = ImageLoader()
         self.clock = pygame.time.Clock()
         self.is_running = True
-        with open('hero.json') as f:
-            stats = ujson.load(f)
-        self.hero = PlayerStats(stats)
-        self.stages = Stages()
-        self.stages.get_stage(self.hero.level)
+        # with open('hero.json') as f:
+        #     stats = ujson.load(f)
+        # self.hero = PlayerStats(stats)
+        # self.stages = Stages()
+        # self.stages.get_stage(self.hero.level)
         self.next_scene = MainMenuScene()
         self.next_render = MenuRender(self.next_scene)
         self.number = 0
@@ -92,14 +92,12 @@ class GameEngine:
                         stats = ujson.load(f)
                     self.hero = PlayerStats(stats)
                     self.next_scene = eval(event.scene)(self.hero)
-                    self.next_render = eval(event.render)(self.next_scene)
                 else:
                     self.next_scene = eval(event.scene)()
-                    self.next_render = eval(event.render)(self.next_scene)
+                self.next_render = eval(event.render)(self.next_scene)
             elif event.type == close_render_Events:
                 event_logger.success(f"Event 'Close Render' for {event.render}-{event.scene} Received")
                 if event.sender == 'HeroMenuNext':
-                    render.scene.hero.level += 1
                     render.scene.hero.save()
                     with open('hero.json') as f:
                         stats = ujson.load(f)
@@ -116,6 +114,19 @@ class GameEngine:
                 render.scene.update_all_infos()
             elif event.type == set_and_get_Events:
                 event_logger.success("Event 'Get or Set game data' Received")
+                if event.action == 'get':
+                    with open('hero.json') as f:
+                        stats = ujson.load(f)
+                    self.hero = PlayerStats(stats)
+                    if event.context == 'StartGame':
+                        self.hero.reset()
+                if event.action == 'set':
+                    if event.context == 'RestartGame':
+                        render.scene.hero.reset()
+                    elif event.context == 'LevelUp':
+                        render.scene.hero.level += 1
+                    self.hero = render.scene.hero
+                    self.hero.save()
             else:
                 render.handleEvents(event)
 

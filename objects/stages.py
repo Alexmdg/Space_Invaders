@@ -3,9 +3,8 @@ from objects.stageObjects.enemies import *
 from objects.stageObjects.weapons import *
 from objects.menuObjects.hud import *
 from objects.graphics.animations import *
-from .stageObjects.player import Player
-from .stageObjects.weapons import Weapon
-from .transitions import StageIntro, StageOutro
+from .transitions import *
+
 
 
 main_logger, event_logger, rect_logger, display_logger, sprite_logger = settings.create_loggers(__name__)

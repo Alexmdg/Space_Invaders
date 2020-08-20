@@ -100,18 +100,19 @@ class StageOutro(Pannel):
                                                0.161 * self.size[1]),
                                               "Try Again",
                                               48,
-                                              MenuEventsRestartLevel()))
+                                             [CloseRenderEvents(sender='OutroLose'),
+                                              StartStageEvents(sender='OutroLose')]))
             self.buttons.items.append(Button('mainMenu',
                                              (0.382 * self.size[0],
                                               0.161 * self.size[1]),
                                              "Main Menu",
                                              48,
-                                             MenuEventsMainMenu()))
+                                             [CloseRenderEvents(sender='OutroLose'),
+                                              StartMenuEvents(sender='OutroLose', scene="MainMenu")]))
             self.buttons.createPannel(self.size[0] / 2, self.size[1] * 0.786, space_between=5.57, transparent=True)
             self.image.blit(self.buttons.image, self.buttons.rect)
 
         elif choice == "win":
-            self.hero.save()
             self.background = pygame.Surface(self.size)
             self.background.blit(
                 pygame.transform.scale(settings.IMAGE_LOADER.win_bg, (int(0.618 * self.size[0]), int(self.size[1]))),
@@ -130,7 +131,8 @@ class StageOutro(Pannel):
                                                0.161 * self.size[1]),
                                               "Continue",
                                               48,
-                                              [CloseRenderEvents(sender='OutroWin'),
+                                              [GetSetEvents(sender="OutroWin", action='set', context="LevelUp"),
+                                               CloseRenderEvents(sender='OutroWin'),
                                                StartMenuEvents(sender='OutroWin', scene="HeroMenuScene")]))
             self.buttons.items.append(Button('mainMenu',
                                              (0.268 * self.size[0],

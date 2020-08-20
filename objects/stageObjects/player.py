@@ -67,7 +67,7 @@ class Player(pygame.sprite.Group):
                 self.dY = 0
             else:
                 self.dY -= 1
-        self.sprites()[0].rect.move_ip(self.dX + (self.dX * self.hero.speed), -(self.dY + (self.dY * self.max_jump)))
+        self.sprites()[0].rect.move_ip(self.dX + (self.dX * self.hero.speed), -(self.dY + (self.dY * self.hero.max_jump)))
 
 
 class PlayerStats:
