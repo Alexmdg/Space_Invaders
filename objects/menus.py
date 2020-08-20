@@ -25,12 +25,12 @@ class PauseMenuScene(Menu):
         with log.bugCheck(log.display, 'PauseMenuScene init'):
             super().__init__()
             self.close_stage = False
-            self.add_button('mainBox', 'gameResume', 'Resume Game', [CloseRenderEvents(sender='PauseMenuScene')])
-            self.add_button('mainBox', 'levelRestart', 'Restart Level', [CloseRenderEvents(sender='PauseMenuScene'),
-                                                                        # CloseRenderEvents(sender='PauseMenuScene'),
+            self.add_button('mainBox', 'gameResume', 'Resume Game', [CloseRenderEvents()])
+            self.add_button('mainBox', 'levelRestart', 'Restart Level', [CloseRenderEvents(),
                                                                         StartStageEvents(sender='PauseMenuScene')])
             self.add_button('mainBox', 'gameRestart', 'New Game', [CloseRenderEvents(sender='PauseMenuScene'),
                                                                  GetSetEvents(action='set', context="RestartGame"),
+                                                                 GetSetEvents(action='get'),
                                                                  StartStageEvents(sender='PauseMenuScene')])
             self.add_button('mainBox', 'quit', 'Quit Game', [QuitGameEvents()])
             self.item_boxes[0].createPannel(self.menu_body.size[0] / 2, self.menu_body.size[1] / 2, space_between=5.57)
@@ -44,15 +44,18 @@ class HeroMenuScene(Menu):
             self.item_boxes[0].items.append(ItemBox('Datas'))
             self.item_boxes[0].items.append(ItemBox('Buttons', side='Horizontal'))
             self.add_button('Buttons', 'cancel', 'Cancel and go back',
-                            [CloseRenderEvents(sender='HeroMenuBack'), StartStageEvents(level=self.hero.level)],
-                            xratio = 0.423, yratio=0.145, font_size=36)
+                            [CloseRenderEvents(sender='HeroMenuNext'),
+                             StartStageEvents()],
+                            xratio=0.423, yratio=0.145, font_size=36)
             self.add_button('Buttons', 'save', 'Learn skills and continue',
-                            [CloseRenderEvents(sender='HeroMenuNext'), StartStageEvents(level=self.hero.level)],
-                            xratio = 0.423, yratio=0.145, font_size=36)
+                            [GetSetEvents(action='set', context='ContinueGame'),
+                             CloseRenderEvents(sender='HeroMenuBack'),
+                             StartStageEvents()],
+                            xratio=0.423, yratio=0.145, font_size=36)
             self.search_itembox('Datas')
             self.targetbox.items.append(ItemBox('PowerUps', side='Horizontal'))
             self.targetbox.items.append(ItemBox('Skills'))
-            self.add_button('PowerUps', 'powerList_title', 'POWER UP', xratio = 0.145, yratio=0.090, font_size=24)
+            self.add_button('PowerUps', 'powerList_title', 'POWER UP', xratio=0.145, yratio=0.090, font_size=24)
             self.search_itembox('PowerUps')
             self.targetbox.items.append(ItemBox('Collected'))
             self.add_button('Collected', 'collected_PU', f'power ups : {self.hero.power_up}',
@@ -61,10 +64,10 @@ class HeroMenuScene(Menu):
             self.targetbox.items.append(ItemBox('Light'))
             self.targetbox.items.append(ItemBox('Ice'))
             self.targetbox.items.append(ItemBox('Earth'))
-            self.add_button('Fire', 'fire', str(self.hero.fire), xratio = 0.145, yratio=0.090)
-            self.add_button('Light', 'light', str(self.hero.light), xratio = 0.145, yratio=0.090)
-            self.add_button('Ice', 'ice', str(self.hero.ice), xratio = 0.145, yratio=0.090)
-            self.add_button('Earth', 'earth', str(self.hero.earth), xratio = 0.145, yratio=0.090)
+            self.add_button('Fire', 'fire', str(self.hero.fire), xratio=0.145, yratio=0.090)
+            self.add_button('Light', 'light', str(self.hero.light), xratio=0.145, yratio=0.090)
+            self.add_button('Ice', 'ice', str(self.hero.ice), xratio=0.145, yratio=0.090)
+            self.add_button('Earth', 'earth', str(self.hero.earth), xratio=0.145, yratio=0.090)
             n=1
             for item_box in self.item_boxes[0].items[0].items[0].items[2:]:
                 item_box.items.append(ItemBox(item_box.name+'_add', side='Horizontal'))
@@ -114,19 +117,21 @@ class HeroMenuScene(Menu):
 
     def update(self):
         def search_in(itembox):
-            for item in itembox.items:
-                if type(item) == ItemBox:
-                    item.update()
-                    log.display.spc_dbg(f"item {item.name}'s rect = {item.rect}")
-                    search_in(item)
-        for box in self.item_boxes:
-            search_in(box)
-            box.update()
-            log.display.spc_dbg(f"item {box.name}'s rect = {box.rect}")
-            self.menu_body.image.blit(box.image, box.rect)
-            log.display.spc_dbg(f"menubody's rect = {self.menu_body.rect}")
-            self.image.blit(self.background, (0, 0))
-            self.image.blit(self.menu_body.image, self.menu_body.rect)
+            with log.bugCheck(log.display, 'Search_in'):
+                for item in itembox.items:
+                    if type(item) == ItemBox:
+                        item.update()
+                        log.display.spc_dbg(f"item {item.name}'s rect = {item.rect}")
+                        search_in(item)
+        with log.bugCheck(log.display, 'Update'):
+            for box in self.item_boxes:
+                search_in(box)
+                box.update()
+                log.display.spc_dbg(f"item {box.name}'s rect = {box.rect}")
+                self.menu_body.image.blit(box.image, box.rect)
+                log.display.spc_dbg(f"menubody's rect = {self.menu_body.rect}")
+                self.image.blit(self.background, (0, 0))
+                self.image.blit(self.menu_body.image, self.menu_body.rect)
 
     def update_all_infos(self):
         self.__init__(self.hero)

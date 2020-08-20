@@ -48,6 +48,7 @@ class StageRender(pygame.Surface):
                                 self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
                     self.blit(self.scene.outro.image, self.scene.outro.rect)
                 elif self.scene.hero.kills == self.scene.level.total_unit:
+                    log.dataProc.cmn_dbg(f'Kills = {self.scene.hero.kills} || Total Units = {self.scene.level.total_unit}')
                     self.scene.outro.chose_ending('win')
                     self.scene.outro.is_running = True
                 else:
@@ -157,8 +158,6 @@ class MenuRender(pygame.Surface):
                 for button in self.scene.targetbox.items:
                     if button.rect.collidepoint((posX, posY)):
                         self.scene.click_down(button)
-                        main_logger.debug(f'scene.hero.stats : {self.scene.hero.datas}')
-
             else:
                 posX = event.pos[0] - self.scene.menu_body.rect.x - self.scene.item_boxes[0].rect.x
                 posY = event.pos[1] - self.scene.menu_body.rect.y - self.scene.item_boxes[0].rect.y

@@ -91,7 +91,6 @@ class PlayerStats:
         self.stage_score = datas['stage_score']
         self.total_score = datas['total_score']
         self.kills = datas['kills']
-        self.datas = datas
 
     def save(self):
         datas = dict((key, value) for (key, value) in self.__dict__.items())
@@ -99,7 +98,7 @@ class PlayerStats:
         with open('hero.json', 'w') as f:
             f.truncate(0)
             ujson.dump(datas, f, indent=4)
-            main_logger.success('Hero stats saved to "hero.json"')
+        main_logger.success('Hero stats saved to "hero.json"')
 
     def reset(self):
 
@@ -124,7 +123,7 @@ class PlayerStats:
                  "total_score": 0,
                  "kills": 0
                 }
-        self.__new__(datas)
+        self.__init__(datas)
         with open('hero.json', 'w') as f:
             f.truncate(0)
             ujson.dump(datas, f, indent=4)

@@ -23,7 +23,7 @@ class GameEngine:
         # with open('hero.json') as f:
         #     stats = ujson.load(f)
         # self.hero = PlayerStats(stats)
-        # self.stages = Stages()
+        self.stages = Stages()
         # self.stages.get_stage(self.hero.level)
         self.next_scene = MainMenuScene()
         self.next_render = MenuRender(self.next_scene)
@@ -78,10 +78,6 @@ class GameEngine:
                 event_logger.success("Event 'StartStage' Received")
                 if event.sender == 'PauseMenuScene':
                     render.scene.close_stage = True
-                with open('hero.json') as f:
-                    stats = ujson.load(f)
-                self.hero = PlayerStats(stats)
-                self.hero.kills = 0
                 self.next_scene = eval(event.scene)(self.stages.get_stage(self.hero.level), self.hero)
                 self.next_render = eval(event.render)(self.next_scene)
                 self.next_render.reset(self.next_scene, self.hero)
@@ -97,16 +93,6 @@ class GameEngine:
                 self.next_render = eval(event.render)(self.next_scene)
             elif event.type == close_render_Events:
                 event_logger.success(f"Event 'Close Render' for {event.render}-{event.scene} Received")
-                if event.sender == 'HeroMenuNext':
-                    render.scene.hero.save()
-                    with open('hero.json') as f:
-                        stats = ujson.load(f)
-                    self.hero = PlayerStats(stats)
-                    sprite_logger.debug(f'self.hero = {self.hero.datas}')
-                elif event.sender == 'HeroMenuBack':
-                    with open('hero.json') as f:
-                        stats = ujson.load(f)
-                    self.hero = PlayerStats(stats)
                 render.is_running = False
             elif event.type == power_up_Events:
                 event_logger.success(f"Event 'PowerUp Event' : {event.sender}{event.action} Received")
@@ -125,8 +111,9 @@ class GameEngine:
                         render.scene.hero.reset()
                     elif event.context == 'LevelUp':
                         render.scene.hero.level += 1
-                    self.hero = render.scene.hero
-                    self.hero.save()
+                    elif event.context == 'ContinueGame':
+                        render.scene.hero.kills = 0
+                    render.scene.hero.save()
             else:
                 render.handleEvents(event)
 
