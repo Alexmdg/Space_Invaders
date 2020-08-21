@@ -171,50 +171,51 @@ class MenuRender(pygame.Surface):
 
         elif event.type == pygame.MOUSEBUTTONUP:
             if type(self.scene) == HeroMenuScene:
-                posX = event.pos[0] - self.scene.menu_body.rect.x - self.scene.item_boxes[0].rect.x
-                rect_logger.debug(f'menu-body : ({self.scene.menu_body.rect.x}; eventX : {event.pos[0]} posX : {posX}')
-                rect_logger.debug(f'{self.scene.item_boxes[0].name} : {self.scene.item_boxes[0].rect.x}; posX : {posX}')
-                self.scene.search_itembox('Datas')
-                posX -= self.scene.targetbox.rect.x
-                rect_logger.debug(f'{self.scene.targetbox.name} : {self.scene.targetbox.rect.x}; posX : {posX}')
-                self.scene.search_itembox('PowerUps')
-                posX -= self.scene.targetbox.rect.x
-                rect_logger.debug(f'{self.scene.targetbox.name} : {self.scene.targetbox.rect.x}; posX : {posX}')
-                posY = event.pos[1] - self.scene.menu_body.rect.y - self.scene.item_boxes[0].rect.y
-                self.scene.search_itembox('Datas')
-                posY -= self.scene.targetbox.rect.y
-                self.scene.search_itembox('PowerUps')
-                posY -= self.scene.targetbox.rect.y
-                rect_logger.debug(
-                    f'Target Box = {self.scene.targetbox.name} : {[item.name for item in self.scene.targetbox.items]}')
-                for box in self.scene.targetbox.items[2:]:
-                    rect_logger.debug(f'box {box.name} - rect: {box.rect} ')
-                    for item in box.items:
-                        rect_logger.debug(
-                            f'item {item.name} - rect: {item.rect},  posX : {posX}-{item.rect.x}-{box.rect.x} = {posX - item.rect.x - box.rect.x} ')
-                        rect_logger.debug(
-                            f'item {item.name} - rect: {item.rect},  posY : {posY}-{item.rect.y}-{box.rect.y} = {posY - item.rect.y - box.rect.y} ')
-                        if type(item) == ItemBox:
-                            tmp_posX = posX
-                            tmp_posX -= item.rect.x
-                            tmp_posX -= box.rect.x
-                            tmp_posY = posY
-                            tmp_posY -= item.rect.y
-                            tmp_posY -= box.rect.y
-                            for button in item.items:
-                                rect_logger.debug(f'button {button.name} - rect: {button.rect} ')
-                                if button.rect.collidepoint((tmp_posX, tmp_posY)):
-                                    self.scene.click_up(button)
-                                    rect_logger.success(
-                                        f'is_collide : {button.rect.collidepoint((tmp_posX, tmp_posY))}')
-                            posX = event.pos[0] - self.scene.menu_body.rect.x - self.scene.item_boxes[0].rect.x
-                            posY = event.pos[1] - self.scene.menu_body.rect.y - self.scene.item_boxes[0].rect.y
-                            self.scene.search_itembox('Buttons')
-                            posX -= self.scene.targetbox.rect.x
-                            posY -= self.scene.targetbox.rect.y
-                            for button in self.scene.targetbox.items:
-                                if button.rect.collidepoint((posX, posY)):
-                                    self.scene.click_up(button)
+                if type(self.scene) == HeroMenuScene:
+                    posX = event.pos[0] - self.scene.menu_body.rect.x - self.scene.item_boxes[0].rect.x
+                    posY = event.pos[1] - self.scene.menu_body.rect.y - self.scene.item_boxes[0].rect.y
+                    rect_logger.debug(
+                        f'menu-body : ({self.scene.menu_body.rect.x}; eventX : {event.pos[0]} posX : {posX}')
+                    rect_logger.debug(
+                        f'{self.scene.item_boxes[0].name} : {self.scene.item_boxes[0].rect.x}; posX : {posX}')
+                    self.scene.search_itembox('Datas')
+                    posX -= self.scene.targetbox.rect.x
+                    posY -= self.scene.targetbox.rect.y
+                    rect_logger.debug(f'{self.scene.targetbox.name} : {self.scene.targetbox.rect.x}; posX : {posX}')
+                    self.scene.search_itembox('PowerUps')
+                    posX -= self.scene.targetbox.rect.x
+                    posY -= self.scene.targetbox.rect.y
+                    rect_logger.debug(f'{self.scene.targetbox.name} : {self.scene.targetbox.rect.x}; posX : {posX}')
+                    rect_logger.debug(
+                        f'Target Box = {self.scene.targetbox.name} : {[item.name for item in self.scene.targetbox.items]}')
+                    for box in self.scene.targetbox.items[2:]:
+                        rect_logger.debug(f'box {box.name} - rect: {box.rect} ')
+                        for item in box.items:
+                            rect_logger.debug(
+                                f'item {item.name} - rect: {item.rect},  posX : {posX}-{item.rect.x}-{box.rect.x} = {posX - item.rect.x - box.rect.x} ')
+                            rect_logger.debug(
+                                f'item {item.name} - rect: {item.rect},  posY : {posY}-{item.rect.y}-{box.rect.y} = {posY - item.rect.y - box.rect.y} ')
+                            if type(item) == ItemBox:
+                                tmp_posX = posX
+                                tmp_posX -= item.rect.x
+                                tmp_posX -= box.rect.x
+                                tmp_posY = posY
+                                tmp_posY -= item.rect.y
+                                tmp_posY -= box.rect.y
+                                for button in item.items:
+                                    rect_logger.debug(f'button {button.name} - rect: {button.rect} ')
+                                    if button.rect.collidepoint((tmp_posX, tmp_posY)):
+                                        self.scene.click_up(button)
+                                        rect_logger.success(
+                                            f'is_collide : {button.rect.collidepoint((tmp_posX, tmp_posY))}')
+                    posX = event.pos[0] - self.scene.menu_body.rect.x - self.scene.item_boxes[0].rect.x
+                    posY = event.pos[1] - self.scene.menu_body.rect.y - self.scene.item_boxes[0].rect.y
+                    self.scene.search_itembox('Buttons')
+                    posX -= self.scene.targetbox.rect.x
+                    posY -= self.scene.targetbox.rect.y
+                    for button in self.scene.targetbox.items:
+                        if button.rect.collidepoint((posX, posY)):
+                            self.scene.click_up(button)
             else:
                 posX = event.pos[0] - self.scene.menu_body.rect.x - self.scene.item_boxes[0].rect.x
                 posY = event.pos[1] - self.scene.menu_body.rect.y - self.scene.item_boxes[0].rect.y

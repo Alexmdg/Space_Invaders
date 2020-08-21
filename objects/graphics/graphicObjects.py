@@ -8,6 +8,7 @@ class ImageLoader:
         self.base_player = image.load(os.path.join('objects\graphics\images\\', 'soldier.png')).convert_alpha()
         self.power_up = image.load(os.path.join('objects\graphics\images\\', 'powerup.png')).convert_alpha()
         self.ink_stain = image.load(os.path.join('objects\graphics\images\\', 'stain.png')).convert_alpha()
+        self.alien_laser = image.load(os.path.join('objects\graphics\images\\', 'alien_laser.png')).convert_alpha()
         self.space_octo = image.load(os.path.join('objects\graphics\images\\', 'ennemy.png')).convert_alpha()
         self.space_ghost = image.load(os.path.join('objects\graphics\images\\', 'enemy2.png')).convert_alpha()
         self.space_blob = image.load(os.path.join('objects\graphics\images\\', 'enemy3.png')).convert_alpha()

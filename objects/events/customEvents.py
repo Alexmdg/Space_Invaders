@@ -58,7 +58,7 @@ class QuitGameEvents:
 
 
 class PowerUpEvents:
-    def __init__(self, sender=1, action='+'):
+    def __init__(self, sender, action):
         self.event = Event(power_up_Events,
                            {'sender': sender,
                             'action': action})

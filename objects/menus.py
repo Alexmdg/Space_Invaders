@@ -4,7 +4,7 @@ from prelog import CheckLog
 from prelog import LEVELS as poglevel
 
 log = CheckLog()
-log.display.setLevel(poglevel['1'])
+log.display.setLevel(settings.logging.ERROR)
 
 class MainMenuScene(Menu):
     def __init__(self):
@@ -50,6 +50,7 @@ class HeroMenuScene(Menu):
             self.add_button('Buttons', 'save', 'Learn skills and continue',
                             [GetSetEvents(action='set', context='ContinueGame'),
                              CloseRenderEvents(sender='HeroMenuBack'),
+                             GetSetEvents(action='get'),
                              StartStageEvents()],
                             xratio=0.423, yratio=0.145, font_size=36)
             self.search_itembox('Datas')
@@ -68,11 +69,10 @@ class HeroMenuScene(Menu):
             self.add_button('Light', 'light', str(self.hero.light), xratio=0.145, yratio=0.090)
             self.add_button('Ice', 'ice', str(self.hero.ice), xratio=0.145, yratio=0.090)
             self.add_button('Earth', 'earth', str(self.hero.earth), xratio=0.145, yratio=0.090)
-            n=1
             for item_box in self.item_boxes[0].items[0].items[0].items[2:]:
                 item_box.items.append(ItemBox(item_box.name+'_add', side='Horizontal'))
-                self.add_button(item_box.name+'_add', '+', '+', [PowerUpEvents(sender=n, action='+')], xratio=0.055, yratio=0.055, font_size=24)
-                self.add_button(item_box.name+'_add', '-', '-', [PowerUpEvents(sender=n, action='-')], xratio=0.055, yratio=0.055, font_size=24)
+                self.add_button(item_box.name+'_add', '+', '+', [PowerUpEvents(sender=item_box.name, action='+')], xratio=0.055, yratio=0.055, font_size=24)
+                self.add_button(item_box.name+'_add', '-', '-', [PowerUpEvents(sender=item_box.name, action='-')], xratio=0.055, yratio=0.055, font_size=24)
             self.search_itembox('Skills')
             self.targetbox.items.append(ItemBox('Row1', side='Horizontal'))
             self.targetbox.items.append(ItemBox('Row2', side='Horizontal'))
@@ -102,14 +102,14 @@ class HeroMenuScene(Menu):
             self.targetbox.rect.x = 0
             self.targetbox.rect.y = 0
             self.search_itembox('Datas')
-            self.targetbox.createPannel(centerx= settings.SCREEN_SIZE[0] / 2, centery = settings.SCREEN_SIZE[1] / 2, space_between=5.55)
+            self.targetbox.createPannel(centerx=settings.SCREEN_SIZE[0] / 2, centery = settings.SCREEN_SIZE[1] / 2, space_between=5.55)
             self.targetbox.rect.x = 0
             self.targetbox.rect.y = 0
             self.search_itembox('Buttons')
-            self.targetbox.createPannel(centerx= settings.SCREEN_SIZE[0] / 2, centery = settings.SCREEN_SIZE[1] / 2, space_between=9.02)
+            self.targetbox.createPannel(centerx=settings.SCREEN_SIZE[0] / 2, centery = settings.SCREEN_SIZE[1] / 2, space_between=9.02)
             self.targetbox.rect.x = self.size[0] / 2
             self.targetbox.rect.y = 0
-            self.item_boxes[0].createPannel(centerx= settings.SCREEN_SIZE[0] / 2, centery = settings.SCREEN_SIZE[1] / 2, space_between=9.02)
+            self.item_boxes[0].createPannel(centerx=settings.SCREEN_SIZE[0] / 2, centery = settings.SCREEN_SIZE[1] / 2, space_between=9.02)
             self.item_boxes[0].rect.x = 0
             self.item_boxes[0].rect.y = 0.090*settings.SCREEN_SIZE[1]
 

@@ -131,25 +131,25 @@ class PlayerStats:
             ujson.dump(datas, f, indent=4)
             main_logger.success('Hero stats has been reset')
 
-    def update(self, type, sign):
+    def update(self, power, sign):
         if sign == "+":
             if self.power_up >= 10:
-                if type == 1:
+                if power == 'Fire':
                     self.damage += (0.1*self.damage)
                     self.max_ammo += 1
                     self.attack_rate += (0.1*self.attack_rate)
                     self.fire += 1
-                elif type == 2:
+                elif power == 'Light':
                     self.max_speed += (0.1 * self.max_speed)
                     self.speed += (0.05 * self.speed)
                     self.max_jump += (0.05 * self.max_jump)
                     self.light += 1
-                elif type == 3:
+                elif power == 'Ice':
                     self.shield += 1
                     self.freeze += (0.1 * self.freeze)
                     self.ammo_speed += (0.1 * self.ammo_speed)
                     self.ice += 1
-                elif type == 4:
+                elif power == 'Earth':
                     self.ammo_type += 1
                     self.life += 1
                     self.earth += 1

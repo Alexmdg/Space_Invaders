@@ -92,6 +92,12 @@ class EnnemyArmy(pygame.sprite.Group):
                                         (enemy.dYx * self.difficulty['speedX'])+(self.dY * self.difficulty['speedY']))
 
 
+class AlienLaser(pygame.sprite.Sprite):
+    def __init__(self):
+        self.size = settings.UNITS_SIZE
+        self.image = pygame.transform.scale(settings.IMAGE_LOADER.alien_laser, self.size)
+        self.rect = pygame.Rect(-settings.UNITS_SIZE, settings.SCREEN_SIZE[1])
+
 class SpaceOcto(pygame.sprite.Sprite):
     def __init__(self, rect):
         super().__init__()
