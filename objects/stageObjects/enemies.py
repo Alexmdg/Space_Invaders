@@ -11,7 +11,7 @@ rect_logger.setLevel(settings.logging.INFO)
 display_logger.setLevel(settings.logging.INFO)
 sprite_logger.setLevel(settings.logging.INFO)
 
-class EnnemyArmy(pygame.sprite.Group):
+class EnemyArmy(pygame.sprite.Group):
     def __init__(self, unit, rows, columns, unit_size_factor, level):
         super().__init__()
         self.unit_size = int((settings.UNITS_SIZE * unit_size_factor) / 100)

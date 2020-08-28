@@ -2,7 +2,7 @@ from objects.stageObjects.player import *
 from objects.stageObjects.enemies import *
 from objects.stageObjects.weapons import *
 from objects.menuObjects.hud import *
-from objects.graphics.animations import *
+from graphics.animations import *
 from .transitions import *
 
 
@@ -65,7 +65,7 @@ class Stages:
                 'level': 1,
                 'name': 'Stage 1',
                 'waves': 0,
-                'initial_spawns': ["EnnemyArmy(SpaceOcto, 3, 8, 70, '1')"],
+                'initial_spawns': ["EnemyArmy(SpaceOcto, 3, 8, 70, '1')"],
                 'spawns': [],
                 'spawn_delays': [50],
                 'difficulty': '1',
@@ -75,9 +75,9 @@ class Stages:
                 'level': 2,
                 'name': 'Stage 2',
                 'waves': 2,
-                'initial_spawns': ["EnnemyArmy(SpaceOcto, 3, 8, 70, '1')"],
-                'spawns': ["EnnemyArmy(SpaceGhost, 3, 8, 70, '1')",
-                           "EnnemyArmy(SpaceBlob, 2, 6, 70, '1')"],
+                'initial_spawns': ["EnemyArmy(SpaceOcto, 3, 8, 70, '1')"],
+                'spawns': ["EnemyArmy(SpaceGhost, 3, 8, 70, '1')",
+                           "EnemyArmy(SpaceBlob, 2, 6, 70, '1')"],
                 'spawn_delays': [18, 18, 18],
                 'difficulty': '1',
                 'total_unit': 0,
@@ -86,9 +86,9 @@ class Stages:
                 'level': 3,
                 'name': 'Stage 3',
                 'waves': 2,
-                'initial_spawns': ["EnnemyArmy(SpaceOcto, 4, 10, 70, '1')"],
-                'spawns': ["EnnemyArmy(SpaceGhost, 4, 8, 70, '1')",
-                           "EnnemyArmy(SpaceBlob, 2, 6, 70, '1')"],
+                'initial_spawns': ["EnemyArmy(SpaceOcto, 4, 10, 70, '1')"],
+                'spawns': ["EnemyArmy(SpaceGhost, 4, 8, 70, '1')",
+                           "EnemyArmy(SpaceBlob, 2, 6, 70, '1')"],
                 'spawn_delays': [18, 18, 18],
                 'difficulty': '1',
                 'total_unit': 0,
@@ -97,9 +97,9 @@ class Stages:
                 'level': 4,
                 'name': 'Stage 4',
                 'waves': 2,
-                'initial_spawns': ["EnnemyArmy(SpaceOcto, 4, 10, 70, '1')"],
-                'spawns': ["EnnemyArmy(SpaceGhost, 4, 8, 70, '1')",
-                           "EnnemyArmy(SpaceBlob, 2, 6, 70, '1')"],
+                'initial_spawns': ["EnemyArmy(SpaceOcto, 4, 10, 70, '1')"],
+                'spawns': ["EnemyArmy(SpaceGhost, 4, 8, 70, '1')",
+                           "EnemyArmy(SpaceBlob, 2, 6, 70, '1')"],
                 'spawn_delays': [18, 18, 18],
                 'difficulty': '1',
                 'total_unit': 0,
@@ -108,9 +108,9 @@ class Stages:
                 'level': 5,
                 'name': 'Stage 5',
                 'waves': 2,
-                'initial_spawns': ["EnnemyArmy(SpaceOcto, 4, 10, 70, '1')"],
-                'spawns': ["EnnemyArmy(SpaceGhost, 4, 8, 70, '1')",
-                           "EnnemyArmy(SpaceBlob, 2, 6, 70, '1')"],
+                'initial_spawns': ["EnemyArmy(SpaceOcto, 4, 10, 70, '1')"],
+                'spawns': ["EnemyArmy(SpaceGhost, 4, 8, 70, '1')",
+                           "EnemyArmy(SpaceBlob, 2, 6, 70, '1')"],
                 'spawn_delays': [18, 18, 18],
                 'difficulty': '1',
                 'total_unit': 0,

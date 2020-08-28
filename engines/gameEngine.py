@@ -1,5 +1,5 @@
 from engines.renderEngines import *
-from objects.graphics.graphicObjects import *
+from graphics.graphicObjects import *
 import ujson
 
 from objects.stageObjects.player import PlayerStats
