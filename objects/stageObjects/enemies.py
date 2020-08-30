@@ -92,17 +92,11 @@ class EnemyArmy(pygame.sprite.Group):
                                         (enemy.dYx * self.difficulty['speedX'])+(self.dY * self.difficulty['speedY']))
 
 
-class AlienLaser(pygame.sprite.Sprite):
-    def __init__(self):
-        self.size = settings.UNITS_SIZE
-        self.image = pygame.transform.scale(settings.IMAGE_LOADER.alien_laser, self.size)
-        self.rect = pygame.Rect(-settings.UNITS_SIZE, settings.SCREEN_SIZE[1])
-
 class SpaceOcto(pygame.sprite.Sprite):
     def __init__(self, rect):
         super().__init__()
         self.rect = pygame.Rect(rect)
-        self.pu_chances = 40
+        self.pu_chances = 35
         self.power_up = False
         self.size = rect[1]
         self.image = pygame.transform.scale(settings.IMAGE_LOADER.space_octo, self.size)
@@ -146,3 +140,10 @@ class SpaceBlob(pygame.sprite.Sprite):
         self.dY = 0
         self.dYx = 0
         self.wave = 0
+
+
+class AlienLaser(pygame.sprite.Sprite):
+    def __init__(self):
+        self.size = settings.UNITS_SIZE
+        self.image = pygame.transform.scale(settings.IMAGE_LOADER.alien_laser, self.size)
+        self.rect = pygame.Rect(-settings.UNITS_SIZE, settings.SCREEN_SIZE[1])
