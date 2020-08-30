@@ -1,23 +1,23 @@
 {
  "level": 2,
- "life": 3,
+ "life": 1,
  "max_speed": 5,
  "speed": 1,
  "max_jump": 1,
  "health": 1,
  "shield": 0,
  "ammo_speed": 1,
- "ammo_type": 2,
+ "ammo_type": 0,
  "attack_rate": 1,
  "freeze": 1,
  "max_ammo": 0,
  "damage": 10,
- "power_up": 26,
+ "power_up": 7,
  "light": 0,
  "fire": 0,
  "ice": 0,
- "earth": 2,
+ "earth": 0,
  "stage_score": 0,
  "total_score": 0,
- "kills": 0
+ "kills": 24
 }

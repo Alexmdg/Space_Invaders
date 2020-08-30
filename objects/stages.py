@@ -11,7 +11,7 @@ main_logger, event_logger, rect_logger, display_logger, sprite_logger = settings
 main_logger.setLevel(settings.logging.INFO)
 event_logger.setLevel(settings.logging.INFO)
 rect_logger.setLevel(settings.logging.INFO)
-display_logger.setLevel(settings.logging.DEBUG)
+display_logger.setLevel(settings.logging.INFO)
 sprite_logger.setLevel(settings.logging.INFO)
 
 class StageScene():
@@ -65,7 +65,8 @@ class Stages:
                 'level': 1,
                 'name': 'Stage 1',
                 'waves': 0,
-                'initial_spawns': ["EnemyArmy(SpaceOcto, 3, 8, 70, '1')"],
+                'initial_spawns': ["EnemyArmy(SpaceOcto, 3, 8, 70, '1')",
+                                   "SideEnemies(AlienLaser)"],
                 'spawns': [],
                 'spawn_delays': [50],
                 'difficulty': '1',

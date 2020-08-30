@@ -1,4 +1,5 @@
 import math
+import random
 import settings
 import pygame.rect
 import pygame.sprite
@@ -9,7 +10,7 @@ main_logger.setLevel(settings.logging.INFO)
 event_logger.setLevel(settings.logging.INFO)
 rect_logger.setLevel(settings.logging.INFO)
 display_logger.setLevel(settings.logging.INFO)
-sprite_logger.setLevel(settings.logging.INFO)
+sprite_logger.setLevel(settings.logging.DEBUG)
 
 class EnemyArmy(pygame.sprite.Group):
     def __init__(self, unit, rows, columns, unit_size_factor, level):
@@ -142,8 +143,80 @@ class SpaceBlob(pygame.sprite.Sprite):
         self.wave = 0
 
 
+class SideEnemies(pygame.sprite.Group):
+    def __init__(self, unit):
+        super().__init__()
+        self.unit = unit()
+        self.add(self.unit)
+
+    def update(self):
+        for enemy in self.sprites():
+            enemy.update()
+
+
 class AlienLaser(pygame.sprite.Sprite):
     def __init__(self):
+        super().__init__()
         self.size = settings.UNITS_SIZE
-        self.image = pygame.transform.scale(settings.IMAGE_LOADER.alien_laser, self.size)
-        self.rect = pygame.Rect(-settings.UNITS_SIZE, settings.SCREEN_SIZE[1])
+        self.image = pygame.transform.scale(settings.IMAGE_LOADER.alien_laser, (self.size, self.size))
+        self.rect = pygame.Rect((-settings.UNITS_SIZE, -settings.UNITS_SIZE), (self.size, self.size))
+        self.clock = pygame.time.Clock()
+        self.time = 0
+        self.delay = 5000
+        self.attack = False
+        self.direction = 0
+        self.dX = 0
+
+    def update(self):
+        if self.attack is False:
+            self.clock.tick()
+            if self.clock.get_time() < 35:
+                self.time += self.clock.get_time()
+            if self.time > self.delay:
+                self.attack = True
+                self.time = 0
+                self.side = random.randint(0, 1)
+                if self.side == 0:
+                    self.rect[0] = (-settings.UNITS_SIZE)
+                else:
+                    self.rect[0] = settings.SCREEN_SIZE[0]
+                self.rect[1] = random.randint(0, settings.SCREEN_SIZE[1] - (settings.SCREEN_SIZE[1] / 4))
+        elif self.attack is True:
+            if self.side == 0:
+                self._attack_from_left()
+            else:
+                self._attack_from_right()
+        sprite_logger.debug(f'timer : {self.time}')
+        self.rect.move_ip(self.dX, 0)
+
+    def _attack_from_left(self):
+        if self.direction == 0:
+            self.dX = 3
+            if self.rect[0] > 0:
+                self.shoot()
+                self.direction = 1
+        if self.direction == 1:
+            self.dX = -3
+            if self.rect[0] <= (-settings.UNITS_SIZE):
+                self.attack = False
+                self.dX = 0
+                self.direction = 0
+
+    def _attack_from_right(self):
+        if self.direction == 0:
+            self.dX = -3
+            if self.rect[0] < (settings.SCREEN_SIZE[0] - settings.UNITS_SIZE):
+                self.shoot()
+                self.direction = 1
+        if self.direction == 1:
+            self.dX = 3
+            if self.rect[0] >= settings.SCREEN_SIZE[0]:
+                self.attack = False
+                self.dX = 0
+                self.direction = 0
+
+    def shoot(self):
+        pass
+
+
+
