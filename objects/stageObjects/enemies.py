@@ -22,8 +22,8 @@ class EnemyArmy(pygame.sprite.Group):
         self.difficulty = settings.DIFFICULTY[level]
         self.clock = pygame.time.Clock()
         self.time = 0
-        self.ennemy_type = unit
-        sprite_logger.debug(f'self.ennemy-type: {self.ennemy_type}')
+        self.enemy_type = unit
+        sprite_logger.debug(f'self.enemy-type: {self.enemy_type}')
         for j in range(0, rows):
             for i in range(0, columns):
                 enemy = unit(((0, 0), (self.unit_size, self.unit_size)))
@@ -41,7 +41,7 @@ class EnemyArmy(pygame.sprite.Group):
         if self.clock.get_time() < 35:
             self.time += self.clock.get_time()
         display_logger.debug(f'clock time: {self.clock.get_time()}, self.time: {self.time}, self.dY: {self.dY}')
-        if self.ennemy_type == SpaceBlob:
+        if self.enemy_type == SpaceBlob:
             sprite_logger.debug(f'enemies list : {self.sprites()}')
             for enemy in self.sprites():
                 sprite_logger.debug(f'enemy index : {self.sprites().index(enemy)}')
@@ -68,7 +68,7 @@ class EnemyArmy(pygame.sprite.Group):
                     enemy.dYx = ((settings.SCREEN_SIZE[1] - settings.UNITS_SIZE) / 55)\
                                 * ((math.sin(self.time / 700))*(math.sin(self.time / 350)))
                     enemy.rect.move_ip(self.difficulty['speedX'] * enemy.dXn,
-                                       (enemy.dYx * self.difficulty['speedX']) + (enemy.dY * self.difficulty['speedY'])+ 2)
+                                       (enemy.dYx * self.difficulty['speedX']) + (enemy.dY * self.difficulty['speedY']) + 2)
         else:
             self.dXn_m1 = self.dXn
             self.dXn = ((settings.SCREEN_SIZE[0] - settings.UNITS_SIZE) / 100) * math.cos(self.time / 700)
@@ -77,10 +77,10 @@ class EnemyArmy(pygame.sprite.Group):
             else:
                 self.dY = 0
             rect_logger.debug(f'{self.dXn} | {self.dXn * self.dXn_m1} | {self.dY}')
-            if self.ennemy_type == SpaceOcto:
+            if self.enemy_type == SpaceOcto:
                 for enemy in self.sprites():
                     enemy.rect.move_ip(self.difficulty['speedX'] * self.dXn, self.dY * self.difficulty['speedY'])
-            elif self.ennemy_type == SpaceGhost:
+            elif self.enemy_type == SpaceGhost:
                 for enemy in self.sprites():
                     if self.sprites().index(enemy) % 2 == 0 :
                         enemy.dYx = ((settings.SCREEN_SIZE[1] - settings.UNITS_SIZE) / 88) * math.cos(self.time/ 350)

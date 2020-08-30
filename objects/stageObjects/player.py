@@ -73,6 +73,7 @@ class Player(pygame.sprite.Group):
 class PlayerStats:
     def __init__(self, datas):
         self.level = datas['level']
+        self.life = datas['life']
         self.max_speed = datas['max_speed']
         self.speed = datas['speed']
         self.max_jump = datas['max_jump']
@@ -105,6 +106,7 @@ class PlayerStats:
 
         datas = {
                  "level": 1,
+                 "life": 1,
                  "max_speed": 5,
                  "speed": 1,
                  "max_jump": 1,
@@ -142,7 +144,7 @@ class PlayerStats:
                 elif power == 'Light':
                     self.max_speed += (0.1 * self.max_speed)
                     self.speed += (0.05 * self.speed)
-                    self.max_jump += (0.05 * self.max_jump)
+                    self.max_jump -= (0.05 * self.max_jump)
                     self.light += 1
                 elif power == 'Ice':
                     self.shield += 1

@@ -39,5 +39,5 @@ class Dying(Group):
                     unit.kill()
 
 
-class colickedButton:
+class clickedButton:
     pass
