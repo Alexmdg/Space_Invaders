@@ -162,19 +162,26 @@ class AlienLaser(pygame.sprite.Sprite):
             self.size = (int(settings.UNITS_SIZE / 4), int(settings.UNITS_SIZE / 4))
             self.image = pygame.transform.scale(settings.IMAGE_LOADER.space_blob, self.size)
             self.rect = pygame.Rect(pos, self.size)
+            self.pu_chances = 50
+            self.power_up = False
             trajectoryX = player_pos[0] - pos[0]
             trajectoryY = player_pos[1] - pos[1]
             self.trajectory = trajectoryX / trajectoryY
-
+            self.dX = 0
+            self.X = 0
+            self.Y = 0
+            self.dY = 0
 
         def update(self):
             self.rect.move_ip(5*self.trajectory, 5)
 
     def __init__(self):
         super().__init__()
-        self.size = settings.UNITS_SIZE
-        self.image = pygame.transform.scale(settings.IMAGE_LOADER.alien_laser, (self.size, self.size))
-        self.rect = pygame.Rect((-settings.UNITS_SIZE, -settings.UNITS_SIZE), (self.size, self.size))
+        self.size = (settings.UNITS_SIZE, settings.UNITS_SIZE)
+        self.image = pygame.transform.scale(settings.IMAGE_LOADER.alien_laser, self.size)
+        self.rect = pygame.Rect((-settings.UNITS_SIZE, -settings.UNITS_SIZE), self.size)
+        self.pu_chances = 80
+        self.power_up = False
         self.clock = pygame.time.Clock()
         self.time = 0
         self.delay = 5000
@@ -182,6 +189,9 @@ class AlienLaser(pygame.sprite.Sprite):
         self.shooting = False
         self.direction = 0
         self.dX = 0
+        self.X = 0
+        self.Y = 0
+        self.dY = 0
 
     def update(self):
         if self.attack is False:
@@ -196,7 +206,7 @@ class AlienLaser(pygame.sprite.Sprite):
                     self.rect[0] = (-settings.UNITS_SIZE)
                 else:
                     self.rect[0] = settings.SCREEN_SIZE[0]
-                self.rect[1] = random.randint(0, settings.SCREEN_SIZE[1] - (settings.SCREEN_SIZE[1] / 2))
+                self.rect[1] = random.randint(0, settings.SCREEN_SIZE[1] - (settings.SCREEN_SIZE[1] / 3))
         elif self.attack is True:
             if self.side == 0:
                 self._attack_from_left()
@@ -236,4 +246,64 @@ class AlienLaser(pygame.sprite.Sprite):
         self.groups()[0].add(shoot)
 
 
+class Bomber(pygame.sprite.Sprite):
+    class Ammo(pygame.sprite.Sprite):
+        def __init__(self, pos):
+            super().__init__()
+            self.size = (int(settings.UNITS_SIZE / 4), int(settings.UNITS_SIZE / 4))
+            self.image = pygame.transform.scale(settings.IMAGE_LOADER.space_blob, self.size)
+            self.rect = pygame.Rect(pos, self.size)
+            self.pu_chances = 50
+            self.power_up = False
+            self.dX = 0
+            self.X = 0
+            self.Y = 0
+            self.dY = 0
 
+        def update(self):
+            self.dY += 1.8
+            self.rect.move_ip(0, self.dY)
+
+    def __init__(self):
+        super().__init__()
+        self.size = (settings.UNITS_SIZE, settings.UNITS_SIZE)
+        self.image = pygame.transform.scale(settings.IMAGE_LOADER.bomber, self.size)
+        self.side = random.randint(0, 1)
+        if self.side == 0:
+            self.rect = pygame.Rect((-settings.UNITS_SIZE, random.randint(0, settings.SCREEN_SIZE[1] - (settings.SCREEN_SIZE[1] / 3))),
+                                    self.size)
+        elif self.side == 1:
+            self.rect = pygame.Rect((settings.SCREEN_SIZE[0], random.randint(0, settings.SCREEN_SIZE[1] - (settings.SCREEN_SIZE[1] / 3))),
+                                    self.size)
+        self.pu_chances = 80
+        self.power_up = False
+        self.clock = pygame.time.Clock()
+        self.time = 0
+        self.delay = 10000
+        self.moving = False
+        self.shooting = False
+        self.has_shot = False
+        self.direction = 0
+        self.dX = 0
+        self.X = 0
+        self.Y = 0
+        self.dY = 0
+
+    def update(self):
+        if self.moving is False:
+            self.clock.tick()
+            if self.clock.get_time() < 35:
+                self.time += self.clock.get_time()
+            if self.time > self.delay:
+                self.moving = True
+                self.time = 0
+                if self.side == 0:
+                    self.dX = 5
+                else:
+                    self.dX = -5
+        elif self.moving is True:
+            self.rect.move_ip(self.dX, 0)
+
+    def shoot(self):
+        shoot = self.Ammo((self.rect[0], self.rect[1]))
+        self.groups()[0].add(shoot)

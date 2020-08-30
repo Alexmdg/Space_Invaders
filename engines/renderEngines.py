@@ -59,14 +59,17 @@ class StageRender(pygame.Surface):
                             elem.update()
                             for sprite in elem.sprites():
                                 self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
-                                try:
+                                if type(sprite) is Bomber:
+                                    if self.scene.objects['player'][0].sprites()[0].rect[0] - 5 < sprite.rect[0] < self.scene.objects['player'][0].sprites()[0].rect[0] + 5\
+                                            and sprite.has_shot is False:
+                                        sprite.shoot()
+                                        sprite.has_shot = True
+                                if type(sprite) is AlienLaser:
                                     if sprite.shooting is True:
                                         sprite_logger.debug('SideEnemy Attacked')
                                         sprite.shoot((self.scene.objects['player'][0].sprites()[0].rect[0],
                                                     self.scene.objects['player'][0].sprites()[0].rect[1]))
                                         sprite.shooting = False
-                                except:
-                                    pass
             else:
                 self.is_running = False
 

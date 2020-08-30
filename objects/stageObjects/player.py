@@ -45,13 +45,13 @@ class Player(pygame.sprite.Group):
         if keys[pygame.K_RIGHT] == 0 and self.dX > 0:
             self.dX -= 0.8
 
-        if self.sprites()[0].rect.y <= (settings.SCREEN_SIZE[1] - (1.8 * settings.UNITS_SIZE)) * self.hero.max_jump:
+        if self.sprites()[0].rect.y <= (settings.SCREEN_SIZE[1] - ((3 * settings.UNITS_SIZE) * self.hero.max_jump)):
             self.jump_cooldown = True
         if keys[pygame.K_SPACE] and not self.jump_cooldown:
-            self.dY = 5
-        if (keys[pygame.K_SPACE] == 0 and self.sprites()[0].rect.y < settings.SCREEN_SIZE[1] - (settings.UNITS_SIZE * 1.2) - 1)\
-            or (self.jump_cooldown and self.sprites()[0].rect.y < settings.SCREEN_SIZE[1] - (settings.UNITS_SIZE * 1.2) - 1):
-            self.dY -= 3
+            self.dY = 10
+        if (keys[pygame.K_SPACE] == 0 and self.sprites()[0].rect.y < (settings.SCREEN_SIZE[1] - ((3 * settings.UNITS_SIZE) * self.hero.max_jump)) - 1)\
+            or (self.jump_cooldown and self.sprites()[0].rect.y < (settings.SCREEN_SIZE[1] - ((3 * settings.UNITS_SIZE) * self.hero.max_jump)) - 1):
+            self.dY -= 4
         if self.sprites()[0].rect.x < 0:
             self.sprites()[0].rect.x = 0
             self.dX = 0
@@ -62,7 +62,7 @@ class Player(pygame.sprite.Group):
             self.sprites()[0].rect.y = settings.SCREEN_SIZE[1] - settings.UNITS_SIZE * 1.2
             self.dY = 0
             self.jump_cooldown = False
-        if self.sprites()[0].rect.y <= settings.SCREEN_SIZE[1] - (1.8 * settings.UNITS_SIZE):
+        if self.sprites()[0].rect.y <= (settings.SCREEN_SIZE[1] - ((3 * settings.UNITS_SIZE) * self.hero.max_jump)):
             if self.dY > 0:
                 self.dY = 0
             else:
