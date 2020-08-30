@@ -61,14 +61,14 @@ class Weapon(pygame.sprite.Group):
                   'max_ammo': 3,
                   'damage': 10,
                   'persistant': True},
-            '4': {'name': 'Rock',
-                  'image': 'settings.IMAGE_LOADER.bullet',
-                  'size': 1.3,
-                  'speed': -3.82,
-                  'rate': 1.2,
-                  'max_ammo': 6,
-                  'damage': 5,
-                  'persistant': True},
+            # '4': {'name': 'Rock',
+            #       'image': 'settings.IMAGE_LOADER.bullet',
+            #       'size': 1.3,
+            #       'speed': -3.82,
+            #       'rate': 1.2,
+            #       'max_ammo': 6,
+            #       'damage': 5,
+            #       'persistant': True},
         }
         self.ammo_size = int(((settings.UNITS_SIZE * ammo_size_factor) / 100) * self.levels[str(self.hero.earth)]['size'])
         self.ammo_image = self.levels[str(self.hero.earth)]['image']
