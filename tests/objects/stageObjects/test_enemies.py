@@ -1,10 +1,10 @@
-import os, sys, inspect
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-parentdir2 = os.path.dirname(parentdir)
-parentdir3 = os.path.dirname(parentdir2)
-sys.path.append(parentdir3)
-from objects.stageObjects.enemies import EnemyArmy, SpaceOcto
+# import os, sys, inspect
+# currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+# parentdir = os.path.dirname(currentdir)
+# parentdir2 = os.path.dirname(parentdir)
+# parentdir3 = os.path.dirname(parentdir2)
+# sys.path.append(parentdir3)
+# from objects.stageObjects.enemies import EnemyArmy, SpaceOcto
 
 class Test_EnemyArmy:
     army = EnemyArmy(SpaceOcto, 5, 5, 50, '1')

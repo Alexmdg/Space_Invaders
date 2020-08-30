@@ -142,7 +142,7 @@ class PlayerStats:
                 elif power == 'Light':
                     self.max_speed += (0.1 * self.max_speed)
                     self.speed += (0.05 * self.speed)
-                    self.max_jump += (0.05 * self.max_jump)
+                    self.max_jump -= (0.05 * self.max_jump)
                     self.light += 1
                 elif power == 'Ice':
                     self.shield += 1
