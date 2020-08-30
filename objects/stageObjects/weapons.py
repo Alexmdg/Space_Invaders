@@ -34,23 +34,50 @@ class Weapon(pygame.sprite.Group):
                   'size': 1,
                   'speed': -3.33,
                   'rate': 1.2,
-                  'max_ammo': 6,
-                  'damage': 5},
-            '1': {'name': 'Rock',
-                  'image': 'settings.IMAGE_LOADER.rock',
-                  'size': 1.3,
-                  'speed': -3.33,
-                  'rate': 1.2,
                   'max_ammo': 5,
-                  'damage': 5}
+                  'damage': 5,
+                  'persistant': False},
+            '1': {'name': 'Wood',
+                  'image': 'settings.IMAGE_LOADER.wood',
+                  'size': 1.3,
+                  'speed': -3.82,
+                  'rate': 1.2,
+                  'max_ammo': 6,
+                  'damage': 5,
+                  'persistant': False},
+            '2': {'name': 'bullets',
+                  'image': 'settings.IMAGE_LOADER.bullet',
+                  'size': 0.8,
+                  'speed': -5.55,
+                  'rate': 0.6,
+                  'max_ammo': 12,
+                  'damage': 7,
+                  'persistant': False},
+            '3': {'name': 'meteor',
+                  'image': 'settings.IMAGE_LOADER.meteor',
+                  'size': 2,
+                  'speed': -3.33,
+                  'rate': 2,
+                  'max_ammo': 3,
+                  'damage': 10,
+                  'persistant': True},
+            '4': {'name': 'Rock',
+                  'image': 'settings.IMAGE_LOADER.bullet',
+                  'size': 1.3,
+                  'speed': -3.82,
+                  'rate': 1.2,
+                  'max_ammo': 6,
+                  'damage': 5,
+                  'persistant': True},
         }
-        self.ammo_size = int((settings.UNITS_SIZE * ammo_size_factor) / 100) * self.levels[str(self.hero.earth)]['size']
+        self.ammo_size = int(((settings.UNITS_SIZE * ammo_size_factor) / 100) * self.levels[str(self.hero.earth)]['size'])
         self.ammo_image = self.levels[str(self.hero.earth)]['image']
         self.ammo_surf = pygame.transform.scale(eval(self.ammo_image), (self.ammo_size, self.ammo_size))
         self.ammo_speed = self.levels[str(self.hero.earth)]['speed'] * self.hero.ammo_speed
         self.attack_rate = self.levels[str(self.hero.earth)]['rate'] * self.hero.attack_rate
         self.max_ammo = self.levels[str(self.hero.earth)]['max_ammo'] + self.hero.max_ammo
         self.damage = self.hero.damage
+        self.persistant = self.levels[str(self.hero.earth)]['persistant']
         self.shot_fired = False
 
     def fireShot(self, player_rect, event):

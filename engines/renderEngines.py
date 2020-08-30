@@ -95,9 +95,14 @@ class StageRender(pygame.Surface):
             if pygame.sprite.spritecollideany(self.scene.objects['player'][0].sprites()[0], enemies):
                 self.scene.outro.is_running = True
                 self.scene.outro.chose_ending('lose')
-            deaths = pygame.sprite.groupcollide(self.scene.objects['shots'][0],
-                                                enemies,
-                                                True, True)
+            if self.scene.objects['shots'][0].persistant is False:
+                deaths = pygame.sprite.groupcollide(self.scene.objects['shots'][0],
+                                                    enemies,
+                                                    True, True)
+            else:
+                deaths = pygame.sprite.groupcollide(self.scene.objects['shots'][0],
+                                                    enemies,
+                                                    False, True)
             power_up = pygame.sprite.spritecollideany(self.scene.objects['player'][0].sprites()[0], self.scene.objects['deads'][0])
             if power_up:
                 self.scene.hero.power_up += 1
