@@ -6,7 +6,7 @@ main_logger.setLevel(settings.logging.INFO)
 event_logger.setLevel(settings.logging.INFO)
 rect_logger.setLevel(settings.logging.INFO)
 display_logger.setLevel(settings.logging.INFO)
-sprite_logger.setLevel(settings.logging.INFO)
+sprite_logger.setLevel(settings.logging.DEBUG)
 
 class StageRender(pygame.Surface):
     def __init__(self, stage_scene, size=settings.SCREEN_SIZE):
@@ -59,6 +59,14 @@ class StageRender(pygame.Surface):
                             elem.update()
                             for sprite in elem.sprites():
                                 self.blit(sprite.image, (sprite.rect[0], sprite.rect[1]))
+                                try:
+                                    if sprite.shooting is True:
+                                        sprite_logger.debug('SideEnemy Attacked')
+                                        sprite.shoot((self.scene.objects['player'][0].sprites()[0].rect[0],
+                                                    self.scene.objects['player'][0].sprites()[0].rect[1]))
+                                        sprite.shooting = False
+                                except:
+                                    pass
             else:
                 self.is_running = False
 

@@ -16,6 +16,7 @@ class ImageLoader:
         self.wood = image.load(os.path.join('graphics\images\\', 'wood.png')).convert_alpha()
         self.bullet = image.load(os.path.join('graphics\images\\', 'bullet.png')).convert_alpha()
         self.meteor = image.load(os.path.join('graphics\images\\', 'meteor.png')).convert_alpha()
+        self.fireball = image.load(os.path.join('graphics\images\\', 'fireball.png')).convert_alpha()
         self.dead_bg = image.load(os.path.join('graphics\images\\', '2245.jpg')).convert_alpha()
         self.win_bg = image.load(os.path.join('graphics\images\\', 'win.jpg')).convert_alpha()
 

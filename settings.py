@@ -40,6 +40,7 @@ FPS = 34
 
 def Purple(a=255): return (89, 24, 204, a)
 def Black(a=255): return (0, 0, 0, a)
+def Red(a=255): return (243, 39, 22, a)
 def Grey(a=255): return(229, 222, 206, a)
 def Yellow(a=255): return(245, 191, 48, a)
 def Orange(a=255): return(249, 157, 45, a)

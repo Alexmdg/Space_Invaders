@@ -144,6 +144,7 @@ class SpaceBlob(pygame.sprite.Sprite):
 
 
 class SideEnemies(pygame.sprite.Group):
+
     def __init__(self, unit):
         super().__init__()
         self.unit = unit()
@@ -155,6 +156,20 @@ class SideEnemies(pygame.sprite.Group):
 
 
 class AlienLaser(pygame.sprite.Sprite):
+    class Ammo(pygame.sprite.Sprite):
+        def __init__(self, pos, player_pos):
+            super().__init__()
+            self.size = (int(settings.UNITS_SIZE / 4), int(settings.UNITS_SIZE / 4))
+            self.image = pygame.transform.scale(settings.IMAGE_LOADER.space_blob, self.size)
+            self.rect = pygame.Rect(pos, self.size)
+            trajectoryX = player_pos[0] - pos[0]
+            trajectoryY = player_pos[1] - pos[1]
+            self.trajectory = trajectoryX / trajectoryY
+
+
+        def update(self):
+            self.rect.move_ip(5*self.trajectory, 5)
+
     def __init__(self):
         super().__init__()
         self.size = settings.UNITS_SIZE
@@ -164,6 +179,7 @@ class AlienLaser(pygame.sprite.Sprite):
         self.time = 0
         self.delay = 5000
         self.attack = False
+        self.shooting = False
         self.direction = 0
         self.dX = 0
 
@@ -180,7 +196,7 @@ class AlienLaser(pygame.sprite.Sprite):
                     self.rect[0] = (-settings.UNITS_SIZE)
                 else:
                     self.rect[0] = settings.SCREEN_SIZE[0]
-                self.rect[1] = random.randint(0, settings.SCREEN_SIZE[1] - (settings.SCREEN_SIZE[1] / 4))
+                self.rect[1] = random.randint(0, settings.SCREEN_SIZE[1] - (settings.SCREEN_SIZE[1] / 2))
         elif self.attack is True:
             if self.side == 0:
                 self._attack_from_left()
@@ -193,7 +209,7 @@ class AlienLaser(pygame.sprite.Sprite):
         if self.direction == 0:
             self.dX = 3
             if self.rect[0] > 0:
-                self.shoot()
+                self.shooting = True
                 self.direction = 1
         if self.direction == 1:
             self.dX = -3
@@ -206,7 +222,7 @@ class AlienLaser(pygame.sprite.Sprite):
         if self.direction == 0:
             self.dX = -3
             if self.rect[0] < (settings.SCREEN_SIZE[0] - settings.UNITS_SIZE):
-                self.shoot()
+                self.shooting = True
                 self.direction = 1
         if self.direction == 1:
             self.dX = 3
@@ -215,8 +231,9 @@ class AlienLaser(pygame.sprite.Sprite):
                 self.dX = 0
                 self.direction = 0
 
-    def shoot(self):
-        pass
+    def shoot(self, player_pos):
+        shoot = self.Ammo((self.rect[0], self.rect[1]), player_pos)
+        self.groups()[0].add(shoot)
 
 
 
