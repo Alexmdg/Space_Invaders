@@ -92,7 +92,7 @@ class StageOutro(Pannel):
             self.title = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), 'LOL...', 72)
             self.title.rect.centerx = self.size[0] / 2
             self.title.rect.centery = (1.618 * self.size[1]) / 5
-            self.desc = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), f'imagine losing at lvl 1...', 36)
+            self.desc = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), f'imagine losing at lvl {self.hero.level}...', 36)
             self.desc.rect.centerx = self.size[0] / 2
             self.desc.rect.centery = (2.618 * self.size[1]) / 5
             self.buttons.items.append(Button('levelRestart',
@@ -122,7 +122,7 @@ class StageOutro(Pannel):
             self.background.convert_alpha()
             self.background.set_alpha(175)
             self.image.blit(self.background, (0, 0))
-            self.title = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), 'Stage 1 complete', 72)
+            self.title = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), f'Stage {self.hero.level} complete', 72)
             self.title.rect.centerx = self.size[0] / 2
             self.title.rect.centery = (1.618 * self.size[1]) / 5
             self.desc = TextLabel((self.rect[2] * 0.22, self.rect[3] * 0.22), f'kills = {self.hero.kills}', 36)
