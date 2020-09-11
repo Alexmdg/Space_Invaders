@@ -17,6 +17,7 @@ class Weapon(pygame.sprite.Group):
             super().__init__()
             self.rect = rect
             self.image = surf
+            self.timer = 0
 
         def update(self):
             if self.rect.y <= 0:
